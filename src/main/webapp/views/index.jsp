@@ -6,7 +6,7 @@
     <title>INICIO | CMC SYSTEM</title>
 </head>
 <body>
-
+<h1>CMC SYSTEM</h1>
 
 
 </body>
