@@ -58,6 +58,7 @@
     padding-bottom: 1rem;
     color: var(--main-color);
     border-radius: 30px 0px 0px 30px;
+    transition:all .3s;
 }
 
 .sidebar-menu a span:first-child {
@@ -65,6 +66,23 @@
     padding-right: 1rem;
 }
 
+main {
+    margin-top: 85px;
+    padding: 2rem 1.5rem;
+    background: #f1f5f9;
+    min-height: calc(100vh - 90px);
+}
+
+.contenedorjsp{
+    height: 550px;
+    width: 100%;
+    overflow-x: auto;
+}
+
+myframe {
+    height: 100%;
+    width: 100%;
+}
 #nav-toggle:checked+.sidebar {
     width: 70px;
 }

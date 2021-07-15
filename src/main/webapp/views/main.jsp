@@ -27,23 +27,23 @@
     <div class="sidebar-menu">
         <ul>
             <li>
-                <a href="${context}/views/members/members.jsp" class="active full-width"><span class="las la-handshake"></span>
+                <a href="ServletContainer?action=member" target="myframe" ><span class="las la-handshake"></span>
                     <span>Socios</span></a>
             </li>
             <li>
-                <a href=""><span class="fas fa-address-card"></span>
+                <a href="ServletContainer?action=employe" target="myframe" ><span class="fas fa-address-card"></span>
                     <span>Empleados</span></a>
             </li>
             <li>
-                <a href=""><span class="fas fa-th-list"></span>
+                <a href="ServletContainer?action=credit" target="myframe"><span class="fas fa-th-list"></span>
                     <span>Creditos</span></a>
             </li>
             <li>
-                <a href=""><span class="las la-cash-register"></span>
+                <a href="ServletContainer?action=payment" target="myframe"><span class="las la-cash-register"></span>
                     <span>Abonos</span></a>
             </li>
             <li>
-                <a href=""><span class="las la-wallet"></span>
+                <a href="ServletContainer?action=loan" target="myframe"><span class="las la-wallet"></span>
                     <span>Prestamos</span></a>
             </li>
         </ul>
@@ -52,6 +52,7 @@
 
 <!--Top bar-->
 <div class="main-topbar">
+
     <header>
         <h2>
             <label for="nav-toggle">
@@ -68,7 +69,12 @@
         </div>
     </header>
 
+<main>
 
+    <div class="m-2 contenedorjsp" >
+        <iframe name="myframe" width="100%" height="100%"></iframe>
+    </div>
+</main>
 
 </div>
 
@@ -79,7 +85,9 @@
 
 
 
-<script src="${context}/assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+
 <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+<script src="${context}/assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+<script src="${context}/assets/dist/js/validarseleccion.js"></script>
 </body>
 </html>
