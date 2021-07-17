@@ -9,7 +9,14 @@ public class ConnectionMySQL {
         String useSSL = "false";
         String timezone = "UTC";
         String url = String.format("jdbc:mysql://%s:%s/%s?useSSL=%s&serverTimezone=%s", host, port, database, useSSL, timezone);
-        DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
+       try {
+
+           DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
+
+           System.out.println("Conectado");
+       }catch(Exception e){
+           System.out.println("No Conectado");
+        }
         return DriverManager.getConnection(url, "root", "");
     }
 
@@ -32,6 +39,5 @@ public class ConnectionMySQL {
 
         }catch(SQLException e){ }
     }
-
 
 }

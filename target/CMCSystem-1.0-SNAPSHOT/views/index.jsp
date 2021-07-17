@@ -26,8 +26,8 @@
                 </div>
                 <div class="d-grid gap-2">
                     <br>
-                    <a class="btn btn-primary btn" href="${context}/ServletUser">Iniciar Sesion</a>
-                    <button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#addStudent">Registrarse</button>
+                   <a class="btn btn-primary btn" href="${context}/ServletUser">Iniciar Sesion</a>
+                  <!--  <input type="submit" name="accion" value="Ingresar" class="btn btn-primary">-->
                 </div>
             </form>
         </div>

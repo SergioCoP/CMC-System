@@ -1,23 +1,48 @@
 package com.mx.cmc.CMCSystem.model.users;
 
+import com.mx.cmc.CMCSystem.model.employees.BeanEmployee;
+
 public class BeanUser {
     private int iduser;
-    private int idempleado;
-    private String name;
-    private String lastnames;
-    private String role;
+    private String email;
+    private String password;
+    private BeanEmployee idemploye;
 
-    public BeanUser(){
+    public BeanUser() {
+    }
+
+    public BeanUser(BeanEmployee idemploye, String email, String password) {
+        this.idemploye = idemploye;
+        this.email = email;
+        this.password = password;
 
     }
 
-    public BeanUser(int iduser, int idempleado, String name, String lastnames, String role){
-        this.iduser = iduser;
-        this.idempleado = idempleado;
-        this.name = name;
-        this.lastnames = lastnames;
-        this.role = role;
 
+
+    public BeanEmployee getIdemploye() {
+        return idemploye;
+
+    }
+
+    public void setIdemploye(BeanEmployee idemploye) {
+        this.idemploye = idemploye;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public int getIduser() {
@@ -26,37 +51,5 @@ public class BeanUser {
 
     public void setIduser(int iduser) {
         this.iduser = iduser;
-    }
-
-    public int getIdempleado() {
-        return idempleado;
-    }
-
-    public void setIdempleado(int idempleado) {
-        this.idempleado = idempleado;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getLastnames() {
-        return lastnames;
-    }
-
-    public void setLastnames(String lastnames) {
-        this.lastnames = lastnames;
-    }
-
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
     }
 }

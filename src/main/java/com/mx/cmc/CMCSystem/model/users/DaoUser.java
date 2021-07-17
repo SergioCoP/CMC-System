@@ -1,11 +1,6 @@
 package com.mx.cmc.CMCSystem.model.users;
 
-import com.mx.cmc.CMCSystem.model.payments.BeanPayments;
-import com.mx.cmc.CMCSystem.model.members.BeanMember;
-import com.mx.cmc.CMCSystem.model.loans.BeanLoan;
 import com.mx.cmc.CMCSystem.model.employees.BeanEmployee;
-import com.mx.cmc.CMCSystem.model.credits.BeanCredits;
-import com.mx.cmc.CMCSystem.model.credit_history.BeanCreditHistory;
 import com.mx.cmc.CMCSystem.service.ConnectionMySQL;
 
 import org.slf4j.Logger;
@@ -16,24 +11,32 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DaoUser {
-   /* Connection con;
+  Connection con;
     CallableStatement cstm;
     ResultSet rs;
     Logger logger = LoggerFactory.getLogger(DaoUser.class);
 
-    public List<BeanUser> findAll(){
+    public List findAll(){
         List<BeanUser> listUsers = new ArrayList<>();
         try{
             con = ConnectionMySQL.getConnection();
-            cstm = con.prepareCall("{call finduser}");
+            cstm = con.prepareCall("{call findusers}");
             rs = cstm.executeQuery();
 
             while(rs.next()){
                 BeanUser user = new BeanUser();
                 BeanEmployee employe = new BeanEmployee();
 
-                user.setIduser(rs.getInt("idRole"));
-                employe.setName(rs.getString("name"));
+                user.setEmail(rs.getString(2));
+                user.setIduser(rs.getInt(3));
+                user.setPassword(rs.getString(1));
+
+                employe.setIdemploye(rs.getInt(3));
+                employe.setName(rs.getString(5));
+                employe.setLastnames(rs.getString(1));
+                employe.setRole(rs.getString(6));
+
+                user.setIdemploye(employe);
 
                 listUsers.add(user);
             }
@@ -43,5 +46,8 @@ public class DaoUser {
             ConnectionMySQL.closeConnections(con,cstm,rs);
         }
         return listUsers;
-    }*/
+
+    }
+
+
 }

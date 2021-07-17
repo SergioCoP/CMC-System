@@ -1,10 +1,4 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Sergio Cortes
-  Date: 15/07/2021
-  Time: 02:46:p. m.
-  To change this template use File | Settings | File Templates.
---%>
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="context" value="${pageContext.request.contextPath}" />
@@ -19,24 +13,25 @@
 <body>
 
 <div class="main-content">
-    <a href="" class="btn btn-success"><i class="fas fa-plus"></i>Agregar Empleado</a>
+    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="fas fa-plus"></i> Agregar Empleado</button>
     <br/>
     <table class="table">
         <thead class="table-light">
         <tr>
             <th>No.</th><!--Enbcabezado-->
             <th>Nombre</th>
-            <th>Apellidos</th>
             <th>Rol</th>
+            <th>Correo</th>
             <th>Acciones</th>
         </tr>
         </thead>
         <tbody>
-        <c:forEach items="${ listEmployes}" var="employe"><!--iterar cada usuario-->
+        <c:forEach items="${ listUsers }" var="user" ><!--iterar cada usuario-->
         <tr>
-            <td>${employe.id}</td>
-            <td>${employe.name} </td>
-            <td>${employe.rol}</td><!--datos del bean person-->
+            <td>${ user.iduser }</td>
+            <td>${ user.idemploye.name } ${ user.idemploye.lastnames }</td><!--datos del bean person-->
+            <td>${ user.idemploye.role }</td>
+            <td>${ user.email }</td>
             <td>
                     <button type="button" class="btn btn-primary"><i class="fas fa-edit"></i>Modificar</button>
                     <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="fas fa-trash-alt"></i>Eliminar</button>
@@ -68,7 +63,8 @@
 </div>
 
 
-<script src="${context}/assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+
 <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+<script src="${context}/assets/plugins/bootstrap/js/bootstrap.min.js"></script>
 </body>
 </html>

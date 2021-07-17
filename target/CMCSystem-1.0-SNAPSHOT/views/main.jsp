@@ -13,6 +13,7 @@
     <title>Principal | CMC</title>
     <link rel="stylesheet" href="${context}/assets/plugins/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="${context}/assets/dist/css/main.css">
+    <link rel="stylesheet" href="${context}/assets/dist/css/font.css">
     <link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
     <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
 </head>
@@ -21,30 +22,36 @@
 <input type="checkbox" id="nav-toggle">
 <div class="sidebar">
     <div class="sidebar-brand">
-        <h2><span class="las la-clinic-medical"></span> <span>CMC System</span></h2>
+        <h2><img src="${context}/assets/dist/img/Logo-Integradora.svg" alt="60" width="50"><span>  CMC System</span></h2>
+
     </div>
     <!--Secciones-del-tablero-->
     <div class="sidebar-menu">
         <ul>
             <li>
-                <a href="ServletContainer?action=member" target="myframe" ><span class="las la-handshake"></span>
+                <a href="ServletContainer?menu=member" target="myframe" ><span class="las la-handshake"></span>
                     <span>Socios</span></a>
             </li>
             <li>
-                <a href="ServletContainer?action=employe" target="myframe" ><span class="fas fa-address-card"></span>
+               <a href="ServletContainer?menu=employe&accion=Listar" target="myframe" ><span class="fas fa-address-card"></span>
                     <span>Empleados</span></a>
             </li>
             <li>
-                <a href="ServletContainer?action=credit" target="myframe"><span class="fas fa-th-list"></span>
+                <a href="ServletContainer?menu=credit" target="myframe"><span class="fas fa-th-list"></span>
                     <span>Creditos</span></a>
             </li>
             <li>
-                <a href="ServletContainer?action=payment" target="myframe"><span class="las la-cash-register"></span>
+                <a href="ServletContainer?menu=payment" target="myframe"><span class="las la-cash-register"></span>
                     <span>Abonos</span></a>
             </li>
             <li>
-                <a href="ServletContainer?action=loan" target="myframe"><span class="las la-wallet"></span>
+                <a href="ServletContainer?menu=loan" target="myframe"><span class="las la-wallet"></span>
                     <span>Prestamos</span></a>
+            </li>
+
+            <li>
+                <a href=""><span class="fas fa-sign-out-alt"></span>
+                    <span>Salir</span></a>
             </li>
         </ul>
     </div>
@@ -61,7 +68,7 @@
         </h2>
 
         <div class="user-wrapper">
-            <img src="" width="40px" height="40px" alt="">
+            <img src="${context}/assets/dist/img/usuario.png" alt="50" width="50">
             <div>
                 <h4>Administrador</h4>
                 <small>Super Admin</small>

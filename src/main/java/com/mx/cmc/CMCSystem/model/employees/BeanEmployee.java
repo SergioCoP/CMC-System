@@ -4,7 +4,7 @@ public class BeanEmployee {
 
     private int idemploye;
     private int idcredit;
-    private int idpayment;
+    private long idpayment;
     private String name;
     private String lastnames;
     private String role;
@@ -12,14 +12,20 @@ public class BeanEmployee {
     public BeanEmployee() {
     }
 
-    public BeanEmployee(int idemploye, int idcredit, int idpayment, String name, String lastnames, String role) {
-        this.idemploye = idemploye;
-        this.idcredit = idcredit;
-        this.idpayment = idpayment;
+    public BeanEmployee(String name, String lastnames, String role) {
         this.name = name;
         this.lastnames = lastnames;
         this.role = role;
     }
+
+    public BeanEmployee(int idcredit) {
+        this.idcredit = idcredit;
+    }
+
+    public BeanEmployee(long idpayment){
+        this.idpayment = idpayment;
+    }
+
 
     public int getIdemploye() {
         return idemploye;
@@ -37,11 +43,11 @@ public class BeanEmployee {
         this.idcredit = idcredit;
     }
 
-    public int getIdpayment() {
+    public long getIdpayment() {
         return idpayment;
     }
 
-    public void setIdpayment(int idpayment) {
+    public void setIdpayment(long idpayment) {
         this.idpayment = idpayment;
     }
 
