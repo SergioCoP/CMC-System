@@ -13,7 +13,7 @@
 <body>
 
 <div class="main-content">
-    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="fas fa-plus"></i> Agregar Empleado</button>
+    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#adduser"><i class="fas fa-plus"></i> Agregar Empleado</button>
     <br/>
     <table class="table">
         <thead class="table-light">
@@ -58,6 +58,72 @@
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fas fa-times"></i>Cerrar</button>
                 <button type="button" class="btn btn-danger"><i class="fas fa-trash-alt"></i>Eliminar usuario</button>
             </div>
+        </div>
+    </div>
+</div>
+
+<!--MODAL -->
+<div class="modal fade" id="adduser" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form method="POST" action="ServletContainer?menu=employe" >
+                <div class="modal-header">
+                    <h5 class="modal-title" id="titulo">Registro de Empleados</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" value="Crear" name="accion">
+                    <div class="col-lg-12">
+                        <div class="form-group">
+                            <label>Nombre(s)</label>
+                            <input type="text" class="form-control campo" id="nombre" onkeyup="" pattern="^[a-zA-ZáéíóúÁÉÍÓÚÑñüÜ ]+" title="Sólo letras"/>
+                            <small id="desc-nombre" class="text-danger form-text"></small>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="col-lg-12">
+                        <div class="form-group">
+                            <label>Apellido(s)</label>
+                            <input type="text" class="form-control campo" id="apellidos" onkeyup="" pattern="^[a-zA-ZáéíóúÁÉÍÓÚÑñüÜ ]+" title="Sólo letras"/>
+                            <small id="desc-apellidos" class="text-danger form-text"></small>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="col-lg-12">
+                        <div class="form-group">
+                            <label>Correo electrónico: </label>
+                            <input type="text" class="form-control" id="correo" onkeyup="" />
+                            <small id="desc-correo" class="text-danger form-text"></small>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="col-lg-12">
+                        <div class="form-group">
+                            <label>Contraseña: </label>
+                            <input type="text" class="form-control" id="contraseña" onkeyup="v" />
+                            <small id="desc-contraseña" class="text-danger form-text"></small>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="col-lg-12">
+                        <label>Rol: </label>
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <select class="form-select fecha" id="rol" onchange="">
+                                    <option value="Cajero">Cajero</option>
+                                    <option value="Coordinador">Coordinador</option>
+                                    <option value="Asesor">Asesor</option>
+                                </select>
+                            </div>
+                        </div>
+                        <small id="desc-rol" class="form-text text-danger"></small>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="submit" class="btn btn-primary" id="btnGuardar">Guardar</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>

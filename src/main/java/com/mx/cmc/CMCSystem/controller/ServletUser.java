@@ -20,11 +20,15 @@ import java.io.IOException;
 @WebServlet(name = "ServletUser", value = "/ServletUser")
 public class ServletUser extends HttpServlet {
    Logger logger = LoggerFactory.getLogger(ServletUser.class);
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
      request.getRequestDispatcher("/views/main.jsp").forward(request, response);
-    }
+
+     }
+
+
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

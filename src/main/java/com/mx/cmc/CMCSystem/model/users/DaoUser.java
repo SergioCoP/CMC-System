@@ -16,26 +16,24 @@ public class DaoUser {
     ResultSet rs;
     Logger logger = LoggerFactory.getLogger(DaoUser.class);
 
-    public List findAll(){
+    public List<BeanUser> findAll(){
         List<BeanUser> listUsers = new ArrayList<>();
         try{
             con = ConnectionMySQL.getConnection();
             cstm = con.prepareCall("{call findusers}");
             rs = cstm.executeQuery();
-
             while(rs.next()){
+
                 BeanUser user = new BeanUser();
                 BeanEmployee employe = new BeanEmployee();
 
-                user.setEmail(rs.getString(2));
-                user.setIduser(rs.getInt(3));
-                user.setPassword(rs.getString(1));
-
-                employe.setIdemploye(rs.getInt(3));
-                employe.setName(rs.getString(5));
-                employe.setLastnames(rs.getString(1));
-                employe.setRole(rs.getString(6));
-
+                user.setEmail(rs.getString("correo"));
+                user.setIduser(rs.getInt("idusuario"));
+                user.setPassword(rs.getString("contrasena"));
+                employe.setIdemploye(rs.getInt("idempleado"));
+                employe.setName(rs.getString("nombre"));
+                employe.setLastnames(rs.getString("apellidos"));
+                employe.setRole(rs.getString("rol"));
                 user.setIdemploye(employe);
 
                 listUsers.add(user);
@@ -47,6 +45,27 @@ public class DaoUser {
         }
         return listUsers;
 
+    }
+
+    public boolean agregar(BeanUser user){
+        boolean flag = false;
+        try{
+            con = ConnectionMySQL.getConnection();
+            cstm = con.prepareCall("{call registeremploye(?,?,?,?,?)}");
+
+            cstm.setString(1,user.getIdemploye().getName());
+            cstm.setString(2,user.getIdemploye().getLastnames());
+            cstm.setString(3,user.getIdemploye().getRole());
+            cstm.setString(4,user.getEmail());
+            cstm.setString(5,user.getPassword());
+            cstm.execute();
+            flag=true;
+        }catch(SQLException e){
+            logger.error("Ha ocurrido un error: " + e.getMessage());
+        }finally {
+            ConnectionMySQL.closeConnections(con,cstm);
+        }
+        return flag;
     }
 
 
