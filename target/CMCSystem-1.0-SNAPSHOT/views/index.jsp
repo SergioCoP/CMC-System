@@ -10,24 +10,25 @@
 <body>
 <div class="container mt-5 col-lg-4">
     <div class="card col-sm-10">
+        <img src="${context}/assets/dist/img/Logo-Integradora.svg" class="card-img" alt="...">
         <div class="card-body ">
-            <form class="form" action="validar" method="post">
+            <form class="form" action="ServletValidar" method="POST">
                 <div class="form-group text-center">
                     <h3>Inicio de Sesión</h3>
                     <label>Bienvenido</label>
                 </div>
                 <div class="form-group">
                     <label class="text-center">Usuario:</label>
-                    <input type="text" name="correo" class="form-control">
+                    <input type="text" name="txtcorreo" class="form-control">
                 </div>
                 <div class="form-group">
                     <label class="text-center">Contraseña:</label>
-                    <input type="password" name="contrasena" class="form-control">
+                    <input type="password" name="txtcontrasena" class="form-control">
                 </div>
                 <div class="d-grid gap-2">
                     <br>
-                   <a class="btn btn-primary btn" href="${context}/ServletUser">Iniciar Sesion</a>
-                  <!--  <input type="submit" name="accion" value="Ingresar" class="btn btn-primary">-->
+                 <!--  <a class="btn btn-primary btn" href="${context}/ServletUser">Iniciar Sesion</a>-->
+                    <button type="submit" name="action" value="Ingresar" class="btn btn-primary">Ingresar </button>
                 </div>
             </form>
         </div>

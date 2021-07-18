@@ -13,7 +13,7 @@
 <body>
 
 <div class="main-content">
-    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#adduser"><i class="fas fa-plus"></i> Agregar Empleado</button>
+    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#adduser"><i class="fas fa-plus"></i> Registrar</button>
     <br/>
     <table class="table">
         <thead class="table-light">
@@ -26,16 +26,16 @@
         </tr>
         </thead>
         <tbody>
-        <c:forEach items="${ listUsers }" var="user" ><!--iterar cada usuario-->
+        <c:forEach items="${listUsers}" var="user" ><!--iterar cada usuario-->
         <tr>
-            <td>${ user.iduser }</td>
-            <td>${ user.idemploye.name } ${ user.idemploye.lastnames }</td><!--datos del bean person-->
-            <td>${ user.idemploye.role }</td>
-            <td>${ user.email }</td>
+            <td>${user.getIduser()}</td>
+            <td>${user.getIdemploye().getName()} ${user.getIdemploye().getLastnames()}</td><!--datos del bean person-->
+            <td>${user.getIdemploye().getRole()}</td>
+            <td>${user.getEmail()}</td>
             <td>
-                    <button type="button" class="btn btn-primary"><i class="fas fa-edit"></i>Modificar</button>
-                    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="fas fa-trash-alt"></i>Eliminar</button>
-                    <button type="button" class="btn btn-info"><i class="fas fa-trash-alt"></i>Ver</button>
+                    <button type="button" class="btn btn-primary"><i class="fas fa-edit"></i></button>
+                    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="fas fa-trash-alt"></i></button>
+                    <button type="button" class="btn btn-info"><i class="fas fa-eye"></i></button>
             </td>
         </tr>
         </c:forEach>
@@ -66,7 +66,7 @@
 <div class="modal fade" id="adduser" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form method="POST" action="ServletContainer?menu=employe" >
+            <form method="POST" action="ServletContainer?menu=employe&accion=Crear" >
                 <div class="modal-header">
                     <h5 class="modal-title" id="titulo">Registro de Empleados</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -121,7 +121,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                    <button type="submit" class="btn btn-primary" id="btnGuardar">Guardar</button>
+                    <button type="submit" class="btn btn-primary" id="btnGuardar" >Guardar</button>
                 </div>
             </form>
         </div>

@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DaoUser {
-  Connection con;
+    Connection con;
     CallableStatement cstm;
     ResultSet rs;
     Logger logger = LoggerFactory.getLogger(DaoUser.class);
@@ -44,7 +44,6 @@ public class DaoUser {
             ConnectionMySQL.closeConnections(con,cstm,rs);
         }
         return listUsers;
-
     }
 
     public boolean agregar(BeanUser user){
@@ -66,6 +65,36 @@ public class DaoUser {
             ConnectionMySQL.closeConnections(con,cstm);
         }
         return flag;
+    }
+
+    public BeanUser Validar(String correo, String contrasena){
+        BeanUser user = null;
+
+        try{
+            con = ConnectionMySQL.getConnection();
+            cstm = con.prepareCall("select * from usuarios as u inner join empleados as e on u.id_empleado = e.idempleado where u.correo = ? AND u.contrasena = ?");
+            cstm.setString(1,correo);
+            cstm.setString(2,contrasena);
+            rs = cstm.executeQuery();
+
+            if(rs.next()){
+                BeanEmployee employ = new BeanEmployee();
+                user = new BeanUser();
+
+                user.setEmail(rs.getString("correo"));
+                user.setPassword(rs.getString("contrasena"));
+                employ.setName(rs.getString("nombre"));
+                employ.setLastnames(rs.getString("apellidos"));
+                employ.setRole(rs.getString("rol"));
+                user.setIdemploye(employ);
+            }
+        }catch (SQLException e){
+            logger.error("Ha ocurrido un error: " + e.getMessage());
+        }finally {
+            ConnectionMySQL.closeConnections(con,cstm,rs);
+        }
+        return user;
+
     }
 
 

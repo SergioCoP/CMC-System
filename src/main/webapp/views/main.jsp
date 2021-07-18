@@ -48,11 +48,6 @@
                 <a href="ServletContainer?menu=loan" target="myframe"><span class="las la-wallet"></span>
                     <span>Prestamos</span></a>
             </li>
-
-            <li>
-                <a href=""><span class="fas fa-sign-out-alt"></span>
-                    <span>Salir</span></a>
-            </li>
         </ul>
     </div>
 </div>
@@ -70,9 +65,13 @@
         <div class="user-wrapper">
             <img src="${context}/assets/dist/img/usuario.png" alt="50" width="50">
             <div>
-                <h4>Administrador</h4>
-                <small>Super Admin</small>
+                <h4>${user.getIdemploye().getName()} ${user.getIdemploye().getLastnames()}</h4>
+                <small>${user.getEmail()}</small>
             </div>
+            <div class="d-inline-block" tabindex="0" data-bs-popper="tooltip" title="Cerrar Sesión">
+                <button class="btn btn-light btn-sm" type="submit" name="action" value="Salir"><i class="fas fa-sign-out-alt"></i></button>
+            </div>
+
         </div>
     </header>
 
@@ -94,6 +93,8 @@
 
 
 <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+<script src="${context}/assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="${context}/assets/plugins/bootstrap/js/bootstrap.bundle.js"></script>
 <script src="${context}/assets/plugins/bootstrap/js/bootstrap.min.js"></script>
 <script src="${context}/assets/dist/js/validarseleccion.js"></script>
 </body>

@@ -18,11 +18,16 @@ public class BeanUser {
 
     }
 
+    public int getIduser() {
+        return iduser;
+    }
 
+    public void setIduser(int iduser) {
+        this.iduser = iduser;
+    }
 
     public BeanEmployee getIdemploye() {
         return idemploye;
-
     }
 
     public void setIdemploye(BeanEmployee idemploye) {
@@ -45,11 +50,5 @@ public class BeanUser {
         this.password = password;
     }
 
-    public int getIduser() {
-        return iduser;
-    }
 
-    public void setIduser(int iduser) {
-        this.iduser = iduser;
-    }
 }
