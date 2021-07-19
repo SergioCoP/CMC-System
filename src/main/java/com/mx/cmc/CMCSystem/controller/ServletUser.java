@@ -16,16 +16,31 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
+import java.util.List;
 
 @WebServlet(name = "ServletUser", value = "/ServletUser")
 public class ServletUser extends HttpServlet {
    Logger logger = LoggerFactory.getLogger(ServletUser.class);
 
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException{
+
+      request.getRequestDispatcher("/views/employes/employes.jsp").forward(request, response);
+     }
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-      request.getRequestDispatcher("/views/main.jsp").forward(request,response);
 
+ processRequest(request,response);
 
      }
 
@@ -33,6 +48,6 @@ public class ServletUser extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+ processRequest(request,response);
     }
 }

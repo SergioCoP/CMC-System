@@ -27,8 +27,9 @@ public class ServletValidar extends HttpServlet {
 
             user = userdaor.Validar(correo,contra);
             if(user.getIdemploye().getName() != null){
+                System.out.println("nombre:"+user.getIdemploye().getName());
                 request.setAttribute("user",user);
-                request.getRequestDispatcher("/views/main.jsp").forward(request,response);
+                request.getRequestDispatcher("ServletContainer?menu=main").forward(request,response);
             }else{
                 request.getRequestDispatcher("/views/index.jsp").forward(request,response);
             }

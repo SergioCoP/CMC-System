@@ -15,6 +15,7 @@ public class DaoUser {
     CallableStatement cstm;
     ResultSet rs;
     Logger logger = LoggerFactory.getLogger(DaoUser.class);
+    int r;
 
     public List<BeanUser> findAll(){
         List<BeanUser> listUsers = new ArrayList<>();
@@ -46,8 +47,36 @@ public class DaoUser {
         return listUsers;
     }
 
-    public boolean agregar(BeanUser user){
-        boolean flag = false;
+    public BeanUser ListarporId(int id){
+        BeanUser user = null;
+        try{
+            con = ConnectionMySQL.getConnection();
+            cstm = con.prepareCall("select * from usuarios as U inner join empleados as e on U.id_empleado = e.idempleado where U.idusuario = ?");
+            cstm.setInt(1,id);
+            rs = cstm.executeQuery();
+
+            while(rs.next()){
+                BeanEmployee employe = new BeanEmployee();
+                user = new BeanUser();
+
+                employe.setIdemploye(rs.getInt("idempleado"));
+                employe.setName(rs.getString("nombre"));
+                employe.setLastnames(rs.getString("apellidos"));
+                employe.setRole(rs.getString("rol"));
+                user.setIduser(rs.getInt("idusuario"));
+                user.setEmail(rs.getString("correo"));
+                user.setPassword(rs.getString("contrasena"));
+                user.setIdemploye(employe);
+            }
+        }catch(SQLException e){
+            logger.error("Ha ocurrido un error: " + e.getMessage());
+        }finally {
+            ConnectionMySQL.closeConnections(con,cstm,rs);
+        }
+        return user;
+    }
+
+    public int agregar(BeanUser user){
         try{
             con = ConnectionMySQL.getConnection();
             cstm = con.prepareCall("{call registeremploye(?,?,?,?,?)}");
@@ -57,15 +86,49 @@ public class DaoUser {
             cstm.setString(3,user.getIdemploye().getRole());
             cstm.setString(4,user.getEmail());
             cstm.setString(5,user.getPassword());
-            cstm.execute();
-            flag=true;
+            cstm.executeUpdate();
         }catch(SQLException e){
             logger.error("Ha ocurrido un error: " + e.getMessage());
         }finally {
             ConnectionMySQL.closeConnections(con,cstm);
         }
-        return flag;
+        return r;
     }
+
+    public int actualizar(BeanUser user){
+        try{
+            con = ConnectionMySQL.getConnection();
+            cstm = con.prepareCall("{call modifyemploye(?,?,?,?,?,?)}");
+
+            cstm.setInt(1,user.getIduser());
+            cstm.setString(2,user.getIdemploye().getName());
+            cstm.setString(3,user.getIdemploye().getLastnames());
+            cstm.setString(4,user.getIdemploye().getRole());
+            cstm.setString(5,user.getEmail());
+            cstm.setString(6,user.getPassword());
+            cstm.executeUpdate();
+        }catch (SQLException e){
+            logger.error("Ha ocurrido un error: " + e.getMessage());
+        }finally {
+            ConnectionMySQL.closeConnections(con,cstm);
+        }
+        return r;
+
+    }
+
+    public void eliminar(int id){
+        try{
+            con = ConnectionMySQL.getConnection();
+            cstm = con.prepareCall("{call deleteemploye(?)}");
+            cstm.setInt(1,id);
+            cstm.executeUpdate();
+        }catch(SQLException e){
+            logger.error("Ha ocurrido un error: " + e.getMessage());
+        }finally {
+            ConnectionMySQL.closeConnections(con,cstm);
+        }
+    }
+
 
     public BeanUser Validar(String correo, String contrasena){
         BeanUser user = null;
@@ -77,7 +140,7 @@ public class DaoUser {
             cstm.setString(2,contrasena);
             rs = cstm.executeQuery();
 
-            if(rs.next()){
+            while(rs.next()){
                 BeanEmployee employ = new BeanEmployee();
                 user = new BeanUser();
 

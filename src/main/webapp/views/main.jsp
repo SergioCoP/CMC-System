@@ -33,7 +33,7 @@
                     <span>Socios</span></a>
             </li>
             <li>
-               <a href="ServletContainer?menu=employe&accion=Listar" target="myframe" ><span class="fas fa-address-card"></span>
+               <a href="ServletContainer?menu=employee&action=Listar" target="myframe" ><span class="fas fa-address-card"></span>
                     <span>Empleados</span></a>
             </li>
             <li>
@@ -68,17 +68,19 @@
                 <h4>${user.getIdemploye().getName()} ${user.getIdemploye().getLastnames()}</h4>
                 <small>${user.getEmail()}</small>
             </div>
-            <div class="d-inline-block" tabindex="0" data-bs-popper="tooltip" title="Cerrar Sesión">
-                <button class="btn btn-light btn-sm" type="submit" name="action" value="Salir"><i class="fas fa-sign-out-alt"></i></button>
-            </div>
+            <form method="post" action="ServletValidar">
+                <div class="d-inline-block" tabindex="0" data-bs-popper="tooltip" title="Cerrar Sesión">
+                    <button class="btn btn-light btn-sm" type="submit" name="action" value="Salir"><i class="fas fa-sign-out-alt"></i></button>
+                </div>
+            </form>
 
         </div>
     </header>
 
 <main>
 
-    <div class="m-2 contenedorjsp" >
-        <iframe name="myframe" width="100%" height="100%"></iframe>
+    <div class="m-4 contenedorjsp" style="height: 530px;" >
+        <iframe name="myframe" width="100%" height="100%" style="border: none;"></iframe>
     </div>
 </main>
 
