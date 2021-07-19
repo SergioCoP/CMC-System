@@ -29,7 +29,7 @@
     <div class="sidebar-menu">
         <ul>
             <li>
-                <a href="ServletContainer?menu=member" target="myframe" ><span class="las la-handshake"></span>
+                <a href="ServletContainer?menu=member&action=Listar" target="myframe" ><span class="las la-handshake"></span>
                     <span>Socios</span></a>
             </li>
             <li>
@@ -37,7 +37,7 @@
                     <span>Empleados</span></a>
             </li>
             <li>
-                <a href="ServletContainer?menu=credit" target="myframe"><span class="fas fa-th-list"></span>
+                <a href="ServletContainer?menu=credit&action=Listar" target="myframe"><span class="fas fa-th-list"></span>
                     <span>Creditos</span></a>
             </li>
             <li>

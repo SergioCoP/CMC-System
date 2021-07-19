@@ -27,25 +27,26 @@
   </tr>
   </thead>
   <tbody>
-  <c:forEach items="${ listMembers }" var="user" varStatus="status"><!--iterar cada usuario-->
+  <c:forEach items="${listMembers}" var="member" varStatus="status"><!--iterar cada usuario-->
   <tr>
-    <td>${status.count}</td>
-    <td>${ user.email} </td>
-    <td>${user.idPerson.name} ${user.idPerson.lastname}</td><!--datos del bean person-->
+    <td>${member.getIdmember()}</td>
+    <td>${member.getName()} </td>
+    <td>${member.getLastname()}</td><!--datos del bean person-->
+    <td>${member.getReg_dates()} </td>
     <td>
-      <c:if test="${user.status == 1}">
+      <c:if test="${member.getStatus() == 1}">
         <span class="badge bg-success">Activo</span>
       </c:if>
-      <c:if test="${user.status == 0}">
+      <c:if test="${member.getStatus() == 0}">
         <span class="badge bg-success">Inactivo</span>
       </c:if>
     </td>
     <td>
-      <c:if test="${user.status == 1}">
+      <c:if test="${member.getStatus() == 1}">
         <button type="button" class="btn btn-primary"><i class="fas fa-edit"></i>Modificar</button>
         <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="fas fa-trash-alt"></i>Eliminar</button>
       </c:if>
-      <c:if test="${user.status == 0}">
+      <c:if test="${member.getStatus() == 0}">
         <button type="button" class="btn btn-info"><i class="fas fa-trash-alt"></i>Info</button>
       </c:if>
     </td>

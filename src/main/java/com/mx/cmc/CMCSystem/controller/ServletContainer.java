@@ -1,7 +1,11 @@
 package com.mx.cmc.CMCSystem.controller;
 
 
+import com.mx.cmc.CMCSystem.model.credits.BeanCredits;
+import com.mx.cmc.CMCSystem.model.credits.DaoCredits;
 import com.mx.cmc.CMCSystem.model.employees.BeanEmployee;
+import com.mx.cmc.CMCSystem.model.members.BeanMember;
+import com.mx.cmc.CMCSystem.model.members.DaoMember;
 import com.mx.cmc.CMCSystem.model.users.BeanUser;
 import com.mx.cmc.CMCSystem.model.users.DaoUser;
 import org.slf4j.Logger;
@@ -19,6 +23,10 @@ public class ServletContainer extends HttpServlet {
     BeanUser user = new BeanUser();
     DaoUser userdao = new DaoUser();
     BeanEmployee employ = new BeanEmployee();
+    BeanCredits credit = new BeanCredits();
+    DaoCredits creditdaot = new DaoCredits();
+    BeanMember member = new BeanMember();
+    DaoMember memberdao = new DaoMember();
     int iduser;
 
 
@@ -36,6 +44,12 @@ public class ServletContainer extends HttpServlet {
         String menu = request.getParameter("menu");
         String action = request.getParameter("action");
         if(menu.equals("member")){
+            switch (action){
+                case "Listar":
+                    List<BeanMember> listMembers = memberdao.findmembers();
+                    request.setAttribute("listMembers",listMembers);
+                    break;
+            }
             request.getRequestDispatcher("/views/members/members.jsp").forward(request, response);
         }
         if(menu.equals("main")){
@@ -106,6 +120,20 @@ public class ServletContainer extends HttpServlet {
             request.getRequestDispatcher("/views/employes/employes.jsp").forward(request, response);
         }
         if(menu.equals("credit")){
+            switch (action){
+                case "Listar":
+                    List<BeanCredits> listCredits = creditdaot.findcredits();
+                    request.setAttribute("listCredits",listCredits);
+                    break;
+                case "Agregar":
+                    return;
+                case "Actualizar":
+                    return;
+                case "Eliminar":
+                    return;
+                case "EliminarTemporal":
+                    return;
+            }
             request.getRequestDispatcher("/views/credits/credits.jsp").forward(request, response);
         }
         if(menu.equals("payment")){

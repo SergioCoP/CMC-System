@@ -3,29 +3,26 @@ package com.mx.cmc.CMCSystem.model.members;
 public class BeanMember {
 
     private int idmember;
-    private int idloan;
-    private int idpayment;
     private String name;
+    private String lastname;
     private String born_date;
-    private String registration_date;
-    private char sexo;
-    private String status;
-    private String official_id;
-    private String birth_certificate;
-    private String curp;
-    private String proof_residence;
-    private String sketch_address;
+    private String reg_dates;
+    private String sexo;
+    private int status;
+    private int official_id;
+    private int birth_certificate;
+    private int curp;
+    private int proof_residence;
+    private int sketch_address;
 
     public BeanMember() {
     }
 
-    public BeanMember(int idmember, int idloan, int idpayment, String name, String born_date, String registration_date, char sexo, String status, String official_id, String birth_certificate, String curp, String proof_residence, String sketch_address) {
+    public BeanMember(int idmember,String name, String born_date, String reg_dates, String sexo, int status, int official_id, int birth_certificate, int curp, int proof_residence, int sketch_address) {
         this.idmember = idmember;
-        this.idloan = idloan;
-        this.idpayment = idpayment;
         this.name = name;
         this.born_date = born_date;//fecha de nacimineot
-        this.registration_date = registration_date;//fecha de nacimiento
+        this.reg_dates = reg_dates;//fecha de nacimiento
         this.sexo = sexo;
         this.status = status;
         this.official_id = official_id;//identificaion ofical
@@ -41,22 +38,6 @@ public class BeanMember {
 
     public void setIdmember(int idmember) {
         this.idmember = idmember;
-    }
-
-    public int getIdloan() {
-        return idloan;
-    }
-
-    public void setIdloan(int idloan) {
-        this.idloan = idloan;
-    }
-
-    public int getIdpayment() {
-        return idpayment;
-    }
-
-    public void setIdpayment(int idpayment) {
-        this.idpayment = idpayment;
     }
 
     public String getName() {
@@ -75,67 +56,75 @@ public class BeanMember {
         this.born_date = born_date;
     }
 
-    public String getRegistration_date() {
-        return registration_date;
+    public String getLastname() {
+        return lastname;
     }
 
-    public void setRegistration_date(String registration_date) {
-        this.registration_date = registration_date;
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
     }
 
-    public char getSexo() {
+    public String getSexo() {
         return sexo;
     }
 
-    public void setSexo(char sexo) {
+    public void setSexo(String sexo) {
         this.sexo = sexo;
     }
 
-    public String getStatus() {
+    public int getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(int status) {
         this.status = status;
     }
 
-    public String getOfficial_id() {
+    public int getOfficial_id() {
         return official_id;
     }
 
-    public void setOfficial_id(String official_id) {
+    public void setOfficial_id(int official_id) {
         this.official_id = official_id;
     }
 
-    public String getBirth_certificate() {
+    public int getBirth_certificate() {
         return birth_certificate;
     }
 
-    public void setBirth_certificate(String birth_certificate) {
+    public void setBirth_certificate(int birth_certificate) {
         this.birth_certificate = birth_certificate;
     }
 
-    public String getCurp() {
+    public int getCurp() {
         return curp;
     }
 
-    public void setCurp(String curp) {
+    public void setCurp(int curp) {
         this.curp = curp;
     }
 
-    public String getProof_residence() {
+    public int getProof_residence() {
         return proof_residence;
     }
 
-    public void setProof_residence(String proof_residence) {
+    public void setProof_residence(int proof_residence) {
         this.proof_residence = proof_residence;
     }
 
-    public String getSketch_address() {
+    public int getSketch_address() {
         return sketch_address;
     }
 
-    public void setSketch_address(String sketch_address) {
+    public void setSketch_address(int sketch_address) {
         this.sketch_address = sketch_address;
+    }
+
+    public String getReg_dates() {
+        return reg_dates;
+    }
+
+    public void setReg_dates(String reg_dates) {
+        this.reg_dates = reg_dates;
     }
 }

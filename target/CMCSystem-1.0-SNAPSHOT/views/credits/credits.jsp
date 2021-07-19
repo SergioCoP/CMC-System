@@ -33,14 +33,14 @@
         </tr>
         </thead>
         <tbody>
-        <c:forEach items="${ listCredit }" var="credit" ><!--iterar cada usuario-->
+        <c:forEach items="${listCredits}" var="credit" ><!--iterar cada usuario-->
         <tr>
-            <td>${credit.id}</td>
-            <td>${credit.name} </td>
-            <td>${credit.id.plazomin} ${user.idPerson.lastname}</td><!--datos del bean person-->
-            <td>${credit.interesrate}</td>
-            <td>${credit.min} ${credit.max}</td>
-            <td>${credit.requeriments}</td>
+            <td>${credit.getIdcredit()}</td>
+            <td>${credit.getName()} </td>
+            <td>${credit.getMin_period()} -- ${credit.getMax_period()} Meses</td><!--datos del bean person-->
+            <td>${credit.getInterest_rate()} %</td>
+            <td>${credit.getMin_amount()}$ -- ${credit.getMax_amount()}$</td>
+            <td>${credit.getRequeriments()}</td>
             <td>
                 <button type="button" class="btn btn-primary"><i class="fas fa-edit"></i>Modificar</button>
                 <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="fas fa-trash-alt"></i>Eliminar</button>
