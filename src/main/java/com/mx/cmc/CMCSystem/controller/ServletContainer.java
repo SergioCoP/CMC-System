@@ -27,7 +27,7 @@ public class ServletContainer extends HttpServlet {
     DaoCredits creditdaot = new DaoCredits();
     BeanMember member = new BeanMember();
     DaoMember memberdao = new DaoMember();
-    int iduser;
+    int idusuario,idcredit,idmiembro;
 
 
     /**
@@ -48,7 +48,83 @@ public class ServletContainer extends HttpServlet {
                 case "Listar":
                     List<BeanMember> listMembers = memberdao.findmembers();
                     request.setAttribute("listMembers",listMembers);
+                    HttpSession session = request.getSession();//Para guardar los datos del usuario durante todo el tiempo que use la app
+                    session.setAttribute("SocioASeleccionar",listMembers);//Para guardar los datos del usuario durante todo el tiempo que use la app-se guardan
                     break;
+                case "Registrar":
+                    //int idemp = Integer.parseInt(request.getParameter("txtidempleado"));
+                    String nombre = request.getParameter("txtnombre");
+                    String apellido = request.getParameter("txtapellidos");
+                    String fechanac = request.getParameter("txtfechanacimiento");
+                    String fecharegistro = request.getParameter("txtfecharegistro");
+                    String sexo = request.getParameter("txtsexo");
+                    int identificacion = Integer.parseInt(request.getParameter("txtidentificacionofical"));
+                    int actanacimiento = Integer.parseInt(request.getParameter("txtactanacimiento"));
+                    int curp = Integer.parseInt(request.getParameter("txtcurp"));
+                    int comprobantecomicilio = Integer.parseInt(request.getParameter("txtcomprobantedomicilio"));
+                    int croquis = Integer.parseInt(request.getParameter("txtcroquis"));
+
+                    member.setName(nombre);
+                    member.setLastname(apellido);
+                    member.setBorn_date(fechanac);
+                    member.setReg_dates(fecharegistro);
+                    member.setSexo(sexo);
+                    member.setOfficial_id(identificacion);
+                    member.setBirth_certificate(actanacimiento);
+                    member.setCurp(curp);
+                    member.setProof_residence(comprobantecomicilio);
+                    member.setSketch_address(croquis);
+
+                    memberdao.agregar(member);
+                    request.getRequestDispatcher("ServletContainer?menu=member&action=Listar").forward(request, response);
+                    return;
+                case "Actualizar":
+                    idmiembro= Integer.parseInt(request.getParameter("id"));
+                    String nombre1 = request.getParameter("txtnombre");
+                    String apellido1 = request.getParameter("txtapellidos");
+                    String fechanac1 = request.getParameter("txtfechanacimiento");
+                    String fecharegistro1 = request.getParameter("txtfecharegistro");
+                    String sexo1 = request.getParameter("txtsexo");
+                    int identificacion1 = Integer.parseInt(request.getParameter("txtidentificacionofical"));
+                    int actanacimiento1 = Integer.parseInt(request.getParameter("txtactanacimiento"));
+                    int curp1 = Integer.parseInt(request.getParameter("txtcurp"));
+                    int comprobantecomicilio1 = Integer.parseInt(request.getParameter("txtcomprobantedomicilio"));
+                    int croquis1 = Integer.parseInt(request.getParameter("txtcroquis"));
+
+                    member.setIdmember(idmiembro);
+                    member.setName(nombre1);
+                    member.setLastname(apellido1);
+                    member.setBorn_date(fechanac1);
+                    member.setReg_dates(fecharegistro1);
+                    member.setSexo(sexo1);
+                    member.setOfficial_id(identificacion1);
+                    member.setBirth_certificate(actanacimiento1);
+                    member.setCurp(curp1);
+                    member.setProof_residence(comprobantecomicilio1);
+                    member.setSketch_address(croquis1);
+
+                    memberdao.actualizar(member);
+                    request.getRequestDispatcher("ServletContainer?menu=member&action=Listar").forward(request, response);
+                    return;
+                case "Eliminar":
+                    idmiembro = Integer.parseInt(request.getParameter("id"));
+                    memberdao = new DaoMember();
+                    memberdao.eliminar(idmiembro);
+                    request.getRequestDispatcher("ServletContainer?menu=member&action=Listar").forward(request, response);
+                    return;
+                case "EliminarTemporal":
+                    idmiembro = Integer.parseInt(request.getParameter("id"));
+                    memberdao = new DaoMember();
+                    memberdao.eliminartemporal(idmiembro);
+                    request.getRequestDispatcher("ServletContainer?menu=member&action=Listar").forward(request, response);
+                    return;
+                case "Cargar":
+                    idmiembro= Integer.parseInt(request.getParameter("id"));
+                    System.out.println(idusuario);
+                    member = memberdao.ListarporId(idmiembro);
+                    request.setAttribute("MiembroSeleccionado", member);
+                    request.getRequestDispatcher("ServletContainer?menu=member&action=Listar").forward(request, response);
+                    return;
             }
             request.getRequestDispatcher("/views/members/members.jsp").forward(request, response);
         }
@@ -77,19 +153,20 @@ public class ServletContainer extends HttpServlet {
                     user.setIdemploye(employ);
                     userdao.agregar(user);
                     request.getRequestDispatcher("ServletContainer?menu=employee&action=Listar").forward(request, response);
+
                     return;
                     //break;
                 case "Actualizar":
 
-                    iduser = Integer.parseInt(request.getParameter("id"));
-                    System.out.println("" + iduser);
+                    idusuario = Integer.parseInt(request.getParameter("id"));
+                    System.out.println("" + idusuario);
                     String nombre1 = request.getParameter("txtnombre") != null ? request.getParameter("txtnombre") : "";
                     String apellido1 = request.getParameter("txtapellidos");
                     String correo1 = request.getParameter("txtcorreo");
                     String contrasena1 = request.getParameter("txtcontrasena");
                     String rol1 = request.getParameter("txtrol");
 
-                    user.setIduser(iduser);
+                    user.setIduser(idusuario);
                     user.setEmail(correo1);
                     user.setPassword(contrasena1);
                     employ.setName(nombre1);
@@ -102,9 +179,9 @@ public class ServletContainer extends HttpServlet {
                     //break;
                 case "Cargar":
 
-                   iduser = Integer.parseInt(request.getParameter("id"));
-                    System.out.println(iduser);
-                    user = userdao.ListarporId(iduser);
+                    idusuario = Integer.parseInt(request.getParameter("id"));
+                    System.out.println(idusuario);
+                    user = userdao.ListarporId(idusuario);
                     request.setAttribute("Usuario", user);
                     request.getRequestDispatcher("ServletContainer?menu=employee&action=Listar").forward(request, response);
                     return;
@@ -125,13 +202,59 @@ public class ServletContainer extends HttpServlet {
                     List<BeanCredits> listCredits = creditdaot.findcredits();
                     request.setAttribute("listCredits",listCredits);
                     break;
-                case "Agregar":
+                case "Registrar":
+                    String nombre = request.getParameter("txtnombre") != null ? request.getParameter("txtnombre") : "";
+                    int plazomin = Integer.parseInt(request.getParameter("txtplazominimo"));
+                    int plazomax = Integer.parseInt(request.getParameter("txtplazomaximo"));
+                    float tasainteres = Float.parseFloat(request.getParameter("txttasainteres"));
+                    float montomin = Float.parseFloat(request.getParameter("txtmontominimo"));
+                    float montomax = Float.parseFloat(request.getParameter("txtmontomaximo"));
+                    String requisitos = request.getParameter("txtrequisitos");
+                    credit.setName(nombre);
+                    credit.setMin_period(plazomin);
+                    credit.setMax_period(plazomax);
+                    credit.setInterest_rate(tasainteres);
+                    credit.setMin_amount(montomin);
+                    credit.setMax_amount(montomax);
+                    credit.setRequeriments(requisitos);
+                    creditdaot.agregar(credit);
+                    request.getRequestDispatcher("ServletContainer?menu=credit&action=Listar").forward(request, response);
                     return;
                 case "Actualizar":
+                    idcredit = Integer.parseInt(request.getParameter("id"));
+                    System.out.println("" + idcredit);
+                    String nombre1 = request.getParameter("txtnombre") != null ? request.getParameter("txtnombre") : "";
+                    int plazomin1 = Integer.parseInt(request.getParameter("txtplazominimo"));
+                    int plazomax1 = Integer.parseInt(request.getParameter("txtplazomaximo"));
+                    float tasainteres1 = Float.parseFloat(request.getParameter("txttasainteres"));
+                    float montomin1 = Float.parseFloat(request.getParameter("txtmontominimo"));
+                    float montomax1 = Float.parseFloat(request.getParameter("txtmontomaximo"));
+                    String requisitos1 = request.getParameter("txtrequisitos");
+
+                    credit.setName(nombre1);
+                    credit.setMin_period(plazomin1);
+                    credit.setMax_period(plazomax1);
+                    credit.setInterest_rate(tasainteres1);
+                    credit.setMin_amount(montomin1);
+                    credit.setMax_amount(montomax1);
+                    credit.setRequeriments(requisitos1);
+                    creditdaot.actualizar(credit);
+                    request.getRequestDispatcher("ServletContainer?menu=credit&action=Listar").forward(request, response);
                     return;
                 case "Eliminar":
+                    idcredit = Integer.parseInt(request.getParameter("id"));
+                    creditdaot = new DaoCredits();
+                    creditdaot.eliminar(idcredit);
+                    request.getRequestDispatcher("ServletContainer?menu=credit&action=Listar").forward(request, response);
                     return;
                 case "EliminarTemporal":
+                    return;
+                case "Cargar":
+                    idcredit = Integer.parseInt(request.getParameter("id"));
+                    System.out.println(idcredit);
+                    credit = creditdaot.ListarporId(idcredit);
+                    request.setAttribute("CreditoSeleccionado", credit);
+                    request.getRequestDispatcher("ServletContainer?menu=credit&action=Listar").forward(request, response);
                     return;
             }
             request.getRequestDispatcher("/views/credits/credits.jsp").forward(request, response);

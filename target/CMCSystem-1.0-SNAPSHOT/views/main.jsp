@@ -79,7 +79,7 @@
 
 <main>
 
-    <div class="m-4 contenedorjsp" style="height: 530px;" >
+    <div class="m-4 contenedorjsp" style="height: 610px;" >
         <iframe name="myframe" width="100%" height="100%" style="border: none;"></iframe>
     </div>
 </main>

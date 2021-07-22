@@ -4,7 +4,6 @@ import com.mx.cmc.CMCSystem.model.employees.BeanEmployee;
 
 public class BeanCredits {
     private int idcredit;
-    private BeanEmployee idempleado;
     private String name;
     private int max_period;//plazo maximo meses
     private int min_period;//plazo minimo en meses
@@ -91,7 +90,5 @@ public class BeanCredits {
         this.requeriments = requeriments;
     }
 
-    public BeanEmployee getIdempleado() { return idempleado; }
 
-    public void setIdempleado(BeanEmployee idempleado) { this.idempleado = idempleado; }
 }

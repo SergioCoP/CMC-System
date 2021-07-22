@@ -12,6 +12,7 @@ import java.io.IOException;
 public class ServletValidar extends HttpServlet {
     BeanUser user = new BeanUser();
     DaoUser userdaor = new DaoUser();
+    int idusuario;
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -20,21 +21,23 @@ public class ServletValidar extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String accion = request.getParameter("action");
-
         if(accion.equalsIgnoreCase("Ingresar")){
             String correo = request.getParameter("txtcorreo");
             String contra = request.getParameter("txtcontrasena");
-
-            user = userdaor.Validar(correo,contra);
-            if(user.getIdemploye().getName() != null){
+            if(correo != null & contra != null){
+                user = userdaor.Validar(correo,contra);
                 System.out.println("nombre:"+user.getIdemploye().getName());
                 request.setAttribute("user",user);
                 request.getRequestDispatcher("ServletContainer?menu=main").forward(request,response);
+                HttpSession session = request.getSession();//Para guardar los datos del usuario durante todo el tiempo que use la app
+                session.setAttribute("EmpleadoActivo",user);//Para guardar los datos del usuario durante todo el tiempo que use la app-se guardan
             }else{
                 request.getRequestDispatcher("/views/index.jsp").forward(request,response);
+                return;
             }
         }else{
             request.getRequestDispatcher("/views/index.jsp").forward(request,response);
+            return;
         }
     }
 }
