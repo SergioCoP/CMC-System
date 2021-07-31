@@ -1,0 +1,15 @@
+#btn-registar{
+    float: left;
+    margin-left: 20px;
+}
+
+.inputbuscar{
+    outline: 0;
+    border-width: 0 0 2px;
+    border-color: #191c1f;
+    margin-top: 15px;
+    margin-bottom:20px;
+    font-size: 18px;
+    outline: none;
+     margin-left: 35%;
+}
