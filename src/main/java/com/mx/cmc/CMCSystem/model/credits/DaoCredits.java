@@ -30,18 +30,15 @@ public class DaoCredits {
             while(rs.next()){
 
                 BeanCredits credit = new BeanCredits();
-                BeanEmployee employe = new BeanEmployee();
 
-               credit.setIdcredit(rs.getInt("idcredito"));
-               credit.setName(rs.getString("nombre"));
-               credit.setMax_period(rs.getInt("plazo_maximo"));
-               credit.setMin_period(rs.getInt("plazo_minimo"));
-               credit.setMax_amount(rs.getFloat("monto_maximo"));
-               credit.setMin_amount(rs.getFloat("monto_minimo"));
-               credit.setInterest_rate(rs.getFloat("tasa_interes"));
-               credit.setRequeriments(rs.getString("requisitos"));
-               employe.setIdemploye(rs.getInt("idempleado"));
-               credit.setIdempleado(employe);
+                credit.setIdcredit(rs.getInt("idcredito"));
+                credit.setName(rs.getString("nombre"));
+                credit.setMax_period(rs.getInt("plazo_maximo"));
+                credit.setMin_period(rs.getInt("plazo_minimo"));
+                credit.setMax_amount(rs.getFloat("monto_maximo"));
+                credit.setMin_amount(rs.getFloat("monto_minimo"));
+                credit.setInterest_rate(rs.getFloat("tasa_interes"));
+                credit.setRequeriments(rs.getString("requisitos"));
                 listCredits.add(credit);
             }
         }catch(SQLException e){
@@ -56,7 +53,7 @@ public class DaoCredits {
         BeanCredits credit = null;
         try{
             con = ConnectionMySQL.getConnection();
-            cstm = con.prepareCall("select * from creditos as c inner join empleados as e on c.idempleado = e.idempleado where c.idcredito=?");
+            cstm = con.prepareCall("select * from creditos as c  where c.idcredito=?");
             cstm.setInt(1,id);
             rs = cstm.executeQuery();
 
@@ -73,8 +70,6 @@ public class DaoCredits {
                 credit.setMin_amount(rs.getFloat("monto_minimo"));
                 credit.setInterest_rate(rs.getFloat("tasa_interes"));
                 credit.setRequeriments(rs.getString("requisitos"));
-                employe.setIdemploye(rs.getInt("idempleado"));
-                credit.setIdempleado(employe);
             }
         }catch(SQLException e){
             logger.error("Ha ocurrido un error: " + e.getMessage());
@@ -87,16 +82,16 @@ public class DaoCredits {
     public int agregar(BeanCredits credit){
         try{
             con = ConnectionMySQL.getConnection();
-            cstm = con.prepareCall("{call registercredit(?,?,?,?,?,?,?,?)}");
+            cstm = con.prepareCall("{call registercredit(?,?,?,?,?,?,?)}");
 
-            cstm.setInt(1,credit.getIdempleado().getIdemploye());
-            cstm.setString(2, credit.getName());
-            cstm.setInt(3,credit.getMin_period());
-            cstm.setInt(4,credit.getMax_period());
-            cstm.setFloat(5,credit.getInterest_rate());
-            cstm.setFloat(6,credit.getMin_amount());
-            cstm.setFloat(7,credit.getMax_amount());
-            cstm.setString(8,credit.getRequeriments());
+
+            cstm.setString(1, credit.getName());
+            cstm.setInt(2,credit.getMin_period());
+            cstm.setInt(3,credit.getMax_period());
+            cstm.setFloat(4,credit.getInterest_rate());
+            cstm.setFloat(5,credit.getMin_amount());
+            cstm.setFloat(6,credit.getMax_amount());
+            cstm.setString(7,credit.getRequeriments());
             cstm.executeUpdate();
         }catch(SQLException e){
             logger.error("Ha ocurrido un error: " + e.getMessage());
@@ -109,17 +104,16 @@ public class DaoCredits {
     public int actualizar(BeanCredits credit){
         try{
             con = ConnectionMySQL.getConnection();
-            cstm = con.prepareCall("{call modifycredit(?,?,?,?,?,?,?,?,?)}");
+            cstm = con.prepareCall("{call modifycredit(?,?,?,?,?,?,?,?)}");
 
             cstm.setInt(1,credit.getIdcredit());
-            cstm.setInt(2,credit.getIdempleado().getIdemploye());
-            cstm.setString(3, credit.getName());
-            cstm.setInt(4,credit.getMin_period());
-            cstm.setInt(5,credit.getMax_period());
-            cstm.setFloat(6,credit.getInterest_rate());
-            cstm.setFloat(7,credit.getMin_amount());
-            cstm.setFloat(8,credit.getMax_amount());
-            cstm.setString(9,credit.getRequeriments());
+            cstm.setString(2, credit.getName());
+            cstm.setInt(3,credit.getMin_period());
+            cstm.setInt(4,credit.getMax_period());
+            cstm.setFloat(5,credit.getInterest_rate());
+            cstm.setFloat(6,credit.getMin_amount());
+            cstm.setFloat(7,credit.getMax_amount());
+            cstm.setString(8,credit.getRequeriments());
             cstm.executeUpdate();
         }catch (SQLException e){
             logger.error("Ha ocurrido un error: " + e.getMessage());

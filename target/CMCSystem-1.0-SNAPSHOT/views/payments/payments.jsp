@@ -11,6 +11,11 @@
 <html>
 <head>
     <title>Pagos | CMC</title>
+    <style>
+        @media print{
+            .botones:none;
+        }
+    </style>
     <link rel="stylesheet" href="${context}/assets/plugins/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="${context}/assets/dist/css/main.css">
     <link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
@@ -19,8 +24,8 @@
 <body>
 
 <div class="main-content">
-    <a href="" class="btn btn-success"><i class="fas fa-plus"></i>Agregar Pago</a>
-    <a href="" class="btn btn-success"><i class="fas fa-plus"></i>Buscar Socio</a>
+    <a href="" class="btn btn-success botones"><i class="fas fa-plus"></i>Agregar Pago</a>
+    <a href="" class="btn btn-success botones"><i class="fas fa-plus"></i>Buscar Socio</a>
     <label class="nombre_socio"></label>
     <input type="hidden" name="idsocio">
     <br/>
@@ -37,7 +42,7 @@
         </tr>
         </thead>
         <tbody>
-        <c:forEach items="${ listPayments}" var="payment" ><!--iterar cada usuario-->
+        <c:forEach items="${listPayments}" var="payment" ><!--iterar cada usuario-->
         <tr>
             <td>${payment.id}</td>
             <td>${payment.member} </td>
@@ -46,9 +51,9 @@
             <td>${payment.id.amount}</td><
             <td>${payment.id.balance}</td><
             <td>
-                <button type="button" class="btn btn-primary"><i class="fas fa-edit"></i>Modificar</button>
-                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="fas fa-trash-alt"></i>Eliminar</button>
-                <button type="button" class="btn btn-info"><i class="fas fa-trash-alt"></i>Ver</button>
+                <button type="button" class="btn btn-primary botones"><i class="fas fa-edit"></i>Modificar</button>
+                <button type="button" class="btn btn-danger botones" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="fas fa-trash-alt"></i>Eliminar</button>
+                <button type="button" class="btn btn-info botones"><i class="fas fa-trash-alt"></i>Ver</button>
             </td>
         </tr>
         </c:forEach>
@@ -71,6 +76,7 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fas fa-times"></i>Cerrar</button>
                 <button type="button" class="btn btn-danger"><i class="fas fa-trash-alt"></i>Eliminar usuario</button>
+                <button type="button" onclick="print()" class="btn btn-info"><i class="fa fa-file-pdf-o fa-2x"></i>Imprimir</button>
             </div>
         </div>
     </div>

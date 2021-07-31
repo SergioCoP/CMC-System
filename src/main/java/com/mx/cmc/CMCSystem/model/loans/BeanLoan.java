@@ -1,9 +1,12 @@
 package com.mx.cmc.CMCSystem.model.loans;
 
+import com.mx.cmc.CMCSystem.model.employees.BeanEmployee;
+import com.mx.cmc.CMCSystem.model.members.BeanMember;
+
 public class BeanLoan {
     private int idloan;
-    private int idmember;
-    private int idemployee;
+    private BeanMember idmember;
+    private BeanEmployee idemployee;
     private String member_name;
     private String employee_name;
     private String credit_type;
@@ -21,7 +24,7 @@ public class BeanLoan {
     public BeanLoan() {
     }
 
-    public BeanLoan(int idloan, int idmember, int idemployee, String member_name, String employee_name, String credit_type, float amount, float balance, int period, String date_request, String aval1, String aval2, String income_document, String razon_social, String location, String line_bussines) {
+    public BeanLoan(int idloan, BeanMember idmember, BeanEmployee idemployee, String member_name, String employee_name, String credit_type, float amount, float balance, int period, String date_request, String aval1, String aval2, String income_document, String razon_social, String location, String line_bussines) {
         this.idloan = idloan;
         this.idmember = idmember;
         this.idemployee = idemployee;
@@ -48,19 +51,19 @@ public class BeanLoan {
         this.idloan = idloan;
     }
 
-    public int getIdmember() {
+    public BeanMember getIdmember() {
         return idmember;
     }
 
-    public void setIdmember(int idmember) {
+    public void setIdmember(BeanMember idmember) {
         this.idmember = idmember;
     }
 
-    public int getIdemployee() {
+    public BeanEmployee getIdemployee() {
         return idemployee;
     }
 
-    public void setIdemployee(int idemployee) {
+    public void setIdemployee(BeanEmployee idemployee) {
         this.idemployee = idemployee;
     }
 

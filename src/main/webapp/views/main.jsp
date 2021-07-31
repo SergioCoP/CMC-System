@@ -41,11 +41,11 @@
                     <span>Creditos</span></a>
             </li>
             <li>
-                <a href="ServletContainer?menu=payment" target="myframe"><span class="las la-cash-register"></span>
+                <a href="ServletContainer?menu=payment&action=Listar" target="myframe"><span class="las la-cash-register"></span>
                     <span>Abonos</span></a>
             </li>
             <li>
-                <a href="ServletContainer?menu=loan" target="myframe"><span class="las la-wallet"></span>
+                <a href="ServletContainer?menu=loan&action=Listar" target="myframe"><span class="las la-wallet"></span>
                     <span>Prestamos</span></a>
             </li>
         </ul>
@@ -79,7 +79,7 @@
 
 <main>
 
-    <div class="m-4 contenedorjsp" style="height: 530px;" >
+    <div class="m-4 contenedorjsp" style="height: 610px;" >
         <iframe name="myframe" width="100%" height="100%" style="border: none;"></iframe>
     </div>
 </main>

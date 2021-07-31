@@ -10,13 +10,12 @@ public class BeanEmployee {
     public BeanEmployee() {
     }
 
-    public BeanEmployee(String name, String lastnames, String role) {
+    public BeanEmployee(int idemploye, String name, String lastnames, String role) {
+        this.idemploye = idemploye;
         this.name = name;
         this.lastnames = lastnames;
         this.role = role;
     }
-
-
 
 
     public int getIdemploye() {

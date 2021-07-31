@@ -74,6 +74,10 @@ main {
     min-height: calc(100vh - 90px);
 }
 
+.buscador{
+    border: none;
+}
+
 .contenedorjsp{
     height: 550px;
     width: 100%;

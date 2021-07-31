@@ -36,7 +36,7 @@ public class DaoMember {
                 member.setReg_dates(rs.getString("fecha_registro"));
                 member.setSexo(rs.getString("sexo"));
                 member.setStatus(rs.getInt("estado"));
-                member.setOfficial_id(rs.getInt(rs.getInt("identificacion_oficial")));
+                member.setOfficial_id(rs.getInt("identificacion_oficial"));
                 member.setBirth_certificate(rs.getInt("acta_nacimiento"));
                 member.setCurp(rs.getInt("curp"));
                 member.setProof_residence(rs.getInt("comprobante_domicilio"));
@@ -87,19 +87,18 @@ public class DaoMember {
     public int agregar(BeanMember member){
         try{
             con = ConnectionMySQL.getConnection();
-            cstm = con.prepareCall("{call regitermembers(?,?,?,?,?,?,?,?,?,?,?)}");
+            cstm = con.prepareCall("{call regitermembers(?,?,?,?,?,?,?,?,?,?)}");
 
             cstm.setString(1,member.getName());
             cstm.setString(2,member.getLastname());
             cstm.setString(3,member.getBorn_date());
             cstm.setString(4,member.getReg_dates());
             cstm.setString(5,member.getSexo());
-            cstm.setInt(6,member.getStatus());
-            cstm.setInt(7,member.getOfficial_id());
-            cstm.setInt(8,member.getBirth_certificate());
-            cstm.setInt(9,member.getCurp());
-            cstm.setInt(10,member.getProof_residence());
-            cstm.setInt(11,member.getSketch_address());
+            cstm.setInt(6,member.getOfficial_id());
+            cstm.setInt(7,member.getBirth_certificate());
+            cstm.setInt(8,member.getCurp());
+            cstm.setInt(9,member.getProof_residence());
+            cstm.setInt(10,member.getSketch_address());
             cstm.executeUpdate();
         }catch(SQLException e){
             logger.error("Ha ocurrido un error: " + e.getMessage());

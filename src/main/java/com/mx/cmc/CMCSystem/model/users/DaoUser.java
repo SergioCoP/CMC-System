@@ -130,9 +130,9 @@ public class DaoUser {
     }
 
 
-    public BeanUser Validar(String correo, String contrasena){
+    public int Validar(String correo, String contrasena){
         BeanUser user = null;
-
+        r=0;
         try{
             con = ConnectionMySQL.getConnection();
             cstm = con.prepareCall("select * from usuarios as u inner join empleados as e on u.id_empleado = e.idempleado where u.correo = ? AND u.contrasena = ?");
@@ -143,7 +143,7 @@ public class DaoUser {
             while(rs.next()){
                 BeanEmployee employ = new BeanEmployee();
                 user = new BeanUser();
-
+                r=1;
                 user.setEmail(rs.getString("correo"));
                 user.setPassword(rs.getString("contrasena"));
                 employ.setName(rs.getString("nombre"));
@@ -153,6 +153,38 @@ public class DaoUser {
             }
         }catch (SQLException e){
             logger.error("Ha ocurrido un error: " + e.getMessage());
+
+        }finally {
+            ConnectionMySQL.closeConnections(con,cstm,rs);
+        }
+        return r;
+
+    }
+
+    public BeanUser Validar2(String correo, String contrasena){
+        BeanUser user = null;
+        r=0;
+        try{
+            con = ConnectionMySQL.getConnection();
+            cstm = con.prepareCall("select * from usuarios as u inner join empleados as e on u.id_empleado = e.idempleado where u.correo = ? AND u.contrasena = ?");
+            cstm.setString(1,correo);
+            cstm.setString(2,contrasena);
+            rs = cstm.executeQuery();
+
+            while(rs.next()){
+                BeanEmployee employ = new BeanEmployee();
+                user = new BeanUser();
+                r=1;
+                user.setEmail(rs.getString("correo"));
+                user.setPassword(rs.getString("contrasena"));
+                employ.setName(rs.getString("nombre"));
+                employ.setLastnames(rs.getString("apellidos"));
+                employ.setRole(rs.getString("rol"));
+                user.setIdemploye(employ);
+            }
+        }catch (SQLException e){
+            logger.error("Ha ocurrido un error: " + e.getMessage());
+
         }finally {
             ConnectionMySQL.closeConnections(con,cstm,rs);
         }
