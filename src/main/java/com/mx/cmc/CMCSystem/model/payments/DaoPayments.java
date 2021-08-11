@@ -27,7 +27,7 @@ public class DaoPayments {
         List<BeanPayments> listPayments = new ArrayList<>();
         try{
             con = ConnectionMySQL.getConnection();
-            cstm = con.prepareCall("{call findAll}");
+            cstm = con.prepareCall("{call findPayments}");
             rs = cstm.executeQuery();
             while(rs.next()){
 

@@ -23,8 +23,9 @@
 <div class="main-content">
     <div class="d-flex">
         <div class="col-sm-12">
+            <input type="hidden" id="seccion" value="credits">
             <input type="text" id="buscarreg" class="inputbuscar" onkeyup="buscar()" placeholder="Buscar">
-            <button type="button" class="btn btn-success" id="btn-registar"><i class="fas fa-plus"></i>Agregar</button>
+            <button type="button" class="btn btn-success btn-reg" id="btn-registar"><i class="fas fa-plus"></i>Agregar</button>
             <table class="table" id="datostabla">
                 <thead class="table-light" >
                 <tr>
@@ -185,5 +186,6 @@
 <script src="${context}/assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="${context}/assets/plugins/bootstrap/js/bootstrap.bundle.js"></script>
 <script src="${context}/assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+<script src="${context}/assets/dist/js/validarusuario.js"></script>
 </body>
 </html>

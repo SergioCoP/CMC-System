@@ -18,15 +18,24 @@
 <div class="main-content">
   <div class="d-flex">
     <div class="col-sm-12">
+      <input type="hidden" id="seccion" value="member">
       <input type="text" id="buscarreg" class="inputbuscar" onkeyup="buscar()" placeholder="Buscar">
-      <button type="button" id="btn-registar" class="btn btn-success" ><i class="fas fa-plus"></i>Agregar</button>
+      <c:if test="${EmpleadoActivo.getIdemploye().getRole() == 'Asesor'}">
+        <button type="button" id="btn-registar" class="btn btn-success" ><i class="fas fa-plus"></i>Agregar</button>
+      </c:if>
+      <c:if test="${EmpleadoActivo.getIdemploye().getRole() == 'Coordinador'}">
+
+      </c:if>
+      <c:if test="${EmpleadoActivo.getIdemploye().getRole() == 'Cajero'}">
+
+      </c:if>
+
       <table class="table" id="datostabla">
         <thead class="table-light">
         <tr>
           <th>No.</th><!--Enbcabezado-->
           <th>Nombre</th>
           <th>Apellidos</th>
-          <th>Fecha Registro</th>
           <th>Identificación Oficial</th>
           <th>Acta de Nacimiento</th>
           <th>Curp</th>
@@ -42,7 +51,6 @@
           <td>${member.getIdmember()}</td>
           <td>${member.getName()} </td>
           <td>${member.getLastname()}</td><!--datos del bean person-->
-          <td>${member.getReg_dates()} </td>
           <td>
             <c:if test="${member.getOfficial_id() == 1}">
               <span class="badge bg-primary">Aceptado</span>
@@ -107,13 +115,19 @@
             </c:if>
           </td>
           <td>
-            <c:if test="${member.getStatus() == 1}">
-              <a  class="btn btn-primary btn-sm btn-modificar" data-id="${member.getIdmember()}" data-name="${member.getName()}" data-lastname="${member.getLastname()}" data-regdate="${member.getReg_dates()}" data-borndate="${member.getBorn_date()}" data-sex="${member.getSexo()}" data-ine="${member.getOfficial_id()}" data-certibirth="${member.getBirth_certificate()}" data-curp="${member.getCurp()}" data-compdomici="${member.getProof_residence()}" data-croqui="${member.getSketch_address()}"><i class="fas fa-edit"></i></a>
-              <a  class="btn btn-danger btn-sm btn-eliminar" data-id="${member.getIdmember()}" data-name="${member.getName()}" data-lastname="${member.getLastname()}"><i class="fas fa-trash-alt"></i></a>
+            <c:if test="${EmpleadoActivo.getIdemploye().getRole() == 'Asesor'}">
+              <c:if test="${member.getStatus() == 1}">
+                <a  class="btn btn-primary btn-sm btn-modificar"  data-id="${member.getIdmember()}" data-name="${member.getName()}" data-lastname="${member.getLastname()}" data-regdate="${member.getReg_dates()}" data-borndate="${member.getBorn_date()}" data-sex="${member.getSexo()}" data-ine="${member.getOfficial_id()}" data-certibirth="${member.getBirth_certificate()}" data-curp="${member.getCurp()}" data-compdomici="${member.getProof_residence()}" data-croqui="${member.getSketch_address()}"><i class="fas fa-edit"></i></a>
+                <a  class="btn btn-danger btn-sm btn-eliminar" data-id="${member.getIdmember()}" data-name="${member.getName()}" data-lastname="${member.getLastname()}"><i class="fas fa-trash-alt"></i></a>
+              </c:if>
+              <c:if test="${member.getStatus() == 0}">
+                <button type="button" class="btn btn-info btn-sm btn-informacion" data-id="${member.getIdmember()}" data-name="${member.getName()}" data-lastname="${member.getLastname()}" data-regdate="${member.getReg_dates()}" data-borndate="${member.getBorn_date()}" data-sex="${member.getSexo()}" data-ine="${member.getOfficial_id()}" data-certibirth="${member.getBirth_certificate()}" data-curp="${member.getCurp()}" data-compdomici="${member.getProof_residence()}" data-croqui="${member.getSketch_address()}"><i class="fas fa-eye"></i></button>
+              </c:if>
+          </c:if>
+            <c:if test="${EmpleadoActivo.getIdemploye().getRole() == 'Cajero'}">
+                <button type="button" class="btn btn-info btn-sm btn-informacion" data-id="${member.getIdmember()}" data-name="${member.getName()}" data-lastname="${member.getLastname()}" data-regdate="${member.getReg_dates()}" data-borndate="${member.getBorn_date()}" data-sex="${member.getSexo()}" data-ine="${member.getOfficial_id()}" data-certibirth="${member.getBirth_certificate()}" data-curp="${member.getCurp()}" data-compdomici="${member.getProof_residence()}" data-croqui="${member.getSketch_address()}"><i class="fas fa-eye"></i></button>
             </c:if>
-            <c:if test="${member.getStatus() == 0}">
-              <button type="button" class="btn btn-info btn-sm btn-informacion" data-id="${member.getIdmember()}" data-name="${member.getName()}" data-lastname="${member.getLastname()}" data-regdate="${member.getReg_dates()}" data-borndate="${member.getBorn_date()}" data-sex="${member.getSexo()}" data-ine="${member.getOfficial_id()}" data-certibirth="${member.getBirth_certificate()}" data-curp="${member.getCurp()}" data-compdomici="${member.getProof_residence()}" data-croqui="${member.getSketch_address()}"><i class="fas fa-eye"></i></button>
-            </c:if>
+
           </td>
         </tr>
         </c:forEach>
@@ -481,10 +495,11 @@
 </div>
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
-  <script src="${context}/assets/dist/js/funciones.js"></script>
-<script src="${context}/assets/dist/js/memberfuntions.js"></script>
   <script src="${context}/assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script src="${context}/assets/plugins/bootstrap/js/bootstrap.bundle.js"></script>
   <script src="${context}/assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+<script src="${context}/assets/dist/js/funciones.js"></script>
+<script src="${context}/assets/dist/js/validarusuario.js"></script>
+<script src="${context}/assets/dist/js/memberfuntions.js"></script>
 </body>
 </html>

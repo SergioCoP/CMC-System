@@ -14,9 +14,12 @@ const dialogoinformacion = document.getElementById('Informacion');
 (function() {
 
     // Update button opens a modal dialog
-    abrir.addEventListener('click', function() {
-        dialogoregistrar.showModal();
-    });
+    if(abrir){
+        abrir.addEventListener('click', function() {
+            dialogoregistrar.showModal();
+        });
+    }
+
 
     for(let i=0; i < abrir2.length; i++){
         cargarmodal(abrir2[i]);
@@ -114,7 +117,5 @@ function cargarmodal3(boton){
         $('#txtcomprobantedomicilio3').val(comprobantedomi);
         $('#txtcroquis3').val(croquis);
         dialogoinformacion.showModal();
-
-
     }
 }

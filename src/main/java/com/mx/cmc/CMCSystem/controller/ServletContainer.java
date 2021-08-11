@@ -56,6 +56,7 @@ public class ServletContainer extends HttpServlet {
             request.getRequestDispatcher("/views/index.jsp").forward(request, response);
         }
         if(menu.equals("member")){
+
             switch (action){
                 case "Listar":
                     List<BeanMember> listMembers = memberdao.findmembers();
@@ -279,14 +280,14 @@ public class ServletContainer extends HttpServlet {
                     request.setAttribute("listPayments", listPayments);
                     break;
                 case "Agregar":
-                    int idsocio = request.getIntHeader("id socio");
-                    int idempleado = request.getIntHeader("txtid empleado");
-                    int idprestamo = request.getIntHeader("txtid prestamo");
-                    String nombresocio = request.getParameter("txtnombre socio");
-                    String fecha_abono = request.getParameter("txtfecha abono");
-                    float monto_total = request.getIntHeader("txtmonto total");
-                    float monto_abonado = request.getIntHeader("txtmonto abonado");
-                    float saldo_prestamo = request.getIntHeader("txtsaldo prestamo");
+                    int idsocio = request.getIntHeader("idsocio");
+                    int idempleado = request.getIntHeader("txtidempleado");
+                    int idprestamo = request.getIntHeader("txtidprestamo");
+                    String nombresocio = request.getParameter("txtnombresocio");
+                    String fecha_abono = request.getParameter("txtfechaabono");
+                    float monto_total = request.getIntHeader("txtmontototal");
+                    float monto_abonado = request.getIntHeader("txtmontoabonado");
+                    float saldo_prestamo = request.getIntHeader("txtsaldoprestamo");
 
                     payments.setIdmember(member);
                     payments.setIdemploye(employ);
@@ -297,19 +298,19 @@ public class ServletContainer extends HttpServlet {
                     payments.setTotal_amount(monto_abonado);
                     payments.setBalance_loan(saldo_prestamo);
                     daoPayments.agregar(payments);
-                    request.getRequestDispatcher("ServletContainer?menu=payment&action=Agregar").forward(request, response);
+                    request.getRequestDispatcher("ServletContainer?menu=payment&action=Listar").forward(request, response);
                     return;
                 case "Actualizar":
                     idpayment = Integer.parseInt(request.getParameter("id"));
                     System.out.println("" + idpayment);
-                    int idsocio1 = request.getIntHeader("id socio");
-                    int idempleado1 = request.getIntHeader("txtid empleado");
-                    int idprestamo1 = request.getIntHeader("txtid prestamo");
-                    String nombresocio1 = request.getParameter("txtnombre socio");
-                    String fecha_abono1 = request.getParameter("txtfecha abono");
-                    float monto_total1 = request.getIntHeader("txtmonto total");
-                    float monto_abonado1 = request.getIntHeader("txtmonto abonado");
-                    float saldo_prestamo1 = request.getIntHeader("txtsaldo prestamo");
+                    int idsocio1 = request.getIntHeader("idsocio");
+                    int idempleado1 = request.getIntHeader("txtidempleado");
+                    int idprestamo1 = request.getIntHeader("txtidprestamo");
+                    String nombresocio1 = request.getParameter("txtnombresocio");
+                    String fecha_abono1 = request.getParameter("txtfechaabono");
+                    float monto_total1 = request.getIntHeader("txtmontototal");
+                    float monto_abonado1 = request.getIntHeader("txtmontoabonado");
+                    float saldo_prestamo1 = request.getIntHeader("txtsaldoprestamo");
 
                     payments.setIdmember(member);
                     payments.setIdemploye(employ);
@@ -320,17 +321,18 @@ public class ServletContainer extends HttpServlet {
                     payments.setTotal_amount(monto_abonado1);
                     payments.setBalance_loan(saldo_prestamo1);
                     daoPayments.actualizar(payments);
-                    request.getRequestDispatcher("ServletContainer?menu=payment&action=Actualizar").forward(request, response);
+                    request.getRequestDispatcher("ServletContainer?menu=payment&action=Listar").forward(request, response);
                     return;
                 case "Eliminar":
                     int idpayment = Integer.parseInt(request.getParameter("id"));
                     daoPayments = new DaoPayments();
                     daoPayments.eliminar(idpayment);
-                    request.getRequestDispatcher("ServletContainer?menu=payment&action=Eliminar").forward(request, response);
+                    request.getRequestDispatcher("ServletContainer?menu=payment&action=Listar").forward(request, response);
                     return;
             }
             request.getRequestDispatcher("/views/payments/payments.jsp").forward(request, response);
         }
+
         if(menu.equals("loan")){
             switch (action) {
                 case "Listar":
@@ -338,19 +340,19 @@ public class ServletContainer extends HttpServlet {
                     request.setAttribute("listLoan", listLoan);
                     break;
                 case "Agregar":
-                    int idsocio = request.getIntHeader("id socio");
-                    int idempleado = request.getIntHeader("txtid empleado");
-                    String nombresocio = request.getParameter("txtnombre socio");
-                    String nombreempleado = request.getParameter("txtnombre empleado");
-                    String tipo_credito = request.getParameter("txttipo credito");
+                    int idsocio = request.getIntHeader("idsocio");
+                    int idempleado = request.getIntHeader("txtidempleado");
+                    String nombresocio = request.getParameter("txtnombresocio");
+                    String nombreempleado = request.getParameter("txtnombreempleado");
+                    String tipo_credito = request.getParameter("txttipocredito");
                     float monto = request.getIntHeader("txtmonto");
                     float saldo = request.getIntHeader("txtsaldo");
                     int plazo = request.getIntHeader("txtplazo");
-                    String fecha_solicitud = request.getParameter("txtfecha solicitud");
-                    String aval_1 = request.getParameter("txtaval 1");
-                    String aval_2 = request.getParameter("txtaval 2");
-                    String comprobante_ingresos = request.getParameter("txtcomprobante ingresos");
-                    String razon_social = request.getParameter("txtrazon social");
+                    String fecha_solicitud = request.getParameter("txtfechasolicitud");
+                    String aval_1 = request.getParameter("txtaval1");
+                    String aval_2 = request.getParameter("txtaval2");
+                    String comprobante_ingresos = request.getParameter("txtcomprobanteingresos");
+                    String razon_social = request.getParameter("txtrazonsocial");
                     String ubicacion = request.getParameter("txtubicacion");
                     String giro = request.getParameter("txtgiro");
 
@@ -374,19 +376,19 @@ public class ServletContainer extends HttpServlet {
                     request.getRequestDispatcher("ServletContainer?menu=loan&action=Agregar").forward(request, response);
                     return;
                 case "Actualizar":
-                    int idsocio1 = request.getIntHeader("id socio");
+                    int idsocio1 = request.getIntHeader("idsocio");
                     int idempleado1 = request.getIntHeader("txtid empleado");
-                    String nombresocio1 = request.getParameter("txtnombre socio");
-                    String nombreempleado1 = request.getParameter("txtnombre empleado");
-                    String tipo_credito1 = request.getParameter("txttipo credito");
+                    String nombresocio1 = request.getParameter("txtnombresocio");
+                    String nombreempleado1 = request.getParameter("txtnombreempleado");
+                    String tipo_credito1 = request.getParameter("txttipocredito");
                     float monto1 = request.getIntHeader("txtmonto");
                     float saldo1 = request.getIntHeader("txtsaldo");
                     int plazo1 = request.getIntHeader("txtplazo");
-                    String fecha_solicitud1 = request.getParameter("txtfecha solicitud");
-                    String aval_1_1 = request.getParameter("txtaval 1");
-                    String aval_2_1 = request.getParameter("txtaval 2");
-                    String comprobante_ingresos1 = request.getParameter("txtcomprobante ingresos");
-                    String razon_social1 = request.getParameter("txtrazon social");
+                    String fecha_solicitud1 = request.getParameter("txtfechasolicitud");
+                    String aval_1_1 = request.getParameter("txtaval1");
+                    String aval_2_1 = request.getParameter("txtaval2");
+                    String comprobante_ingresos1 = request.getParameter("txtcomprobanteingresos");
+                    String razon_social1 = request.getParameter("txtrazonsocial");
                     String ubicacion1 = request.getParameter("txtubicacion");
                     String giro1 = request.getParameter("txtgiro");
 
