@@ -13,13 +13,11 @@ const dialogoinformacion = document.getElementById('Informacion');
 
 (function() {
 
-    // Update button opens a modal dialog
     if(abrir){
-        abrir.addEventListener('click', function() {
-            dialogoregistrar.showModal();
-        });
-    }
-
+       abrir.addEventListener('click', function() {
+           dialogoregistrar.showModal();
+       });
+   }
 
     for(let i=0; i < abrir2.length; i++){
         cargarmodal(abrir2[i]);

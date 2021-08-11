@@ -500,6 +500,7 @@
   <script src="${context}/assets/plugins/bootstrap/js/bootstrap.min.js"></script>
 <script src="${context}/assets/dist/js/funciones.js"></script>
 <script src="${context}/assets/dist/js/validarusuario.js"></script>
-<script src="${context}/assets/dist/js/memberfuntions.js"></script>
+
 </body>
+<script src="${context}/assets/dist/js/memberfuntions.js"></script>
 </html>
