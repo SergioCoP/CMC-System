@@ -178,6 +178,7 @@ public class DaoUser {
                 r=1;
                 user.setEmail(rs.getString("correo"));
                 user.setPassword(rs.getString("contrasena"));
+                employ.setIdemploye(rs.getInt("idempleado"));
                 employ.setName(rs.getString("nombre"));
                 employ.setLastnames(rs.getString("apellidos"));
                 employ.setRole(rs.getString("rol"));

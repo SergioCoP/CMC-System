@@ -44,7 +44,7 @@ public class ServletContainer extends HttpServlet {
     BeanPayments payments = new BeanPayments();
     BeanLoan loan = new BeanLoan();
     DaoLoan daoLoan = new DaoLoan();
-    int idusuario,idcredit,idpayment,idmiembro,idabono,idprestamo;
+    int idusuario,idcredit,idpayment,idmiembro,idabono,idempleado,idprestamo1;
 
 
     /**
@@ -70,8 +70,8 @@ public class ServletContainer extends HttpServlet {
                 case "Listar":
                     List<BeanMember> listMembers = memberdao.findmembers();
                     request.setAttribute("listMembers",listMembers);
-                    HttpSession session = request.getSession();//Para guardar los datos del usuario durante todo el tiempo que use la app
-                    session.setAttribute("SocioASeleccionar",listMembers);//Para guardar los datos del usuario durante todo el tiempo que use la app-se guardan
+                   // HttpSession session = request.getSession();//Para guardar los datos del usuario durante todo el tiempo que use la app
+                   // session.setAttribute("SocioASeleccionar",listMembers);//Para guardar los datos del usuario durante todo el tiempo que use la app-se guardan
                     break;
                 case "Registrar":
                     //int idemp = Integer.parseInt(request.getParameter("txtidempleado"));
@@ -300,11 +300,14 @@ public class ServletContainer extends HttpServlet {
                     break;
                 case "Registrar":
                     int idsocio = Integer.parseInt( request.getParameter("txtidsocio"));
-                    int idempleado = Integer.parseInt( request.getParameter("txtidempleado"));
-                    int idprestamo = Integer.parseInt(request.getParameter("txtidprestamo"));
+                    idempleado = Integer.parseInt( request.getParameter("txtidempleado"));
+                    System.out.println(idempleado);
+                    idprestamo1 = Integer.parseInt(request.getParameter("txtidprestamo"));
+                    System.out.println(idprestamo1);
+
                     String nombresocio = request.getParameter("txtnombresocio");
                     String fecha_abono = request.getParameter("txtfechaabono");
-                    float monto_abonado = request.getIntHeader("txtmontoabonado");
+                    float monto_abonado = Float.parseFloat(request.getParameter("txtmontoabonado"));
 
                     member = new BeanMember();
                     employ = new BeanEmployee();
@@ -312,7 +315,7 @@ public class ServletContainer extends HttpServlet {
 
                     member.setIdmember(idsocio);
                     employ.setIdemploye(idempleado);
-                    loan.setIdloan(idprestamo);
+                    loan.setIdloan(idprestamo1);
 
                     payments.setIdmember(member);
                     payments.setIdemploye(employ);
@@ -320,7 +323,6 @@ public class ServletContainer extends HttpServlet {
                     payments.setMembername(nombresocio);
                     payments.setDate_payment(fecha_abono);
                     payments.setAmount_payment(monto_abonado);
-
                     daoPayments.agregar(payments);
                     request.getRequestDispatcher("ServletContainer?menu=payment&action=Listar").forward(request, response);
                     return;
@@ -328,10 +330,9 @@ public class ServletContainer extends HttpServlet {
                     idabono = Integer.parseInt(request.getParameter("id"));
                     System.out.println(idabono);
                    payments = daoPayments.ListarporId(idabono);
-                    // request.setAttribute("MiembroSeleccionado", member);
                     map.put("AbonoSeleccionado", payments);
                     write(response, map);
-                    //request.getRequestDispatcher("ServletContainer?menu=member&action=Listar").forward(request, response);
+                  //  request.getRequestDispatcher("ServletContainer?menu=payment&action=Listar").forward(request, response);
                     return;
                 case "exportarPDF":
                     DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");

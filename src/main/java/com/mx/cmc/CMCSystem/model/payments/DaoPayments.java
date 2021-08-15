@@ -61,7 +61,7 @@ public class DaoPayments {
         BeanPayments payments = null;
         try{
             con = ConnectionMySQL.getConnection();
-            cstm = con.prepareCall("select * from abonos where idsocio =?");
+            cstm = con.prepareCall("select idabono,nombresocio,fecha_abono,monto_abonado from abonos where idsocio = ?");
             cstm.setInt(1,id);
             rs = cstm.executeQuery();
 
@@ -73,15 +73,10 @@ public class DaoPayments {
                 payments = new BeanPayments();
 
                 payments.setIdpayment(rs.getInt("idabono"));
-                member.setIdmember(rs.getInt("idsocio"));
-                employe.setIdemploye(rs.getInt("idempleado"));
-                loan.setIdloan(rs.getInt("idprestamo"));
                 payments.setMembername(rs.getString("nombresocio"));
                 payments.setDate_payment(rs.getString("fecha_abono"));
                 payments.setAmount_payment(rs.getFloat("monto_abonado"));
-                payments.setIdmember(member);
-                payments.setIdemploye(employe);
-                payments.setIdloan(loan);
+
             }
         }catch(SQLException e){
             logger.error("Ha ocurrido un error: " + e.getMessage());

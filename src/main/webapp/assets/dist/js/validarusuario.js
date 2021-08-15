@@ -16,8 +16,8 @@ var btnprestamo = document.getElementById("btn-prestamos");
         btnpagos.style.display = "none";
         btnempleado.style.display = "block";
     }else if(rol == "Cajero"){
-       btnsocio.style.display = "block";
-       btnprestamo.style.display = "none";
+       btnsocio.style.display = "none";
+       btnprestamo.style.display = "block";
        btncredito.style.display = "none";
        btnpagos.style.display = "block";
        btnempleado.style.display = "none";

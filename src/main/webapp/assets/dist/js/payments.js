@@ -44,7 +44,8 @@ var btnbuscarsocio = document.getElementById("btn-buscarsocio");
 function cargarmodal(boton){
     //en el evento onclick
     boton.onclick = function(){
-
+        var idmember = $(this).attr('data-id');
+        findAbonos(idmember);
         dialogopagos.showModal();
 
     }
@@ -55,43 +56,89 @@ function cargarmodal(boton){
 (function() {
     btnbuscarsocio.addEventListener('click', function() {
         idsocio = $('#txt_idsocio').val();
-        findMember1();
-        findAbono();
+        inputsocios = $('#txt_nombresocio');
+        inputidprestamo = $('#txt_idprestamo');
+        findMemberPrestamo();
+
+        //findPrestamo();
     });
 
 })();
 
 
-const findMember1 = () =>{
+const findMemberPrestamo = () =>{
     const contextPath = window.location.origin + window.location.pathname.substring(0, window.location.pathname.indexOf("/",2));
-    inputsocios = $('#tnombresocio');
+
     $.ajax({
         type: 'POST',
-        url: contextPath + '/ServletContainer?menu=member&action=Cargar',
+        url: contextPath + '/ServletContainer?menu=loan&action=Cargar',///ServletContainer?menu=member&action=Cargar
         data: {id: idsocio}
     }).done(function(response){
+        console.log(response);
         var dsocio = response;
-        $.each(dsocio, function(i,item){
-            console.log(item);
-            inputsocios.val(item.name + ' '+ item.lastname);
+        $.each(dsocio, function(j,itam){
+            inputsocios.val(itam.member_name);
+            inputidprestamo.val(itam.idloan);
+           // console.log(itam.idloan);
         })
     })
-
 };
 
-const findAbono = () =>{
+const findAbonos= (idmember) =>{
     const contextPath = window.location.origin + window.location.pathname.substring(0, window.location.pathname.indexOf("/",2));
-    inputidprestamo = $('#tidprestamo');
+
+
     $.ajax({
         type: 'POST',
-        url: contextPath + '/ServletContainer?menu=loan&action=Cargar',
-        data: {id: idsocio}
+        url: contextPath + '/ServletContainer?menu=payment&action=Cargar',
+        data: {id: idmember}
     }).done(function(response){
-        var dabono = response;
-        $.each(dabono, function(i,item){
-           // console.log(item.idloan);
-            inputidprestamo.val(item.idloan);
+       var dabono = response;
+        //llenartablapago(dabono);
+        console.log(dabono);
+        let table = "";
+       // var list = response.AbonoSeleccionado.length;
+   $.each(dabono, function(i,item){
+          // console.log(item.membername);
+       let idpago = item.idpayment;
+       console.log(item);
+      table += `
+            <tr>
+                <td>${item.idpayment}</td>
+                <td>${item.membername}</td>
+                <td>${item.date_payment}</td>
+                <td>${item.amount_payment}</td>
+            </tr>
+            `;
+      console.log(table);
+       $('#tdatospago').append(table);
+        //    llenartablapago(item);
         })
     })
 
 };
+
+/*const llenartablapago = (list) =>{
+    console.log(list);
+    let table = "";
+    if(list.length > 0){
+        for(let i = 0; i < list.length; i++){
+            console.log(list[i].membername);
+            table += `
+            <tr>
+                <td>${list[i].idpayment}</td>
+                <td>${list[i].membername}</td>
+                <td>${list[i].date_payment}</td>
+                <td>${list[i].amount_payment}</td>
+            </tr>
+            `;
+        }
+    }else{
+        table = `
+		<tr class="text-center">
+			<td colspan="5">No hay registros para mostrar</td>
+		</tr>
+		`;
+    }
+    $('#tdatospago').html(table);
+};*/

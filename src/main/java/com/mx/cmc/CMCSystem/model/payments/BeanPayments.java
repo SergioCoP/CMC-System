@@ -44,21 +44,7 @@ public class BeanPayments {
         this.idmember = idmember;
     }
 
-    public BeanEmployee getIdemploye() {
-        return idemploye;
-    }
 
-    public void setIdemploye(BeanEmployee idemploye) {
-        this.idemploye = idemploye;
-    }
-
-    public BeanLoan getIdloan() {
-        return idloan;
-    }
-
-    public void setIdloan(BeanLoan idloan) {
-        this.idloan = idloan;
-    }
 
     public String getMembername() {
         return membername;
@@ -84,5 +70,19 @@ public class BeanPayments {
         this.amount_payment = amount_payment;
     }
 
+    public BeanEmployee getIdemploye() {
+        return idemploye;
+    }
 
+    public void setIdemploye(BeanEmployee idemploye) {
+        this.idemploye = idemploye;
+    }
+
+    public BeanLoan getIdloan() {
+        return idloan;
+    }
+
+    public void setIdloan(BeanLoan idloan) {
+        this.idloan = idloan;
+    }
 }

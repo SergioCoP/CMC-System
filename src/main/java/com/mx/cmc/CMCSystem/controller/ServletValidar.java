@@ -26,7 +26,6 @@ public class ServletValidar extends HttpServlet {
             throws ServletException, IOException {
         String accion = request.getParameter("action");
 
-        String tipo_usuario = request.getParameter("txttipo de usuario");
 
         if(accion.equalsIgnoreCase("Ingresar")) {
             String correo = request.getParameter("txtcorreo");

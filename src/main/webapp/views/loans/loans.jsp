@@ -20,31 +20,53 @@
         <div class="col-sm-12">
             <input type="hidden" id="seccion" value="loans">
             <input type="text" id="buscarreg" class="inputbuscar" onkeyup="buscar()" placeholder="Buscar">
-            <button type="button" class="btn btn-success" id="btn-registar"><i class="fas fa-plus"></i>Agregar</button>
+            <c:if test="${EmpleadoActivo.getIdemploye().getRole() == 'Asesor'}">
+                <button type="button" class="btn btn-success" id="btn-registar"><i class="fas fa-plus"></i>Agregar</button>
+            </c:if>
+            <c:if test="${EmpleadoActivo.getIdemploye().getRole() == 'Cajero'}">
+
+            </c:if>
+
             <table class="table" id="datostabla">
                 <thead class="table-light">
                 <tr>
+                    <c:if test="${EmpleadoActivo.getIdemploye().getRole() == 'Cajero'}">
+                    <th>No Socio</th>
+                    </c:if>
                     <th>Nombre del socio</th>
                     <th>Tipo de credito</th>
                     <th>Monto</th>
                     <th>Plazo</th>
                     <th>Fecha de solicitud</th>
-                    <th>Acciones</th>
+                    <c:if test="${EmpleadoActivo.getIdemploye().getRole() == 'Asesor'}">
+                        <th>Acciones</th>
+                    </c:if>
+                    <c:if test="${EmpleadoActivo.getIdemploye().getRole() == 'Cajero'}">
+
+                    </c:if>
                 </tr>
                 </thead>
                 <tbody>
 
                 <c:forEach items="${listLoan}" var="loan" >
                     <tr>
+                        <c:if test="${EmpleadoActivo.getIdemploye().getRole() == 'Cajero'}">
+                            <td>${loan.getIdmember().getIdmember()}</td>
+                        </c:if>
                         <td>${loan.getMember_name()}</td>
                         <td>${loan.getCredit_type()}</td>
-                        <td>${loan.getAmount()}</td>
-                        <td>${loan.getPeriod()}</td>
+                        <td>$ ${loan.getAmount()}</td>
+                        <td>${loan.getPeriod()} Meses</td>
                         <td>${loan.getDate_request()}</td>
-                        <td>
-                            <a class="btn btn-primary btn-sm btn-modificar" data-id="${loan.getIdloan()}" data-memberid="${loan.getIdmember().getIdmember()}" data-namemember="${loan.getMember_name()}" data-creditype="${loan.getCredit_type()}" data-monto="${loan.getAmount()}" data-periodo="${loan.getPeriod()}" data-fechasolicitud="${loan.getDate_request()}" data-aval1="${loan.getAval1()}" data-aval2="${loan.getAval2()}" data-comprobanteingreso="${loan.getIncome_document()}" data-razonsocial="${loan.getRazon_social()}" data-ubicacion="${loan.getLocation()}" data-giro="${loan.getLine_bussines()}"><i class="fas fa-edit"></i></a>
-                            <a class="btn btn-danger btn-sm btn-eliminar" data-id="${loan.getIdloan()}" data-namemember="${loan.getMember_name()}"><i class="fas fa-trash-alt"></i></a>
-                        </td>
+                        <c:if test="${EmpleadoActivo.getIdemploye().getRole() == 'Asesor'}">
+                            <td>
+                                <a class="btn btn-primary btn-sm btn-modificar" data-id="${loan.getIdloan()}" data-memberid="${loan.getIdmember().getIdmember()}" data-namemember="${loan.getMember_name()}" data-creditype="${loan.getCredit_type()}" data-monto="${loan.getAmount()}" data-periodo="${loan.getPeriod()}" data-fechasolicitud="${loan.getDate_request()}" data-aval1="${loan.getAval1()}" data-aval2="${loan.getAval2()}" data-comprobanteingreso="${loan.getIncome_document()}" data-razonsocial="${loan.getRazon_social()}" data-ubicacion="${loan.getLocation()}" data-giro="${loan.getLine_bussines()}"><i class="fas fa-edit"></i></a>
+                                <a class="btn btn-danger btn-sm btn-eliminar" data-id="${loan.getIdloan()}" data-namemember="${loan.getMember_name()}"><i class="fas fa-trash-alt"></i></a>
+                            </td>
+                        </c:if>
+                        <c:if test="${EmpleadoActivo.getIdemploye().getRole() == 'Cajero'}">
+
+                        </c:if>
                     </tr>
                 </c:forEach>
                 </tbody>
@@ -282,11 +304,10 @@
 <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
 <script src="${context}/assets/dist/js/funciones.js"></script>
-<%--<script src="${context}/assets/dist/js/employefunctions.js"></script>--%>
 <script src="${context}/assets/dist/js/loanfuntions.js"></script>
+<script src="${context}/assets/dist/js/validarusuario.js"></script>
 <script src="${context}/assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="${context}/assets/plugins/bootstrap/js/bootstrap.bundle.js"></script>
 <script src="${context}/assets/plugins/bootstrap/js/bootstrap.min.js"></script>
-<script src="${context}/assets/dist/js/validarusuario.js"></script>
 </body>
 </html>
