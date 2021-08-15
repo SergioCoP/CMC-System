@@ -1,5 +1,6 @@
 package com.mx.cmc.CMCSystem.model.payments;
 
+import com.mx.cmc.CMCSystem.model.credits.BeanCredits;
 import com.mx.cmc.CMCSystem.model.employees.BeanEmployee;
 import com.mx.cmc.CMCSystem.model.loans.BeanLoan;
 import com.mx.cmc.CMCSystem.model.members.BeanMember;
@@ -13,13 +14,11 @@ public class BeanPayments {
     private String membername;
     private String date_payment;
     private float amount_payment;
-    private float total_amount;
-    private float balance_loan;
 
     public BeanPayments() {
     }
 
-    public BeanPayments(int idpayment, BeanMember idmember, BeanEmployee idemploye, BeanLoan idloan, String membername, String date_payment, float amount_payment, float total_amount, float balance_loan) {
+    public BeanPayments(int idpayment, BeanMember idmember, BeanEmployee idemploye, BeanLoan idloan, String membername, String date_payment, float amount_payment) {
         this.idpayment = idpayment;
         this.idmember = idmember;
         this.idemploye = idemploye;
@@ -27,24 +26,6 @@ public class BeanPayments {
         this.membername = membername;
         this.date_payment = date_payment;
         this.amount_payment = amount_payment;
-        this.total_amount = total_amount;
-        this.balance_loan = balance_loan;
-    }
-
-    public float getTotal_amount() {
-        return total_amount;
-    }
-
-    public void setTotal_amount(float total_amount) {
-        this.total_amount = total_amount;
-    }
-
-    public float getBalance_loan() {
-        return balance_loan;
-    }
-
-    public void setBalance_loan(float balance_loan) {
-        this.balance_loan = balance_loan;
     }
 
     public int getIdpayment() {
@@ -102,4 +83,6 @@ public class BeanPayments {
     public void setAmount_payment(float amount_payment) {
         this.amount_payment = amount_payment;
     }
+
+
 }

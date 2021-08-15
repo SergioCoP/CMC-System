@@ -26,7 +26,7 @@ public class DaoLoan {
         List<BeanLoan> listLoan = new ArrayList<>();
         try{
             con = ConnectionMySQL.getConnection();
-            cstm = con.prepareCall("{call findAll}");
+            cstm = con.prepareCall("{call findloans}");
             rs = cstm.executeQuery();
             while(rs.next()){
 
@@ -34,22 +34,21 @@ public class DaoLoan {
                 BeanMember member = new BeanMember();
                 BeanEmployee employe = new BeanEmployee();
 
-                loan.setIdloan(rs.getInt("idloan"));
-                member.setIdmember(rs.getInt("idmember"));
-                employe.setIdemploye(rs.getInt("idemploye"));
-                loan.setMember_name(rs.getString("member_name"));
-                loan.setEmployee_name(rs.getString("employee_name"));
-                loan.setCredit_type(rs.getString("credit_type"));
-                loan.setAmount(rs.getFloat("amount"));
-                loan.setBalance(rs.getFloat("balance"));
-                loan.setPeriod(rs.getInt("period"));
-                loan.setDate_request(rs.getString("date_request"));
-                loan.setAval1(rs.getString("aval1"));
-                loan.setAval2(rs.getString("aval2"));
-                loan.setIncome_document(rs.getString("income_document"));
+                loan.setIdloan(rs.getInt("idprestamo"));
+                member.setIdmember(rs.getInt("idsocio"));
+                employe.setIdemploye(rs.getInt("idempleado"));
+                loan.setMember_name(rs.getString("nombresocio"));
+                loan.setEmployee_name(rs.getString("nombreempleado"));
+                loan.setCredit_type(rs.getString("tipo_credito"));
+                loan.setAmount(rs.getFloat("monto"));
+                loan.setPeriod(rs.getInt("plazo"));
+                loan.setDate_request(rs.getString("fecha_solicitud"));
+                loan.setAval1(rs.getString("aval_1"));
+                loan.setAval2(rs.getString("aval_2"));
+                loan.setIncome_document(rs.getString("comprobante_ingresos"));
                 loan.setRazon_social(rs.getString("razon_social"));
-                loan.setLocation(rs.getString("location"));
-                loan.setLine_bussines(rs.getString("line_bussines"));
+                loan.setLocation(rs.getString("ubicacion"));
+                loan.setLine_bussines(rs.getString("giro"));
                 loan.setIdemployee(employe);
                 loan.setIdmember(member);
 
@@ -63,11 +62,11 @@ public class DaoLoan {
         return listLoan;
     }
 
-    public BeanLoan ListarporId(int id){
+    public BeanLoan ListarporIdSocio(int id){
         BeanLoan loan = null;
         try{
             con = ConnectionMySQL.getConnection();
-            cstm = con.prepareCall("select * from prestamos as p inner join empleados as e on p.idempleado = e.idempleado inner join socios as s on p.idsocio = s.idsocio where p.idprestamo=?");
+            cstm = con.prepareCall("select * from prestamos where idsocio=?");
             cstm.setInt(1,id);
             rs = cstm.executeQuery();
 
@@ -76,22 +75,21 @@ public class DaoLoan {
                 BeanEmployee employe = new BeanEmployee();
                 loan = new BeanLoan();
 
-                loan.setIdloan(rs.getInt("idloan"));
-                member.setIdmember(rs.getInt("idmember"));
-                employe.setIdemploye(rs.getInt("idemploye"));
-                loan.setMember_name(rs.getString("member_name"));
-                loan.setEmployee_name(rs.getString("employee_name"));
-                loan.setCredit_type(rs.getString("credit_type"));
-                loan.setAmount(rs.getFloat("amount"));
-                loan.setBalance(rs.getFloat("balance"));
-                loan.setPeriod(rs.getInt("period"));
-                loan.setDate_request(rs.getString("date_request"));
-                loan.setAval1(rs.getString("aval1"));
-                loan.setAval2(rs.getString("aval2"));
-                loan.setIncome_document(rs.getString("income_document"));
+                loan.setIdloan(rs.getInt("idprestamo"));
+                member.setIdmember(rs.getInt("idsocio"));
+                employe.setIdemploye(rs.getInt("idempleado"));
+                loan.setMember_name(rs.getString("nombresocio"));
+                loan.setEmployee_name(rs.getString("nombreempleado"));
+                loan.setCredit_type(rs.getString("tipo_credito"));
+                loan.setAmount(rs.getFloat("monto"));
+                loan.setPeriod(rs.getInt("plazo"));
+                loan.setDate_request(rs.getString("fecha_solicitud"));
+                loan.setAval1(rs.getString("aval_1"));
+                loan.setAval2(rs.getString("aval_2"));
+                loan.setIncome_document(rs.getString("comprobante_ingresos"));
                 loan.setRazon_social(rs.getString("razon_social"));
-                loan.setLocation(rs.getString("location"));
-                loan.setLine_bussines(rs.getString("line_bussines"));
+                loan.setLocation(rs.getString("ubicacion"));
+                loan.setLine_bussines(rs.getString("giro"));
                 loan.setIdemployee(employe);
                 loan.setIdmember(member);
             }
@@ -109,20 +107,19 @@ public class DaoLoan {
             cstm = con.prepareCall("{call registerloan(?,?,?,?,?,?,?,?,?,?,?,?,?,?)}");
 
             cstm.setInt(1, loan.getIdmember().getIdmember());
-            cstm.setInt(2,loan.getIdemployee().getIdemploye());
-            cstm.setString(3,loan.getMember_name());
+            cstm.setString(2,loan.getMember_name());
+            cstm.setInt(3,loan.getIdemployee().getIdemploye());
             cstm.setString(4,loan.getEmployee_name());
             cstm.setString(5,loan.getCredit_type());
             cstm.setFloat(6,loan.getAmount());
-            cstm.setFloat(7,loan.getBalance());
-            cstm.setInt(8,loan.getPeriod());
-            cstm.setString(9,loan.getDate_request());
-            cstm.setString(10,loan.getAval1());
-            cstm.setString(11,loan.getAval2());
-            cstm.setString(12,loan.getIncome_document());
-            cstm.setString(13,loan.getRazon_social());
-            cstm.setString(14,loan.getLocation());
-            cstm.setString(15,loan.getLine_bussines());
+            cstm.setInt(7,loan.getPeriod());
+            cstm.setString(8,loan.getDate_request());
+            cstm.setString(9,loan.getAval1());
+            cstm.setString(10,loan.getAval2());
+            cstm.setString(11,loan.getIncome_document());
+            cstm.setString(12,loan.getRazon_social());
+            cstm.setString(13,loan.getLocation());
+            cstm.setString(14,loan.getLine_bussines());
             cstm.executeUpdate();
         }catch(SQLException e){
             logger.error("Ha ocurrido un error: " + e.getMessage());
@@ -138,21 +135,18 @@ public class DaoLoan {
             cstm = con.prepareCall("{call modifyLoan(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}");
 
             cstm.setInt(1, loan.getIdloan());
-            cstm.setInt(2, loan.getIdmember().getIdmember());
-            cstm.setInt(3,loan.getIdemployee().getIdemploye());
-            cstm.setString(4,loan.getMember_name());
-            cstm.setString(5,loan.getEmployee_name());
-            cstm.setString(6,loan.getCredit_type());
-            cstm.setFloat(7,loan.getAmount());
-            cstm.setFloat(8,loan.getBalance());
-            cstm.setInt(9,loan.getPeriod());
-            cstm.setString(10,loan.getDate_request());
-            cstm.setString(11,loan.getAval1());
-            cstm.setString(12,loan.getAval2());
-            cstm.setString(13,loan.getIncome_document());
-            cstm.setString(14,loan.getRazon_social());
-            cstm.setString(15,loan.getLocation());
-            cstm.setString(16,loan.getLine_bussines());
+            cstm.setString(2,loan.getEmployee_name());
+            cstm.setString(3,loan.getMember_name());
+            cstm.setString(4,loan.getCredit_type());
+            cstm.setString(5,loan.getDate_request());
+            cstm.setFloat(6,loan.getAmount());
+            cstm.setInt(7,loan.getPeriod());
+            cstm.setString(8,loan.getAval1());
+            cstm.setString(9,loan.getAval2());
+            cstm.setString(10,loan.getIncome_document());
+            cstm.setString(11,loan.getRazon_social());
+            cstm.setString(12,loan.getLocation());
+            cstm.setString(13,loan.getLine_bussines());
             cstm.executeUpdate();
 
         }catch (SQLException e){

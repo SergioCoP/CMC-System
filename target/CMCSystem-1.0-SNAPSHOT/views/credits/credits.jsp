@@ -25,33 +25,73 @@
         <div class="col-sm-12">
             <input type="hidden" id="seccion" value="credits">
             <input type="text" id="buscarreg" class="inputbuscar" onkeyup="buscar()" placeholder="Buscar">
-            <button type="button" class="btn btn-success btn-reg" id="btn-registar"><i class="fas fa-plus"></i>Agregar</button>
+            <c:if test="${EmpleadoActivo.getIdemploye().getRole() == 'Cajero'}">
+
+            </c:if>
+            <c:if test="${EmpleadoActivo.getIdemploye().getRole() == 'Coordinador'}">
+                <button type="button" class="btn btn-success btn-reg" id="btn-registar"><i class="fas fa-plus"></i>Agregar</button>
+            </c:if>
+            <c:if test="${EmpleadoActivo.getIdemploye().getRole() == 'Asesor'}">
+
+            </c:if>
+
             <table class="table" id="datostabla">
                 <thead class="table-light" >
                 <tr>
-                    <th>No.</th><!--Enbcabezado-->
+                    <c:if test="${EmpleadoActivo.getIdemploye().getRole() == 'Cajero'}">
+
+                    </c:if>
+                    <c:if test="${EmpleadoActivo.getIdemploye().getRole() == 'Coordinador'}">
+                        <th>No.</th><!--Enbcabezado-->
+                    </c:if>
+                    <c:if test="${EmpleadoActivo.getIdemploye().getRole() == 'Asesor'}">
+
+                    </c:if>
                     <th>Nombre</th>
                     <th>Plazo minimo y maximo</th>
                     <th>Tasa de Interes</th>
                     <th>Monto minimo y maximo</th>
                     <th>Requisitos</th>
-                    <th>Acciones</th>
+                    <c:if test="${EmpleadoActivo.getIdemploye().getRole() == 'Cajero'}">
+
+                    </c:if>
+                    <c:if test="${EmpleadoActivo.getIdemploye().getRole() == 'Coordinador'}">
+                        <th>Acciones</th>
+                    </c:if>
+                    <c:if test="${EmpleadoActivo.getIdemploye().getRole() == 'Asesor'}">
+
+                    </c:if>
                 </tr>
                 </thead>
                 <tbody>
                 <c:forEach items="${listCredits}" var="credit" ><!--iterar cada usuario-->
                 <tr>
-                    <td>${credit.getIdcredit()} </td>
+                    <c:if test="${EmpleadoActivo.getIdemploye().getRole() == 'Cajero'}">
+
+                    </c:if>
+                    <c:if test="${EmpleadoActivo.getIdemploye().getRole() == 'Coordinador'}">
+                        <td>${credit.getIdcredit()} </td>
+                    </c:if>
+                    <c:if test="${EmpleadoActivo.getIdemploye().getRole() == 'Asesor'}">
+
+                    </c:if>
+
                     <td>${credit.getName()} </td>
                     <td>${credit.getMin_period()} -- ${credit.getMax_period()} Meses</td><!--datos del bean person-->
                     <td>${credit.getInterest_rate()} %</td>
                     <td>${credit.getMin_amount()}$ -- ${credit.getMax_amount()}$</td>
                     <td>${credit.getRequeriments()}</td>
                     <td>
-                        <!--href="ServletContainer?menu=credit&action=Cargar&id=${credit.getIdcredit()}"-->
-                        <a  class="btn btn-primary btn-sm btn-modificar" data-id="${credit.getIdcredit()}" data-name="${credit.getName()}" data-minperiord="${credit.getMin_period()}" data-maxperiod="${credit.getMax_period()}" data-interest="${credit.getInterest_rate()}" data-minamount="${credit.getMin_amount()}" data-maxamount="${credit.getMax_amount()}" data-requeriment="${credit.getRequeriments()}"><i class="fas fa-edit"></i></a>
-                        <a  class="btn btn-danger btn-sm btn-eliminar"  data-id="${credit.getIdcredit()}" data-name="${credit.getName()}"><i class="fas fa-trash-alt"></i></a>
-                        <!--ref="ServletContainer?menu=credit&action=Eliminar&id=${credit.getIdcredit()}"-->
+                        <c:if test="${EmpleadoActivo.getIdemploye().getRole() == 'Cajero'}">
+
+                        </c:if>
+                        <c:if test="${EmpleadoActivo.getIdemploye().getRole() == 'Coordinador'}">
+                            <a  class="btn btn-primary btn-sm btn-modificar" data-id="${credit.getIdcredit()}" data-name="${credit.getName()}" data-minperiord="${credit.getMin_period()}" data-maxperiod="${credit.getMax_period()}" data-interest="${credit.getInterest_rate()}" data-minamount="${credit.getMin_amount()}" data-maxamount="${credit.getMax_amount()}" data-requeriment="${credit.getRequeriments()}"><i class="fas fa-edit"></i></a>
+                            <a  class="btn btn-danger btn-sm btn-eliminar"  data-id="${credit.getIdcredit()}" data-name="${credit.getName()}"><i class="fas fa-trash-alt"></i></a>
+                        </c:if>
+                        <c:if test="${EmpleadoActivo.getIdemploye().getRole() == 'Asesor'}">
+
+                        </c:if>
                     </td>
                 </tr>
                 </c:forEach>

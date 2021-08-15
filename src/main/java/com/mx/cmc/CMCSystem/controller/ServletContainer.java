@@ -1,6 +1,8 @@
 package com.mx.cmc.CMCSystem.controller;
 
 
+import com.lowagie.text.pdf.PdfPTable;
+import com.mx.cmc.CMCSystem.model.credit_history.BeanCreditHistory;
 import com.mx.cmc.CMCSystem.model.credits.BeanCredits;
 import com.mx.cmc.CMCSystem.model.credits.DaoCredits;
 import com.mx.cmc.CMCSystem.model.employees.BeanEmployee;
@@ -14,15 +16,22 @@ import com.mx.cmc.CMCSystem.model.users.BeanUser;
 import com.mx.cmc.CMCSystem.model.users.DaoUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import com.google.gson.Gson;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @WebServlet(name = "ServletContainer", value = "/ServletContainer")
 public class ServletContainer extends HttpServlet {
+    private Map map = new HashMap();
     Logger logger = LoggerFactory.getLogger(ServletContainer.class);
     BeanUser user = new BeanUser();
     DaoUser userdao = new DaoUser();
@@ -35,7 +44,7 @@ public class ServletContainer extends HttpServlet {
     BeanPayments payments = new BeanPayments();
     BeanLoan loan = new BeanLoan();
     DaoLoan daoLoan = new DaoLoan();
-    int idusuario,idcredit,idpayment,idmiembro;
+    int idusuario,idcredit,idpayment,idmiembro,idabono,idprestamo;
 
 
     /**
@@ -135,8 +144,10 @@ public class ServletContainer extends HttpServlet {
                     idmiembro= Integer.parseInt(request.getParameter("id"));
                     System.out.println(idmiembro);
                     member = memberdao.ListarporId(idmiembro);
-                    request.setAttribute("MiembroSeleccionado", member);
-                    request.getRequestDispatcher("ServletContainer?menu=member&action=Listar").forward(request, response);
+                   // request.setAttribute("MiembroSeleccionado", member);
+                    map.put("MiembroSeleccionado", member);
+                    write(response, map);
+                    //request.getRequestDispatcher("ServletContainer?menu=member&action=Listar").forward(request, response);
                     return;
             }
             request.getRequestDispatcher("/views/members/members.jsp").forward(request, response);
@@ -210,12 +221,18 @@ public class ServletContainer extends HttpServlet {
             }
             request.getRequestDispatcher("/views/employes/employes.jsp").forward(request, response);
         }
+
         if(menu.equals("credit")){
             switch (action){
                 case "Listar":
                     List<BeanCredits> listCredits = creditdaot.findcredits();
                     request.setAttribute("listCredits",listCredits);
                     break;
+                case "Listar1":
+                    List<BeanCredits> listCredits1 = creditdaot.findcredits();
+                    map.put("listCredits1",listCredits1);
+                    write(response, map);
+                    return;
                 case "Registrar":
                     String nombre = request.getParameter("txtnombre") != null ? request.getParameter("txtnombre") : "";
                     int plazomin = Integer.parseInt(request.getParameter("txtplazominimo"));
@@ -273,62 +290,60 @@ public class ServletContainer extends HttpServlet {
             }
             request.getRequestDispatcher("/views/credits/credits.jsp").forward(request, response);
         }
+
         if(menu.equals("payment")){
             switch (action) {
                 case "Listar":
-                    List<BeanPayments> listPayments = daoPayments.findAll();
+                  //  PdfPTable table = null;
+                    List<BeanCreditHistory> listPayments = daoPayments.findAll();
                     request.setAttribute("listPayments", listPayments);
                     break;
-                case "Agregar":
-                    int idsocio = request.getIntHeader("idsocio");
-                    int idempleado = request.getIntHeader("txtidempleado");
-                    int idprestamo = request.getIntHeader("txtidprestamo");
+                case "Registrar":
+                    int idsocio = Integer.parseInt( request.getParameter("txtidsocio"));
+                    int idempleado = Integer.parseInt( request.getParameter("txtidempleado"));
+                    int idprestamo = Integer.parseInt(request.getParameter("txtidprestamo"));
                     String nombresocio = request.getParameter("txtnombresocio");
                     String fecha_abono = request.getParameter("txtfechaabono");
-                    float monto_total = request.getIntHeader("txtmontototal");
                     float monto_abonado = request.getIntHeader("txtmontoabonado");
-                    float saldo_prestamo = request.getIntHeader("txtsaldoprestamo");
+
+                    member = new BeanMember();
+                    employ = new BeanEmployee();
+                    loan = new BeanLoan();
+
+                    member.setIdmember(idsocio);
+                    employ.setIdemploye(idempleado);
+                    loan.setIdloan(idprestamo);
 
                     payments.setIdmember(member);
                     payments.setIdemploye(employ);
                     payments.setIdloan(loan);
                     payments.setMembername(nombresocio);
                     payments.setDate_payment(fecha_abono);
-                    payments.setAmount_payment(monto_total);
-                    payments.setTotal_amount(monto_abonado);
-                    payments.setBalance_loan(saldo_prestamo);
+                    payments.setAmount_payment(monto_abonado);
+
                     daoPayments.agregar(payments);
                     request.getRequestDispatcher("ServletContainer?menu=payment&action=Listar").forward(request, response);
                     return;
-                case "Actualizar":
-                    idpayment = Integer.parseInt(request.getParameter("id"));
-                    System.out.println("" + idpayment);
-                    int idsocio1 = request.getIntHeader("idsocio");
-                    int idempleado1 = request.getIntHeader("txtidempleado");
-                    int idprestamo1 = request.getIntHeader("txtidprestamo");
-                    String nombresocio1 = request.getParameter("txtnombresocio");
-                    String fecha_abono1 = request.getParameter("txtfechaabono");
-                    float monto_total1 = request.getIntHeader("txtmontototal");
-                    float monto_abonado1 = request.getIntHeader("txtmontoabonado");
-                    float saldo_prestamo1 = request.getIntHeader("txtsaldoprestamo");
+                case "Cargar":
+                    idabono = Integer.parseInt(request.getParameter("id"));
+                    System.out.println(idabono);
+                   payments = daoPayments.ListarporId(idabono);
+                    // request.setAttribute("MiembroSeleccionado", member);
+                    map.put("AbonoSeleccionado", payments);
+                    write(response, map);
+                    //request.getRequestDispatcher("ServletContainer?menu=member&action=Listar").forward(request, response);
+                    return;
+                case "exportarPDF":
+                    DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
+                    String nomFile = dateFormat.format(new Date());
+                    String var1 = "Content";
+                    String var2 = "attachment; filename=Pagos_" + nomFile;
+                    response.setHeader(var1,var2);
+                    DaoPayments exportarPDF = new DaoPayments();
+                    exportarPDF.findAll();
+                  //  exportarPDF.export(response);
+                    request.getRequestDispatcher("ServletContainer?menu=payment&action=Listar").forward(request,response);
 
-                    payments.setIdmember(member);
-                    payments.setIdemploye(employ);
-                    payments.setIdloan(loan);
-                    payments.setMembername(nombresocio1);
-                    payments.setDate_payment(fecha_abono1);
-                    payments.setAmount_payment(monto_total1);
-                    payments.setTotal_amount(monto_abonado1);
-                    payments.setBalance_loan(saldo_prestamo1);
-                    daoPayments.actualizar(payments);
-                    request.getRequestDispatcher("ServletContainer?menu=payment&action=Listar").forward(request, response);
-                    return;
-                case "Eliminar":
-                    int idpayment = Integer.parseInt(request.getParameter("id"));
-                    daoPayments = new DaoPayments();
-                    daoPayments.eliminar(idpayment);
-                    request.getRequestDispatcher("ServletContainer?menu=payment&action=Listar").forward(request, response);
-                    return;
             }
             request.getRequestDispatcher("/views/payments/payments.jsp").forward(request, response);
         }
@@ -339,31 +354,35 @@ public class ServletContainer extends HttpServlet {
                     List<BeanLoan> listLoan = daoLoan.findAll();
                     request.setAttribute("listLoan", listLoan);
                     break;
-                case "Agregar":
-                    int idsocio = request.getIntHeader("idsocio");
-                    int idempleado = request.getIntHeader("txtidempleado");
+                case "Registrar":
+                    int idsocio = Integer.parseInt(request.getParameter("txtidsocio"));
                     String nombresocio = request.getParameter("txtnombresocio");
-                    String nombreempleado = request.getParameter("txtnombreempleado");
+                    int idempleado = Integer.parseInt(request.getParameter("txtidempleado"));
+                    String nombreempleado = request.getParameter("txtnombrempleado");
                     String tipo_credito = request.getParameter("txttipocredito");
-                    float monto = request.getIntHeader("txtmonto");
-                    float saldo = request.getIntHeader("txtsaldo");
-                    int plazo = request.getIntHeader("txtplazo");
+                    float monto = Float.parseFloat(request.getParameter("txtmonto"));
+                    int plazo = Integer.parseInt(request.getParameter("txtplazo"));
                     String fecha_solicitud = request.getParameter("txtfechasolicitud");
-                    String aval_1 = request.getParameter("txtaval1");
-                    String aval_2 = request.getParameter("txtaval2");
+                    String aval_1 = request.getParameter("txtnombreaval1");
+                    String aval_2 = request.getParameter("txtnombreaval2");
                     String comprobante_ingresos = request.getParameter("txtcomprobanteingresos");
                     String razon_social = request.getParameter("txtrazonsocial");
                     String ubicacion = request.getParameter("txtubicacion");
                     String giro = request.getParameter("txtgiro");
 
+                    member = new BeanMember();
+                    employ = new BeanEmployee();
+
+                    member.setIdmember(idsocio);
+                    employ.setIdemploye(idempleado);
 
                     loan.setIdmember(member);
                     loan.setIdemployee(employ);
+
                     loan.setMember_name(nombresocio);
                     loan.setEmployee_name(nombreempleado);
                     loan.setCredit_type(tipo_credito);
                     loan.setAmount(monto);
-                    loan.setBalance(saldo);
                     loan.setPeriod(plazo);
                     loan.setDate_request(fecha_solicitud);
                     loan.setAval1(aval_1);
@@ -372,50 +391,71 @@ public class ServletContainer extends HttpServlet {
                     loan.setRazon_social(razon_social);
                     loan.setLocation(ubicacion);
                     loan.setLine_bussines(giro);
+
                     daoLoan.agregar(loan);
-                    request.getRequestDispatcher("ServletContainer?menu=loan&action=Agregar").forward(request, response);
+                    request.getRequestDispatcher("ServletContainer?menu=loan&action=Listar").forward(request, response);
                     return;
                 case "Actualizar":
-                    int idsocio1 = request.getIntHeader("idsocio");
-                    int idempleado1 = request.getIntHeader("txtid empleado");
+                    int idprestamo = Integer.parseInt(request.getParameter("txtidprestamo"));
+                    try{
+                        idmiembro = Integer.parseInt(request.getParameter("txtidsocio1"));
+                        System.out.println(idmiembro);
+                    }catch(Exception e){
+                        System.out.println("Hubo un error");
+                    }
+
                     String nombresocio1 = request.getParameter("txtnombresocio");
-                    String nombreempleado1 = request.getParameter("txtnombreempleado");
+                    int idempleado1 = Integer.parseInt(request.getParameter("txtidempleado"));
+                    String nombreempleado1 = request.getParameter("txtnombrempleado");
                     String tipo_credito1 = request.getParameter("txttipocredito");
-                    float monto1 = request.getIntHeader("txtmonto");
-                    float saldo1 = request.getIntHeader("txtsaldo");
-                    int plazo1 = request.getIntHeader("txtplazo");
+                    float monto1 = Float.parseFloat(request.getParameter("txtmonto"));
+                    int plazo1 = Integer.parseInt(request.getParameter("txtplazo"));
                     String fecha_solicitud1 = request.getParameter("txtfechasolicitud");
-                    String aval_1_1 = request.getParameter("txtaval1");
-                    String aval_2_1 = request.getParameter("txtaval2");
+                    String aval_12 = request.getParameter("txtnombreaval1");
+                    String aval_22 = request.getParameter("txtnombreaval2");
                     String comprobante_ingresos1 = request.getParameter("txtcomprobanteingresos");
                     String razon_social1 = request.getParameter("txtrazonsocial");
                     String ubicacion1 = request.getParameter("txtubicacion");
                     String giro1 = request.getParameter("txtgiro");
 
+                    member = new BeanMember();
+                    employ = new BeanEmployee();
+
+                    member.setIdmember(idmiembro);
+                    employ.setIdemploye(idempleado1);
 
                     loan.setIdmember(member);
                     loan.setIdemployee(employ);
+                    loan.setIdloan(idprestamo);
                     loan.setMember_name(nombresocio1);
                     loan.setEmployee_name(nombreempleado1);
                     loan.setCredit_type(tipo_credito1);
                     loan.setAmount(monto1);
-                    loan.setBalance(saldo1);
                     loan.setPeriod(plazo1);
                     loan.setDate_request(fecha_solicitud1);
-                    loan.setAval1(aval_1_1);
-                    loan.setAval2(aval_2_1);
+                    loan.setAval1(aval_12);
+                    loan.setAval2(aval_22);
                     loan.setIncome_document(comprobante_ingresos1);
                     loan.setRazon_social(razon_social1);
                     loan.setLocation(ubicacion1);
                     loan.setLine_bussines(giro1);
+
                     daoLoan.actualizar(loan);
-                    request.getRequestDispatcher("ServletContainer?menu=loan&action=Actualizar").forward(request, response);
+                    request.getRequestDispatcher("ServletContainer?menu=loan&action=Listar").forward(request, response);
                     return;
                 case "Eliminar":
-                    int idloan = Integer.parseInt(request.getParameter("id"));
+                    int idprestamo1 = Integer.parseInt(request.getParameter("txtidprestamo1"));
                     daoLoan = new DaoLoan();
-                    daoLoan.eliminar(idloan);
-                    request.getRequestDispatcher("ServletContainer?menu=loan&action=Eliminar").forward(request, response);
+                    daoLoan.eliminar(idprestamo1);
+                    request.getRequestDispatcher("ServletContainer?menu=loan&action=Listar").forward(request, response);
+                    return;
+                case "Cargar":
+                    idprestamo = Integer.parseInt(request.getParameter("id"));
+                    System.out.println(idprestamo);
+                    loan = daoLoan.ListarporIdSocio(idprestamo);
+                    // request.setAttribute("MiembroSeleccionado", member);
+                    map.put("PrestamoSeleccionado", loan);
+                    write(response, map);
                     return;
             }
             request.getRequestDispatcher("/views/loans/loans.jsp").forward(request, response);
@@ -447,6 +487,11 @@ public class ServletContainer extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         processRequest(request, response);
+    }
+
+    private void write(HttpServletResponse response, Map<String, Object> map) throws IOException {
+        response.setContentType("application/json");
+        response.getWriter().write(new Gson().toJson(map));
     }
     }
 

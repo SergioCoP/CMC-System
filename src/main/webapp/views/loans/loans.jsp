@@ -27,27 +27,23 @@
                     <th>Nombre del socio</th>
                     <th>Tipo de credito</th>
                     <th>Monto</th>
-                    <th>Saldo</th>
                     <th>Plazo</th>
                     <th>Fecha de solicitud</th>
-
+                    <th>Acciones</th>
                 </tr>
                 </thead>
                 <tbody>
 
                 <c:forEach items="${listLoan}" var="loan" >
                     <tr>
-                        <td>${loan.getEmployee_name()}}</td>
+                        <td>${loan.getMember_name()}</td>
                         <td>${loan.getCredit_type()}</td>
                         <td>${loan.getAmount()}</td>
-                        <td>${loan.getBalance()}</td>
-                        <td>${loan.getPeriod()}}</td>
-                        <td>${loan.getDate_request()}}</td>
+                        <td>${loan.getPeriod()}</td>
+                        <td>${loan.getDate_request()}</td>
                         <td>
-                            <!--- href="ServletContainer?menu=loan&action=ListarporId=${loan.getidloan()}"-->
-                            <a class="btn btn-primary btn-sm btn-modificar" data-id="${loan.getEmployee_name()}" data-credit_type="${loan.getCredit_type()} " data-amount="${loan.getAmount()}" data-balance="${loan.getBalance()}" data-period="${loan.getPeriod()}" data-date_request="${loan.getDate_request()}"><i class="fas fa-edit"></i></a>
-                            <a class="btn btn-danger btn-sm btn-eliminar" data-id="${loan.getidloan()}" data-credit_type="${loan.getCredit_type()} " data-amount="${loan.getAmount()}" ><i class="fas fa-trash-alt"></i></a>
-                            <!--  href="ServletContainer?menu=loan&action=Eliminar=${loan.getidloan()}" -->
+                            <a class="btn btn-primary btn-sm btn-modificar" data-id="${loan.getIdloan()}" data-memberid="${loan.getIdmember().getIdmember()}" data-namemember="${loan.getMember_name()}" data-creditype="${loan.getCredit_type()}" data-monto="${loan.getAmount()}" data-periodo="${loan.getPeriod()}" data-fechasolicitud="${loan.getDate_request()}" data-aval1="${loan.getAval1()}" data-aval2="${loan.getAval2()}" data-comprobanteingreso="${loan.getIncome_document()}" data-razonsocial="${loan.getRazon_social()}" data-ubicacion="${loan.getLocation()}" data-giro="${loan.getLine_bussines()}"><i class="fas fa-edit"></i></a>
+                            <a class="btn btn-danger btn-sm btn-eliminar" data-id="${loan.getIdloan()}" data-namemember="${loan.getMember_name()}"><i class="fas fa-trash-alt"></i></a>
                         </td>
                     </tr>
                 </c:forEach>
@@ -58,73 +54,96 @@
 
 </div>
 
-<dialog id="Registrar" class="col-sm-5 dialogo">
+<dialog id="Registrar" class="col-sm-6 dialogo">
     <div class="d-flex">
-        <div class="card col-sm-12 border-0">
+        <div class="card col-sm-16 border-0">
             <div class="card-header align-content-end">
                 <button class="btn btn-light" id="cerrar" type="reset"><i class="fas fa-times"></i></button>
             </div>
             <div class="card-body">
                 <form action="ServletContainer?menu=loan" method="POST" class="row g-3" >
                     <input type="hidden" name="action" value="Registrar">
-                    <div class="form-group col-md-6">
-                        <label>Nombre del socio:</label>
-                        <input type="text" class="form-control campo" name="txtnombre socio" onkeyup="" pattern="^[a-zA-ZáéíóúÁÉÍÓÚÑñüÜ ]+" title="Sólo letras" value="${loan.getIdloan()}"/>
+                    <div class="form-group col-md-3">
+                        <label>Buscar Socio:</label>
+                        <div class="input-group">
+                            <button class="btn btn-outline-secondary" type="button" id="btn-buscarsocio"><i class="fas fa-search"></i></button>
+                            <input type="text" class="form-control" placeholder="Por Id"  aria-describedby="btn-buscarsocio" name="txtidsocio" id="txt_idsocio" >
+                        </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="form-group col-md-9">
+                        <label>Nombre del socio:</label>
+                        <input type="text" class="form-control campo" name="txtnombresocio" id="tnombresocio" pattern="^[a-zA-ZáéíóúÁÉÍÓÚÑñüÜ ]+" title="Sólo letras"/>
+                    </div>
+                    <input type="hidden" name="txtidempleado" value="${EmpleadoActivo.getIdemploye().getIdemploye()}">
+                    <input type="hidden" name="txtnombrempleado" value="${EmpleadoActivo.getIdemploye().getName()} ${EmpleadoActivo.getIdemploye().getLastnames()}">
+                    <div class="col-md-5">
                         <label>Tipo de credito: </label>
                         <div class="row">
                             <div class="">
-                                <select class="form-select fecha" name="txttipo credito" id="txttipo credito" onchange="">
-                                    <option value="DE TEMPORADA">DE TEMPORADA</option>
-                                    <option value="PRODUCTIVO">PRODUCTIVO</option>
-                                    <option value="MI VIVIENDA">MI VIVIENDA</option>
+                                <select class="form-select fecha" name="txttipocredito" id="txt_tipocredito" onchange="">
+
                                 </select>
                             </div>
                         </div>
                         <small id="desc-credito" class="form-text text-danger"></small>
                     </div>
-                    <div class="col-md-6">
-                        <label>Tipo de monto: </label>
+                    <div class="form-group col-md-7">
+                        <label>Monto Solicitado:  </label>
+                        <input type="text" class="form-control" name="txtmonto" >
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label>Plazo: </label>
+                        <input type="number" class="form-control" name="txtplazo" onkeyup="" placeholder="No. Meses" />
+                    </div>
+                    <div class="form-group col-md-8">
+                        <label>Fecha solicitud: </label>
+                        <input type="date" class="form-control" name="txtfechasolicitud" onkeyup="" />
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label>Aval 1:</label>
+                        <div class="input-group">
+                            <button class="btn btn-outline-secondary" type="button" id="btn-buscaraval1"><i class="fas fa-search"></i></button>
+                            <input type="text" class="form-control" placeholder="Id Socio"  aria-describedby="btn-buscarsocio" name="txtidaval1" id="txt_idaval1" >
+                        </div>
+                    </div>
+                    <div class="form-group col-md-8">
+                        <label>Nombre del Aval:</label>
+                        <input type="text" class="form-control campo" name="txtnombreaval1" id="txt_nombreaval1" onkeyup=""/>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label>Aval 2:</label>
+                        <div class="input-group">
+                            <button class="btn btn-outline-secondary" type="button" id="btn-buscaraval2"><i class="fas fa-search"></i></button>
+                            <input type="text" class="form-control" placeholder=" Id Socio"  aria-describedby="btn-buscarsocio" name="txtidaval2" id="txt_idaval2" >
+                        </div>
+                    </div>
+                    <div class="form-group col-md-8">
+                        <label>Nombre del Aval:</label>
+                        <input type="text" class="form-control campo" name="txtnombreaval2" id="txt_nombreaval2"/>
+                    </div>
+                    <div class="col-md-5">
+                        <label>Comprobante Ingresos:</label>
                         <div class="row">
                             <div class="">
-                                <select class="form-select fecha" name="txtmonto" id="txtmonto" onchange="">
-                                    <option value="1,000.00">1,000.00</option>
-                                    <option value="2,000.00">2,000.00</option>
-                                    <option value="3,000.00">3,000.00</option>
-                                    <option value="4,000.00">4,000.00</option>
-                                    <option value="5,000.00">5,000.00</option>
-                                    <option value="6,000.00">6,000.00</option>
-                                    <option value="7,000.00">7,000.00</option>
-                                    <option value="8,000.00">8,000.00</option>
-                                    <option value="9,000.00">9,000.00</option>
-                                    <option value="10,000.00">10,000.00</option>
-                                    <option value="11,000.00">11,000.00</option>
-                                    <option value="12,000.00">12,000.00</option>
-                                    <option value="13,000.00">13,000.00</option>
-                                    <option value="14,000.00">14,000.00</option>
-                                    <option value="15,000.00">15,000.00</option>
-                                    <option value="16,000.00">16,000.00</option>
-                                    <option value="17,000.00">17,000.00</option>
-                                    <option value="18,000.00">18,000.00</option>
-                                    <option value="19,000.00">19,000.00</option>
-                                    <option value="20,000.00">20,000.00</option>
+                                <select class="form-select" name="txtcomprobanteingresos" id="txcomprobanteingresos" onchange="">
+                                    <option value="1">Aceptado</option>
+                                    <option value="2">Pendiente</option>
+                                    <option value="0">Rechazado</option>
                                 </select>
                             </div>
                         </div>
-                        <small id="desc-rol" class="form-text text-danger"></small>
+                    </div>
+                    <div class="form-group col-md-7">
+                        <label>Razón Social:</label>
+                        <input type="text" class="form-control campo" name="txtrazonsocial" onkeyup=""/>
                     </div>
                     <div class="form-group col-md-6">
-                        <label>Saldo: </label>
-                        <input type="number" class="form-control" name="txtsaldo" onkeyup="" />
+                        <label>Ubicacion:</label>
+                        <input type="text" class="form-control campo" name="txtubicacion" onkeyup=""/>
                     </div>
                     <div class="form-group col-md-6">
-                        <label>Plazo: </label>
-                        <input type="number" class="form-control" name="txtplazo" onkeyup="" />
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label>Fecha de solicitud: </label>
-                        <input type="date" class="form-control" name="txtfecha solicitud" onkeyup="" />
+                        <label>Giro:</label>
+                        <input type="text" class="form-control campo" name="txtgiro" onkeyup=""/>
                     </div>
                     <menu>
                         <button type="submit" class="btn btn-success"><i class="fas fa-plus"></i>Registrar</button>
@@ -143,68 +162,93 @@
             </div>
             <div class="card-body">
                 <form action="ServletContainer?menu=loan" method="POST" class="row g-3">
-                    <input type="hidden" name="id" value="" id="idloan">
-                    <div class="form-group col-md-6">
-                        <label>Nombre del socio:</label>
-                        <input type="text" class="form-control campo" name="txtnombre socio" onkeyup="" pattern="^[a-zA-ZáéíóúÁÉÍÓÚÑñüÜ ]+" title="Sólo letras" value="${loan.getIdloan()}"/>
+                    <input type="hidden" name="action" value="Actualizar">
+                    <div class="form-group col-md-3">
+                        <input type="hidden" name="txtidprestamo" id="txt_idprestamo" >
+                        <label>Buscar Socio:</label>
+                        <div class="input-group">
+                            <button class="btn btn-outline-secondary" type="button" id="btn-buscarsocio2" disabled><i class="fas fa-search"></i></button>
+                            <input type="text" class="form-control" placeholder="Por Id"  aria-describedby="btn-buscarsocio" name="txtidsocio1" id="tidsocio1" disabled >
+                        </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="form-group col-md-9">
+                        <label>Nombre del socio:</label>
+                        <input type="text" class="form-control campo" name="txtnombresocio" id="tnombresocio1" pattern="^[a-zA-ZáéíóúÁÉÍÓÚÑñüÜ ]+" title="Sólo letras" disabled/>
+                    </div>
+                    <input type="hidden" name="txtidempleado" value="${EmpleadoActivo.getIdemploye().getIdemploye()}">
+                    <input type="hidden" name="txtnombrempleado" value="${EmpleadoActivo.getIdemploye().getName()} ${EmpleadoActivo.getIdemploye().getLastnames()}">
+                    <div class="col-md-5">
                         <label>Tipo de credito: </label>
                         <div class="row">
                             <div class="">
-                                <select class="form-select fecha" name="txttipo credito" id="txttipo credito1" onchange="">
-                                    <option value="DE TEMPORADA">DE TEMPORADA</option>
+                                <select class="form-select fecha" name="txttipocredito" id="txt_tipocredito2" onchange="">
+                                    <%--<option value="DE TEMPORADA">DE TEMPORADA</option>
                                     <option value="PRODUCTIVO">PRODUCTIVO</option>
-                                    <option value="MI VIVIENDA">MI VIVIENDA</option>
+                                    <option value="MI VIVIENDA">MI VIVIENDA</option>--%>
                                 </select>
                             </div>
                         </div>
-                        <small id="desc-credito1" class="form-text text-danger"></small>
                     </div>
-                    <div class="col-md-6">
-                        <label>Tipo de monto: </label>
+                    <div class="form-group col-md-7">
+                        <label>Monto Solicitado:  </label>
+                        <input type="text" class="form-control" name="txtmonto" id="txtmonto2">
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label>Plazo: </label>
+                        <input type="number" class="form-control" name="txtplazo" id="txt_plazo" onkeyup="" placeholder="No. Meses" />
+                    </div>
+                    <div class="form-group col-md-8">
+                        <label>Fecha solicitud: </label>
+                        <input type="date" class="form-control" name="txtfechasolicitud" id="txt_fechasolicitud" onkeyup="" />
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label>Aval 1:</label>
+                        <div class="input-group">
+                            <button class="btn btn-outline-secondary" type="button" id="btn-buscaraval12"><i class="fas fa-search"></i></button>
+                            <input type="text" class="form-control" placeholder="Id Socio"  aria-describedby="btn-buscarsocio" name="txtidaval" id="txt_idaval11" >
+                        </div>
+                    </div>
+                    <div class="form-group col-md-8">
+                        <label>Nombre del Aval:</label>
+                        <input type="text" class="form-control campo" name="txtnombreaval1" id="txt_nombreaval11"/>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label>Aval 2:</label>
+                        <div class="input-group">
+                            <button class="btn btn-outline-secondary" type="button" id="btn-buscaraval22"><i class="fas fa-search"></i></button>
+                            <input type="text" class="form-control" placeholder=" Id Socio"  aria-describedby="btn-buscarsocio" name="txtidaval" id="txt_idaval22" >
+                        </div>
+                    </div>
+                    <div class="form-group col-md-8">
+                        <label>Nombre del Aval:</label>
+                        <input type="text" class="form-control campo" name="txtnombreaval2" id="txt_nombreaval22"/>
+                    </div>
+                    <div class="col-md-5">
+                        <label>Comprobante Ingresos:</label>
                         <div class="row">
                             <div class="">
-                                <select class="form-select fecha" name="txtmonto" id="txtmonto1" onchange="">
-                                    <option value="1,000.00">1,000.00</option>
-                                    <option value="2,000.00">2,000.00</option>
-                                    <option value="3,000.00">3,000.00</option>
-                                    <option value="4,000.00">4,000.00</option>
-                                    <option value="5,000.00">5,000.00</option>
-                                    <option value="6,000.00">6,000.00</option>
-                                    <option value="7,000.00">7,000.00</option>
-                                    <option value="8,000.00">8,000.00</option>
-                                    <option value="9,000.00">9,000.00</option>
-                                    <option value="10,000.00">10,000.00</option>
-                                    <option value="11,000.00">11,000.00</option>
-                                    <option value="12,000.00">12,000.00</option>
-                                    <option value="13,000.00">13,000.00</option>
-                                    <option value="14,000.00">14,000.00</option>
-                                    <option value="15,000.00">15,000.00</option>
-                                    <option value="16,000.00">16,000.00</option>
-                                    <option value="17,000.00">17,000.00</option>
-                                    <option value="18,000.00">18,000.00</option>
-                                    <option value="19,000.00">19,000.00</option>
-                                    <option value="20,000.00">20,000.00</option>
+                                <select class="form-select" name="txtcomprobanteingresos" id="txt_comprobanteingresos" onchange="">
+                                    <option value="1">Aceptado</option>
+                                    <option value="2">Pendiente</option>
+                                    <option value="0">Rechazado</option>
                                 </select>
                             </div>
                         </div>
-                        <small id="desc-rol1" class="form-text text-danger"></small>
+                    </div>
+                    <div class="form-group col-md-7">
+                        <label>Razón Social:</label>
+                        <input type="text" class="form-control campo" name="txtrazonsocial" id="txt_razonsocial" onkeyup=""/>
                     </div>
                     <div class="form-group col-md-6">
-                        <label>Saldo: </label>
-                        <input type="number" class="form-control" name="txtsaldo" onkeyup="" />
+                        <label>Ubicacion:</label>
+                        <input type="text" class="form-control campo" name="txtubicacion" id="txt_ubicacion" onkeyup=""/>
                     </div>
                     <div class="form-group col-md-6">
-                        <label>Plazo: </label>
-                        <input type="number" class="form-control" name="txtplazo" onkeyup="" />
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label>Fecha de solicitud: </label>
-                        <input type="date" class="form-control" name="txtfecha solicitud" onkeyup="" />
+                        <label>Giro:</label>
+                        <input type="text" class="form-control campo" name="txtgiro" id="txt_giro" onkeyup=""/>
                     </div>
                     <menu>
-                        <button type="submit" class="btn btn-primary" name="action" value="Actualizar"><i class="fas fa-edit"></i>Modificar</button>
+                        <button type="submit" class="btn btn-primary"><i class="fas fa-edit"></i>Modificar</button>
                     </menu>
                 </form>
             </div>
@@ -220,13 +264,14 @@
             </div>
             <div class="card-body">
                 <form action="${context}/ServletContainer?menu=loan"  method="POST" class="row g-3">
-                    <input type="hidden" name="id" value="" id="idloan2">
+                    <input type="hidden" name="txtidprestamo1" id="txt_idprestamo1" value="">
+                    <input type="hidden" name="action" value="Eliminar">
                     <div class="form-group col-md-12">
                         <label>Eliminar a:</label>
-                        <input type="text" class="form-control campo" name="txtnombre socio" id="txtnombre socio" disabled />
+                        <input type="text" class="form-control campo" name="txtnombresocio" id="txt_nombresocio3" disabled />
                     </div>
                     <menu>
-                        <button type="submit" class="btn btn-danger" name="action" value="Eliminar" ><i class="fas fa-plus"></i>Eliminar</button>
+                        <button type="submit" class="btn btn-danger"><i class="fas fa-plus"></i>Eliminar</button>
                     </menu>
                 </form>
             </div>
@@ -237,7 +282,8 @@
 <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
 <script src="${context}/assets/dist/js/funciones.js"></script>
-<script src="${context}/assets/dist/js/employefunctions.js"></script>
+<%--<script src="${context}/assets/dist/js/employefunctions.js"></script>--%>
+<script src="${context}/assets/dist/js/loanfuntions.js"></script>
 <script src="${context}/assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="${context}/assets/plugins/bootstrap/js/bootstrap.bundle.js"></script>
 <script src="${context}/assets/plugins/bootstrap/js/bootstrap.min.js"></script>

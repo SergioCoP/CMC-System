@@ -11,7 +11,6 @@ public class BeanLoan {
     private String employee_name;
     private String credit_type;
     private float amount;//monto solicitado
-    private float balance;//monto restante
     private int period;//plazo solicitado a pagar
     private String date_request;//fecha de solicitid
     private String aval1;
@@ -24,7 +23,7 @@ public class BeanLoan {
     public BeanLoan() {
     }
 
-    public BeanLoan(int idloan, BeanMember idmember, BeanEmployee idemployee, String member_name, String employee_name, String credit_type, float amount, float balance, int period, String date_request, String aval1, String aval2, String income_document, String razon_social, String location, String line_bussines) {
+    public BeanLoan(int idloan, BeanMember idmember, BeanEmployee idemployee, String member_name, String employee_name, String credit_type, float amount, int period, String date_request, String aval1, String aval2, String income_document, String razon_social, String location, String line_bussines) {
         this.idloan = idloan;
         this.idmember = idmember;
         this.idemployee = idemployee;
@@ -32,7 +31,6 @@ public class BeanLoan {
         this.employee_name = employee_name;
         this.credit_type = credit_type;
         this.amount = amount;
-        this.balance = balance;
         this.period = period;
         this.date_request = date_request;
         this.aval1 = aval1;
@@ -97,14 +95,6 @@ public class BeanLoan {
 
     public void setAmount(float amount) {
         this.amount = amount;
-    }
-
-    public float getBalance() {
-        return balance;
-    }
-
-    public void setBalance(float balance) {
-        this.balance = balance;
     }
 
     public int getPeriod() {

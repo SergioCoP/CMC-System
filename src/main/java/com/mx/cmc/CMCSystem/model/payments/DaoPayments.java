@@ -1,7 +1,11 @@
 package com.mx.cmc.CMCSystem.model.payments;
 
-import com.mx.cmc.CMCSystem.model.payments.BeanPayments;
-import com.mx.cmc.CMCSystem.model.payments.DaoPayments;
+import com.lowagie.text.*;
+import com.lowagie.text.Font;
+import com.lowagie.text.pdf.PdfPTable;
+import com.lowagie.text.pdf.PdfWriter;
+import com.mx.cmc.CMCSystem.model.credit_history.BeanCreditHistory;
+import com.mx.cmc.CMCSystem.model.credits.BeanCredits;
 import com.mx.cmc.CMCSystem.model.members.BeanMember;
 import com.mx.cmc.CMCSystem.model.employees.BeanEmployee;
 import com.mx.cmc.CMCSystem.model.loans.BeanLoan;
@@ -9,10 +13,9 @@ import com.mx.cmc.CMCSystem.service.ConnectionMySQL;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.sql.CallableStatement;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import javax.servlet.http.HttpServletResponse;
+import java.awt.*;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,33 +26,28 @@ public class DaoPayments {
     Logger logger = LoggerFactory.getLogger(DaoPayments.class);
     int r;
 
-    public List<BeanPayments> findAll(){
-        List<BeanPayments> listPayments = new ArrayList<>();
+    public List<BeanCreditHistory> findAll(){
+        List<BeanCreditHistory> listPayments = new ArrayList<>();
         try{
             con = ConnectionMySQL.getConnection();
-            cstm = con.prepareCall("{call findPayments}");
+            cstm = con.prepareCall("{call findpayments}");
             rs = cstm.executeQuery();
             while(rs.next()){
 
-                BeanPayments payments = new BeanPayments();
-                BeanLoan loan = new BeanLoan();
-                BeanMember member = new BeanMember();
-                BeanEmployee employe = new BeanEmployee();
+                BeanCreditHistory credithis = new BeanCreditHistory();
 
-                payments.setIdpayment(rs.getInt("idpayment"));
-                member.setIdmember(rs.getInt("idmember"));
-                employe.setIdemploye(rs.getInt("idemploye"));
-                loan.setIdloan(rs.getInt("idloan"));
-                payments.setMembername(rs.getString("membername"));
-                payments.setDate_payment(rs.getString("date_payment"));
-                payments.setAmount_payment(rs.getFloat("amount_payment"));
-                payments.setTotal_amount(rs.getFloat("total_amount"));
-                payments.setBalance_loan(rs.getInt("total_amount"));
-                payments.setIdmember(member);
-                payments.setIdemploye(employe);
-                payments.setIdloan(loan);
+                credithis.setIdpayment(rs.getInt("idabono"));
+                credithis.setIdmember(rs.getInt("idsocio"));
+                credithis.setMembername(rs.getString("nombresocio"));
+                credithis.setCreditname(rs.getString("tipo_credito"));
+                credithis.setPeriod(rs.getInt("plazo"));
+                credithis.setTotal_amount(rs.getFloat("monto_total"));
+                credithis.setBalance(rs.getFloat("monto_restante"));
+                credithis.setAmount_payment(rs.getFloat("monto_abonado"));
+                credithis.setDate_payment(rs.getString("fecha_abono"));
+                credithis.setStatus(rs.getInt("estatus"));
 
-                listPayments.add(payments);
+               listPayments.add(credithis);
             }
         }catch(SQLException e){
             logger.error("Ha ocurrido un error: " + e.getMessage());
@@ -63,7 +61,7 @@ public class DaoPayments {
         BeanPayments payments = null;
         try{
             con = ConnectionMySQL.getConnection();
-            cstm = con.prepareCall("select * from abonos as a inner join empleados as e on a.idempleado = e.idempleado inner join socios as s on a.idsocio = s.idsocio inner join prestamos as p on a.idprestamo = p.idprestamo where p.idabono=?");
+            cstm = con.prepareCall("select * from abonos where idsocio =?");
             cstm.setInt(1,id);
             rs = cstm.executeQuery();
 
@@ -74,19 +72,16 @@ public class DaoPayments {
                 BeanEmployee employe = new BeanEmployee();
                 payments = new BeanPayments();
 
-                payments.setIdpayment(rs.getInt("idpayment"));
-                member.setIdmember(rs.getInt("idmember"));
-                employe.setIdemploye(rs.getInt("idemploye"));
-                loan.setIdloan(rs.getInt("idloan"));
-                payments.setMembername(rs.getString("membername"));
-                payments.setDate_payment(rs.getString("date_payment"));
-                payments.setAmount_payment(rs.getFloat("amount_payment"));
-                payments.setTotal_amount(rs.getFloat("total_amount"));
-                payments.setBalance_loan(rs.getInt("total_amount"));
+                payments.setIdpayment(rs.getInt("idabono"));
+                member.setIdmember(rs.getInt("idsocio"));
+                employe.setIdemploye(rs.getInt("idempleado"));
+                loan.setIdloan(rs.getInt("idprestamo"));
+                payments.setMembername(rs.getString("nombresocio"));
+                payments.setDate_payment(rs.getString("fecha_abono"));
+                payments.setAmount_payment(rs.getFloat("monto_abonado"));
                 payments.setIdmember(member);
                 payments.setIdemploye(employe);
                 payments.setIdloan(loan);
-
             }
         }catch(SQLException e){
             logger.error("Ha ocurrido un error: " + e.getMessage());
@@ -99,7 +94,7 @@ public class DaoPayments {
     public int agregar(BeanPayments payments){
         try{
             con = ConnectionMySQL.getConnection();
-            cstm = con.prepareCall("{call registerPayments(?,?,?,?,?,?,?,?)}");
+            cstm = con.prepareCall("{call registerpayment(?,?,?,?,?,?)}");
 
             cstm.setInt(1, payments.getIdmember().getIdmember());
             cstm.setInt(2,payments.getIdemploye().getIdemploye());
@@ -107,8 +102,6 @@ public class DaoPayments {
             cstm.setString(4,payments.getMembername());
             cstm.setString(5,payments.getDate_payment());
             cstm.setFloat(6,payments.getAmount_payment());
-            cstm.setFloat(7,payments.getTotal_amount());
-            cstm.setFloat(8,payments.getBalance_loan());
 
             cstm.executeUpdate();
         }catch(SQLException e){
@@ -119,7 +112,7 @@ public class DaoPayments {
         return r;
     }
 
-    public int actualizar(BeanPayments payments){
+    /*public int actualizar(BeanPayments payments){
         try{
             con = ConnectionMySQL.getConnection();
             cstm = con.prepareCall("{call modifyPayments(?,?,?,?,?,?,?,?,?)}");
@@ -131,8 +124,6 @@ public class DaoPayments {
             cstm.setString(5,payments.getMembername());
             cstm.setString(6,payments.getDate_payment());
             cstm.setFloat(7,payments.getAmount_payment());
-            cstm.setFloat(8,payments.getTotal_amount());
-            cstm.setFloat(9,payments.getBalance_loan());
 
             cstm.executeUpdate();
 
@@ -143,9 +134,9 @@ public class DaoPayments {
         }
         return r;
 
-    }
+    }*/
 
-    public void eliminar(int id){
+    /*public void eliminar(int id){
         try{
             con = ConnectionMySQL.getConnection();
             cstm = con.prepareCall("{call deletepayments(?)}");
@@ -156,6 +147,31 @@ public class DaoPayments {
         }finally {
             ConnectionMySQL.closeConnections(con,cstm);
         }
+    }*/
+
+  /*  public void export(HttpServletResponse response) {
+        try (Document document = new Document(PageSize.A4)){
+            PdfWriter.getInstance(document, response.getOutputStream());
+            document.open();
+            Font font= FontFactory.getFont(FontFactory.HELVETICA);
+            font.setSize(20);
+            font.setColor(Color.white);
+            Paragraph paragraph= new Paragraph("Lista de pagos",font);
+            paragraph.setAlignment(Paragraph.ALIGN_CENTER);
+            document.add(paragraph);
+            PdfPTable table = new PdfPTable(6);
+            table.setWidthPercentage(100f);
+            table.setWidths(new int[] {1,2,3,3,3,3,3,3,3});
+            table.setSpacingBefore(10f);
+            findAll(table);
+            document.add(table);
+            document.close();
+        } catch (Exception e) {
+            System.out.println("Error: "+ e);
+        }
     }
+
+    private void findAll(PdfPTable table) {
+    }*/
 
 }

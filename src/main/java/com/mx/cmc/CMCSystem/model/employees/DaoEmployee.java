@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DaoEmployee {
-   /* Connection con;
+   Connection con;
     CallableStatement cstm;
     ResultSet rs;
     Logger logger = LoggerFactory.getLogger(DaoEmployee.class);
@@ -133,7 +133,7 @@ public class DaoEmployee {
             ConnectionMySQL.closeConnections(con,cstm);
         }
     }
-    public BeanEmployee Validar(String correo, String contrasena){
+   /* public BeanEmployee Validar(String correo, String contrasena){
         BeanEmployee employee = null;
 
         try{

@@ -12,6 +12,12 @@
     font-family: 'Poppins', sans-serif;
     transition:all .3s;
 }
+.timg {
+    height: 20px;
+    width: 20px;
+    margin: 0;
+    padding: 0;
+}
 
 .sidebar {
     width: 345px;

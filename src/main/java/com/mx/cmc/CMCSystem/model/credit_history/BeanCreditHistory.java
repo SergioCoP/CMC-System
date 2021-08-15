@@ -1,49 +1,58 @@
 package com.mx.cmc.CMCSystem.model.credit_history;
 
+import com.mx.cmc.CMCSystem.model.credits.BeanCredits;
+import com.mx.cmc.CMCSystem.model.loans.BeanLoan;
+import com.mx.cmc.CMCSystem.model.members.BeanMember;
+import com.mx.cmc.CMCSystem.model.payments.BeanPayments;
+
 public class BeanCreditHistory {
-    private int idsocio_history;
-    private int idloan; //loan es prestamo
-    private String credit_name; //noombre del tipo de credito
-    private int period; //plazo al que se esta pagando
-    private float total_amount; //monto total prestado
-    private float balance; //monto restante a pagar
-    private String status; //mencionar el estado del prestamo
+
+    private int idmember;
+    private int idpayment;
+    private String membername;
+    private String creditname;
+    private int period;
+    private float total_amount;
+    private float balance;
+    private float amount_payment;
+    private String date_payment;
+    private int status;
+
 
     public BeanCreditHistory() {
     }
 
-    public BeanCreditHistory(int idsocio_history, int idloan, String credit_name, int period, float total_amount, float balance, String status) {
-        this.idsocio_history = idsocio_history;
-        this.idloan = idloan;
-        this.credit_name = credit_name;
-        this.period = period;
-        this.total_amount = total_amount;
-        this.balance = balance;
-        this.status = status;
+
+    public int getIdmember() {
+        return idmember;
     }
 
-    public int getIdsocio_history() {
-        return idsocio_history;
+    public void setIdmember(int idmember) {
+        this.idmember = idmember;
     }
 
-    public void setIdsocio_history(int idsocio_history) {
-        this.idsocio_history = idsocio_history;
+    public int getIdpayment() {
+        return idpayment;
     }
 
-    public int getIdloan() {
-        return idloan;
+    public void setIdpayment(int idpayment) {
+        this.idpayment = idpayment;
     }
 
-    public void setIdloan(int idloan) {
-        this.idloan = idloan;
+    public String getMembername() {
+        return membername;
     }
 
-    public String getCredit_name() {
-        return credit_name;
+    public void setMembername(String membername) {
+        this.membername = membername;
     }
 
-    public void setCredit_name(String credit_name) {
-        this.credit_name = credit_name;
+    public String getCreditname() {
+        return creditname;
+    }
+
+    public void setCreditname(String creditname) {
+        this.creditname = creditname;
     }
 
     public int getPeriod() {
@@ -70,11 +79,27 @@ public class BeanCreditHistory {
         this.balance = balance;
     }
 
-    public String getStatus() {
+    public float getAmount_payment() {
+        return amount_payment;
+    }
+
+    public void setAmount_payment(float amount_payment) {
+        this.amount_payment = amount_payment;
+    }
+
+    public String getDate_payment() {
+        return date_payment;
+    }
+
+    public void setDate_payment(String date_payment) {
+        this.date_payment = date_payment;
+    }
+
+    public int getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(int status) {
         this.status = status;
     }
 }

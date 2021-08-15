@@ -21,30 +21,45 @@
         <div class="col-sm-12">
             <input type="hidden" id="seccion" value="payments">
             <input type="text" id="buscarreg" class="inputbuscar" onkeyup="buscar()" placeholder="Buscar">
-            <button type="button" class="btn btn-success" id="btn-registar"><i class="fas fa-plus"></i>Agregar</button>
+            <button type="button" class="btn btn-success" id="btn-registar"><i class="fas fa-plus"></i>Agregar Pago</button>
             <table class="table" id="datostabla">
                 <thead class="table-light">
                 <tr>
-                    <th>Nombre de Abono</th>
-                    <th>Fecha de abono</th>
-                    <th>Monto total</th>
-                    <th>Monto Abonado</th>
-                    <th>Saldo</th>
+                    <th>No</th>
+                    <th>Nombre Socio</th>
+                    <th>Tipo Credito</th>
+                    <th>Plazo</th>
+                    <%--<th>Monto</th>--%>
+                    <th>Restante</th>
+                  <%--  <th>Monto Abonado</th>--%>
+                    <th>Fecha Abono</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
                 </tr>
                 </thead>
                 <tbody>
 
                 <c:forEach items="${listPayments}" var="payments" >
                 <tr>
-                    <td>${payments.getMembername()}}</td>
+                    <td>${payments.getIdpayment()}</td>
+                    <td>${payments.getMembername()}</td>
+                    <td>${payments.getCreditname()}</td>
+                    <td>${payments.getPeriod()} Meses</td>
+                  <%--  <td>${payments.getTotal_amount()}</td>--%>
+                    <td>$ ${payments.getBalance()}</td>
+                  <%--  <td>${payments.getAmount_payment()}</td>--%>
                     <td>${payments.getDate_payment()}</td>
-                    <td>${payments.getTotal_amount()}</td>
-                    <td>${payments.getAmount_payment()}</td>
-                    <td>${payments.getBalance_loan()}}</td>
                     <td>
+                        <c:if test="${payments.getStatus() == 1}">
+                            <span class="badge bg-success">En Curso</span>
+                        </c:if>
+                        <c:if test="${payments.getStatus() == 0}">
+                            <span class="badge bg-primary">Terminado</span>
+                        </c:if>
+                    </td>
+                   <td>
                         <!--- href="ServletContainer?menu=payment&action=ListarporId=${payments.getIdpayment()}"-->
-                        <a class="btn btn-primary btn-sm btn-modificar" data-id="${payments.getIdpayment()}" data-membername="${payments.getMembername()} " data-date_payment="${payments.getDate_payment()}" data-amount_payment="${payments.getAmount_payment()}" data-total_amount="${payments.getTotal_amount()}" data-balance_loan="${payments.getBalance_loan()}"><i class="fas fa-edit"></i></a>
-                        <a class="btn btn-danger btn-sm btn-eliminar" data-id="${payments.getIdpayment()}" data-membername="${payments.getMembername()} " data-date_payment="${payments.getDate_payment()}" ><i class="fas fa-trash-alt"></i></a>
+                        <a class="btn btn-primary btn-sm btn-verpagos" data-id="${payments.getIdmember()}"><i class="fas fa-eye"></i> Ver Pagos</a>
                         <!--  href="ServletContainer?menu=payment&action=Eliminar&id=${payments.getIdpayment()}" -->
                     </td>
                 </tr>
@@ -53,7 +68,6 @@
             </table>
         </div>
     </div>
-
 </div>
 
 <dialog id="Registrar" class="col-sm-5 dialogo">
@@ -65,25 +79,29 @@
             <div class="card-body">
                 <form action="ServletContainer?menu=payment" method="POST" class="row g-3" >
                     <input type="hidden" name="action" value="Registrar">
-                    <div class="form-group col-md-6">
-                        <label>Nombre Abono:</label>
-                        <input type="text" class="form-control campo" name="txtnombresocio" onkeyup="" pattern="^[a-zA-ZáéíóúÁÉÍÓÚÑñüÜ ]+" title="Sólo letras" value="${payments.getIdpayment()}"/>
+                    <div class="form-group col-md-3">
+                        <label>Buscar Socio:</label>
+                        <div class="input-group">
+                            <button class="btn btn-outline-secondary" type="button" id="btn-buscarsocio"><i class="fas fa-search"></i></button>
+                            <input type="text" class="form-control" placeholder="Por Id"  aria-describedby="btn-buscarsocio" name="txtidsocio" id="txt_idsocio" >
+                        </div>
                     </div>
-                    <div class="form-group col-md-6">
+                    <input type="hidden" name="txtidempleado" value="${EmpleadoActivo.getIdemploye().getIdemploye()}">
+                    <div class="form-group col-md-9">
+                        <label>Nombre del socio:</label>
+                        <input type="text" class="form-control campo" name="txtnombresocio" id="tnombresocio" pattern="^[a-zA-ZáéíóúÁÉÍÓÚÑñüÜ ]+" title="Sólo letras"/>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label>No.Prestamo</label>
+                        <input type="text" class="form-control campo" name="txtidprestamo" id="tidprestamo" disabled/>
+                    </div>
+                    <div class="form-group col-md-4">
                         <label>Fecha:</label>
                         <input type="date" class="form-control campo" name="txtfechaabono" onkeyup="" title="Fecha de registro"/>
                     </div>
-                    <div class="form-group col-md-12">
-                        <label>Monto total: </label>
-                        <input type="number" class="form-control" name="txtmontototal" onkeyup="" />
-                    </div>
-                    <div class="form-group col-md-6">
+                    <div class="form-group col-md-5">
                         <label>Monto abonado: </label>
                         <input type="number" class="form-control" name="txtmontoabonado" onkeyup="" />
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label>Saldo: </label>
-                        <input type="number" class="form-control" name="txtsaldoprestamo" onkeyup="" />
                     </div>
                     <menu>
                         <button type="submit" class="btn btn-success"><i class="fas fa-plus"></i>Registrar</button>
@@ -94,61 +112,25 @@
     </div>
 </dialog>
 
-<dialog id="Modificar" class="col-sm-5 dialogo" data-backdrop="static">
+
+<dialog id="Pagos" class="col-sm-7 dialogo">
     <div class="d-flex">
         <div class="card col-sm-12 border-0">
             <div class="card-header align-content-end">
                 <button class="btn btn-light" id="cerrar1" type="reset"><i class="fas fa-times"></i></button>
             </div>
             <div class="card-body">
-                <form action="ServletContainer?menu=payment" method="POST" class="row g-3">
-                    <input type="hidden" name="id" value="" id="idpayment">
-                    <div class="form-group col-md-6">
-                        <label>Nombre Abono:</label>
-                        <input type="text" class="form-control campo" name="txtnombresocio" onkeyup="" pattern="^[a-zA-ZáéíóúÁÉÍÓÚÑñüÜ ]+" title="Sólo letras" value="${payments.getIdpayment()}"/>
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label>Fecha:</label>
-                        <input type="date" class="form-control campo" name="txtfechaabono" onkeyup="" title="Fecha de registro"/>
-                    </div>
-                    <div class="form-group col-md-12">
-                        <label>Monto total: </label>
-                        <input type="number" class="form-control" name="txtmontototal" onkeyup="" />
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label>Monto abonado: </label>
-                        <input type="number" class="form-control" name="txtmontoabonado" onkeyup="" />
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label>Saldo: </label>
-                        <input type="number" class="form-control" name="txtsaldoprestamo" onkeyup="" />
-                    </div>
-                    <menu>
-                        <button type="submit" class="btn btn-primary" name="action" value="Actualizar"><i class="fas fa-edit"></i>Modificar</button>
-                    </menu>
-                </form>
-            </div>
-        </div>
-    </div>
-</dialog>
-
-<dialog id="Eliminar" class="col-sm-5 dialogo">
-    <div class="d-flex">
-        <div class="card col-sm-12 border-0">
-            <div class="card-header align-content-end">
-                <button class="btn btn-light" id="cerrar2" type="reset"><i class="fas fa-times"></i></button>
-            </div>
-            <div class="card-body">
-                <form action="${context}/ServletContainer?menu=payment"  method="POST" class="row g-3">
-                    <input type="hidden" name="id" value="" id="idemploye2">
-                    <div class="form-group col-md-12">
-                        <label>Eliminar a:</label>
-                        <input type="text" class="form-control campo" name="txtnombre" id="txtnombre2" disabled />
-                    </div>
-                    <menu>
-                        <button type="submit" class="btn btn-danger" name="action" value="Eliminar" ><i class="fas fa-plus"></i>Eliminar</button>
-                    </menu>
-                </form>
+                <table class="table" id="datostabla1">
+                    <thead class="table-light">
+                    <tr>
+                        <th>No</th>
+                        <th>Nombre Socio</th>
+                        <th>Fecha de Abono</th>
+                        <th>Monto Abonado</th>
+                    </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
             </div>
         </div>
     </div>
@@ -157,10 +139,11 @@
 <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
 <script src="${context}/assets/dist/js/funciones.js"></script>
-<script src="${context}/assets/dist/js/payments.js"></script>
+
 <script src="${context}/assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="${context}/assets/plugins/bootstrap/js/bootstrap.bundle.js"></script>
 <script src="${context}/assets/plugins/bootstrap/js/bootstrap.min.js"></script>
 <script src="${context}/assets/dist/js/validarusuario.js"></script>
 </body>
+<script src="${context}/assets/dist/js/payments.js"></script>
 </html>

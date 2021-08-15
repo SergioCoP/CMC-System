@@ -127,7 +127,6 @@
             <c:if test="${EmpleadoActivo.getIdemploye().getRole() == 'Cajero'}">
                 <button type="button" class="btn btn-info btn-sm btn-informacion" data-id="${member.getIdmember()}" data-name="${member.getName()}" data-lastname="${member.getLastname()}" data-regdate="${member.getReg_dates()}" data-borndate="${member.getBorn_date()}" data-sex="${member.getSexo()}" data-ine="${member.getOfficial_id()}" data-certibirth="${member.getBirth_certificate()}" data-curp="${member.getCurp()}" data-compdomici="${member.getProof_residence()}" data-croqui="${member.getSketch_address()}"><i class="fas fa-eye"></i></button>
             </c:if>
-
           </td>
         </tr>
         </c:forEach>
