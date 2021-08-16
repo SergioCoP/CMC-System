@@ -24,7 +24,7 @@
                 <button type="button" class="btn btn-success" id="btn-registar"><i class="fas fa-plus"></i>Agregar</button>
             </c:if>
             <c:if test="${EmpleadoActivo.getIdemploye().getRole() == 'Cajero'}">
-
+                <input type="hidden" class="btn btn-success" id="btn-registar"></input>
             </c:if>
 
             <table class="table" id="datostabla">
@@ -62,6 +62,7 @@
                             <td>
                                 <a class="btn btn-primary btn-sm btn-modificar" data-id="${loan.getIdloan()}" data-memberid="${loan.getIdmember().getIdmember()}" data-namemember="${loan.getMember_name()}" data-creditype="${loan.getCredit_type()}" data-monto="${loan.getAmount()}" data-periodo="${loan.getPeriod()}" data-fechasolicitud="${loan.getDate_request()}" data-aval1="${loan.getAval1()}" data-aval2="${loan.getAval2()}" data-comprobanteingreso="${loan.getIncome_document()}" data-razonsocial="${loan.getRazon_social()}" data-ubicacion="${loan.getLocation()}" data-giro="${loan.getLine_bussines()}"><i class="fas fa-edit"></i></a>
                                 <a class="btn btn-danger btn-sm btn-eliminar" data-id="${loan.getIdloan()}" data-namemember="${loan.getMember_name()}"><i class="fas fa-trash-alt"></i></a>
+                                <a class="btn btn-success btn-sm btn-generaresquema"><i class="far fa-file-pdf"></i></a>
                             </td>
                         </c:if>
                         <c:if test="${EmpleadoActivo.getIdemploye().getRole() == 'Cajero'}">
@@ -189,13 +190,13 @@
                         <input type="hidden" name="txtidprestamo" id="txt_idprestamo" >
                         <label>Buscar Socio:</label>
                         <div class="input-group">
-                            <button class="btn btn-outline-secondary" type="button" id="btn-buscarsocio2" disabled><i class="fas fa-search"></i></button>
-                            <input type="text" class="form-control" placeholder="Por Id"  aria-describedby="btn-buscarsocio" name="txtidsocio1" id="tidsocio1" disabled >
+                            <button class="btn btn-outline-secondary" type="button" id="btn-buscarsocio2" ><i class="fas fa-search"></i></button>
+                            <input type="text" class="form-control" placeholder="Por Id"  aria-describedby="btn-buscarsocio" name="txtidsocio1" id="tidsocio1"  >
                         </div>
                     </div>
                     <div class="form-group col-md-9">
                         <label>Nombre del socio:</label>
-                        <input type="text" class="form-control campo" name="txtnombresocio" id="tnombresocio1" pattern="^[a-zA-ZáéíóúÁÉÍÓÚÑñüÜ ]+" title="Sólo letras" disabled/>
+                        <input type="text" class="form-control campo" name="txtnombresocio" id="tnombresocio1" pattern="^[a-zA-ZáéíóúÁÉÍÓÚÑñüÜ ]+" title="Sólo letras" />
                     </div>
                     <input type="hidden" name="txtidempleado" value="${EmpleadoActivo.getIdemploye().getIdemploye()}">
                     <input type="hidden" name="txtnombrempleado" value="${EmpleadoActivo.getIdemploye().getName()} ${EmpleadoActivo.getIdemploye().getLastnames()}">
@@ -296,6 +297,41 @@
                         <button type="submit" class="btn btn-danger"><i class="fas fa-plus"></i>Eliminar</button>
                     </menu>
                 </form>
+            </div>
+        </div>
+    </div>
+</dialog>
+
+
+<dialog id="Esquema_Pago" class="col-sm-8 dialogo">
+    <div class="d-flex">
+        <div class="card col-sm-12 border-0">
+            <div class="card-header align-content-end">
+                <button class="btn btn-light" id="cerrar3" type="reset"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="card-body" id="content-schema">
+                <div class="row g-3">
+                    <div class="form-group col-md-6">
+                    <label>Socio:</label>
+                     <input class="form-control campo" type="text" id="txtnombre_socio" >
+                    </div>
+                    <div class="form-group col-md-12">
+                        <table class="table" id="datostabla1">
+                            <thead class="table-light">
+                            <tr>
+                                <th>No</th>
+                                <th>Nombre Socio</th>
+                                <th>Fecha de Abono</th>
+                                <th>Monto Abonado</th>
+                            </tr>
+                            </thead>
+                            <tbody id="tdatospago"></tbody>
+                        </table>
+                    </div>
+                    <menu>
+                        <button class="btn btn-success" id="btn-exportar"><i class="far fa-file-pdf"></i></button>
+                    </menu>
+                </div>
             </div>
         </div>
     </div>

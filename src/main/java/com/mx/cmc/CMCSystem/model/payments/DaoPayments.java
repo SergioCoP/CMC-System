@@ -57,7 +57,8 @@ public class DaoPayments {
         return listPayments;
     }
 
-    public BeanPayments ListarporId(int id){
+    public List<BeanPayments> ListarporId(int id){
+        List<BeanPayments> listPagos = new ArrayList<>();
         BeanPayments payments = null;
         try{
             con = ConnectionMySQL.getConnection();
@@ -77,13 +78,14 @@ public class DaoPayments {
                 payments.setDate_payment(rs.getString("fecha_abono"));
                 payments.setAmount_payment(rs.getFloat("monto_abonado"));
 
+                listPagos.add(payments);
             }
         }catch(SQLException e){
             logger.error("Ha ocurrido un error: " + e.getMessage());
         }finally {
             ConnectionMySQL.closeConnections(con,cstm,rs);
         }
-        return payments;
+        return listPagos;
     }
 
     public int agregar(BeanPayments payments){

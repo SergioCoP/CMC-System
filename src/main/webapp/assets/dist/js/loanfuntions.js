@@ -125,7 +125,7 @@ function  cargarmodal2(boton2) {
         });
 
         btnbuscarsocio2.addEventListener('click', function() {
-            idsocio = $('#txt_idsocio1').val();
+            idsocio = $('#tidsocio1').val();
             inputsocios = $('#tnombresocio1');
             findMember();
         });

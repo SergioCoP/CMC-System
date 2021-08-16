@@ -156,7 +156,7 @@ public class ServletContainer extends HttpServlet {
             request.getRequestDispatcher("/views/main.jsp").forward(request, response);
         }
         if(menu.equalsIgnoreCase("employee")){
-            String ret = "Listar";
+
             switch (action){
                 case "Listar":
                     List<BeanUser> listUsers = userdao.findAll();
@@ -329,9 +329,10 @@ public class ServletContainer extends HttpServlet {
                 case "Cargar":
                     idabono = Integer.parseInt(request.getParameter("id"));
                     System.out.println(idabono);
-                   payments = daoPayments.ListarporId(idabono);
-                    map.put("AbonoSeleccionado", payments);
+                    List<BeanPayments> listPagos = daoPayments.ListarporId(idabono);
+                    map.put("AbonoSeleccionado", listPagos);
                     write(response, map);
+                    map.clear();
                   //  request.getRequestDispatcher("ServletContainer?menu=payment&action=Listar").forward(request, response);
                     return;
                 case "exportarPDF":

@@ -132,7 +132,7 @@ public class DaoLoan {
     public int actualizar(BeanLoan loan){
         try{
             con = ConnectionMySQL.getConnection();
-            cstm = con.prepareCall("{call modifyLoan(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}");
+            cstm = con.prepareCall("{call modifyLoan(?,?,?,?,?,?,?,?,?,?,?,?,?)}");
 
             cstm.setInt(1, loan.getIdloan());
             cstm.setString(2,loan.getEmployee_name());

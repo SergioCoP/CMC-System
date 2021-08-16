@@ -47,7 +47,6 @@ function cargarmodal(boton){
         var idmember = $(this).attr('data-id');
         findAbonos(idmember);
         dialogopagos.showModal();
-
     }
 }
 
@@ -86,8 +85,6 @@ const findMemberPrestamo = () =>{
 
 const findAbonos= (idmember) =>{
     const contextPath = window.location.origin + window.location.pathname.substring(0, window.location.pathname.indexOf("/",2));
-
-
     $.ajax({
         type: 'POST',
         url: contextPath + '/ServletContainer?menu=payment&action=Cargar',
@@ -95,27 +92,34 @@ const findAbonos= (idmember) =>{
     }).done(function(response){
        var dabono = response;
         //llenartablapago(dabono);
-        console.log(dabono);
+       // console.log(dabono.AbonoSeleccionado);
         let table = "";
+        $('#tdatospago').empty();
        // var list = response.AbonoSeleccionado.length;
    $.each(dabono, function(i,item){
           // console.log(item.membername);
-       let idpago = item.idpayment;
-       console.log(item);
-      table += `
+       let list = item;
+       if(list.length > 0){
+           for(let i = 0; i < list.length; i++){
+               table += `
             <tr>
-                <td>${item.idpayment}</td>
-                <td>${item.membername}</td>
-                <td>${item.date_payment}</td>
-                <td>${item.amount_payment}</td>
+                <td>${list[i].idpayment}</td>
+                <td>${list[i].membername}</td>
+                <td>${list[i].date_payment}</td>
+                <td>$ ${list[i].amount_payment}</td>
             </tr>
             `;
+           }
+       }else{
+           table = `
+		`;
+       }
+      // console.log(item);
       console.log(table);
        $('#tdatospago').append(table);
         //    llenartablapago(item);
         })
     })
-
 };
 
 /*const llenartablapago = (list) =>{
