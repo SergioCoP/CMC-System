@@ -1,14 +1,30 @@
 dialog::backdrop{
-    background: rgba(0,0,0,.6);
+    background: rgba(0,0,0,.1);
 }
 .dialogo{
     padding: 10px;
     border: none;
     border-radius:10px;
-    top: 10px;
+    top: 15%;
     position: fixed;
-    left:25%;
-    top: 10%;
-    right: 25%;
-    overflow:hidden;
+    left:15%;
+    overflow: hidden;
+   /* right: 15%;*/
 }
+
+#content-schema{
+    overflow-y: scroll;
+    max-height: 18% ;
+}
+content-schema1{
+    overflow-y: scroll;
+    max-height: 30% ;
+}
+#Esquema_Pago{
+    max-height: 75% ;
+}
+
+#Pagos{
+    max-height: 75% ;
+}
+

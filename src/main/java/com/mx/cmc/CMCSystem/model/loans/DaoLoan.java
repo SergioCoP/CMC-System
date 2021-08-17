@@ -1,5 +1,6 @@
 package com.mx.cmc.CMCSystem.model.loans;
 
+import com.mx.cmc.CMCSystem.model.credits.BeanCredits;
 import com.mx.cmc.CMCSystem.model.loans.BeanLoan;
 import com.mx.cmc.CMCSystem.model.loans.DaoLoan;
 import com.mx.cmc.CMCSystem.model.members.BeanMember;
@@ -33,6 +34,7 @@ public class DaoLoan {
                 BeanLoan loan = new BeanLoan();
                 BeanMember member = new BeanMember();
                 BeanEmployee employe = new BeanEmployee();
+
 
                 loan.setIdloan(rs.getInt("idprestamo"));
                 member.setIdmember(rs.getInt("idsocio"));
@@ -96,6 +98,33 @@ public class DaoLoan {
         }catch(SQLException e){
             logger.error("Ha ocurrido un error: " + e.getMessage());
         }finally {
+            ConnectionMySQL.closeConnections(con,cstm,rs);
+        }
+        return loan;
+    }
+
+    public BeanLoan Listarporidprestamo(int id){
+        BeanLoan loan = null;
+
+        try{
+            con = ConnectionMySQL.getConnection();
+            cstm = con.prepareCall("select *from datosamortizacion where idprestamo = ?");
+            cstm.setInt(1,id);
+            rs = cstm.executeQuery();
+
+            while(rs.next()){
+                loan = new BeanLoan();
+                BeanCredits credit = new BeanCredits();
+
+                loan.setIdloan(rs.getInt("idprestamo"));
+                loan.setMember_name(rs.getString("nombresocio"));
+                loan.setAmount(rs.getFloat("monto"));
+                loan.setDate_request(rs.getString("fecha_solicitud"));
+            }
+
+        }catch (SQLException e){
+            logger.error("Ha ocurrido un error: " + e.getMessage());
+        }finally{
             ConnectionMySQL.closeConnections(con,cstm,rs);
         }
         return loan;

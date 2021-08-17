@@ -1,5 +1,6 @@
 package com.mx.cmc.CMCSystem.model.loans;
 
+import com.mx.cmc.CMCSystem.model.credits.BeanCredits;
 import com.mx.cmc.CMCSystem.model.employees.BeanEmployee;
 import com.mx.cmc.CMCSystem.model.members.BeanMember;
 
@@ -7,6 +8,7 @@ public class BeanLoan {
     private int idloan;
     private BeanMember idmember;
     private BeanEmployee idemployee;
+    private BeanCredits idcredit;
     private String member_name;
     private String employee_name;
     private String credit_type;
@@ -161,6 +163,11 @@ public class BeanLoan {
         this.line_bussines = line_bussines;
     }
 
+    public BeanCredits getIdcredit() {
+        return idcredit;
+    }
 
-
+    public void setIdcredit(BeanCredits idcredit) {
+        this.idcredit = idcredit;
+    }
 }

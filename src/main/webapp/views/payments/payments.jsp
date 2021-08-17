@@ -119,7 +119,7 @@
             <div class="card-header align-content-end">
                 <button class="btn btn-light" id="cerrar1" type="reset"><i class="fas fa-times"></i></button>
             </div>
-            <div class="card-body">
+            <div class="card-body" id="content-schema1">
                 <table class="table" id="datostabla1">
                     <thead class="table-light">
                     <tr>
