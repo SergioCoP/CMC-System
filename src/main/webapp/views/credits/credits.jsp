@@ -29,7 +29,7 @@
 
             </c:if>
             <c:if test="${EmpleadoActivo.getIdemploye().getRole() == 'Coordinador'}">
-                <button type="button" class="btn btn-success btn-reg" id="btn-registar"><i class="fas fa-plus"></i>Agregar</button>
+                <button type="button" class="btn btn-success btn-reg" id="btn-registar"><i class="fas fa-plus"></i> Agregar</button>
             </c:if>
             <c:if test="${EmpleadoActivo.getIdemploye().getRole() == 'Asesor'}">
 
@@ -48,9 +48,9 @@
 
                     </c:if>
                     <th>Nombre</th>
-                    <th>Plazo minimo y maximo</th>
-                    <th>Tasa de Interes</th>
-                    <th>Monto minimo y maximo</th>
+                    <th>Plazo mínimo y máximo</th>
+                    <th>Tasa de Intéres</th>
+                    <th>Monto mínimo y máximo</th>
                     <th>Requisitos</th>
                     <c:if test="${EmpleadoActivo.getIdemploye().getRole() == 'Cajero'}">
 
@@ -113,27 +113,27 @@
                 <form action="ServletContainer?menu=credit" method="POST" class="row g-3" >
                     <input type="hidden" name="action" value="Registrar">
                     <div class="form-group col-md-6">
-                        <label>Nombre</label>
+                        <label>Nombre: </label>
                         <input type="text" class="form-control campo" name="txtnombre" onkeyup="" pattern="^[a-zA-ZáéíóúÁÉÍÓÚÑñüÜ ]+" title="Sólo letras"/>
                     </div>
                     <div class="form-group col-md-6">
-                        <label>Plazo minimo</label>
+                        <label>Plazo Mínimo: </label>
                         <input type="text" class="form-control campo" name="txtplazominimo" onkeyup=""/>
                     </div>
                     <div class="form-group col-md-6">
-                        <label>Plazo maximo </label>
+                        <label>Plazo Máximo: </label>
                         <input type="text" class="form-control" name="txtplazomaximo" onkeyup="" />
                     </div>
                     <div class="form-group col-md-6">
-                        <label>Tasa de interes </label>
+                        <label>Tasa de Intéres: </label>
                         <input type="text" class="form-control" name="txttasainteres" onkeyup=""  />
                     </div>
                     <div class="form-group col-md-6">
-                        <label>Monto minimo</label>
+                        <label>Monto Mínimo:</label>
                         <input type="text" class="form-control" name="txtmontominimo" onkeyup="" />
                     </div>
                     <div class="form-group col-md-6">
-                        <label>Monto Maximo</label>
+                        <label>Monto Máximo</label>
                         <input type="text" class="form-control" name="txtmontomaximo" onkeyup=""/>
                     </div>
                     <div class="form-group col-md-12">
@@ -160,31 +160,31 @@
                 <form action="ServletContainer?menu=credit" method="POST" class="row g-3" >
                     <input type="hidden" name="id" id="idcredito" value="">
                     <div class="form-group col-md-6">
-                        <label>Nombre</label>
+                        <label>Nombre:</label>
                         <input type="text" class="form-control campo" name="txtnombre" id="txtnombre" onkeyup="" pattern="^[a-zA-ZáéíóúÁÉÍÓÚÑñüÜ ]+" title="Sólo letras" value="${CreditoSeleccionado.getName()}"/>
                     </div>
                     <div class="form-group col-md-6">
-                        <label>Plazo minimo</label>
+                        <label>Plazo Mínimo:</label>
                         <input type="text" class="form-control campo" name="txtplazominimo" id="txtplazominimo" onkeyup="" value="${CreditoSeleccionado.getMin_period()}" />
                     </div>
                     <div class="form-group col-md-6">
-                        <label>Plazo maximo </label>
+                        <label>Plazo Máximo: </label>
                         <input type="text" class="form-control" name="txtplazomaximo" id="txtplazomaximo" onkeyup="" value="${CreditoSeleccionado.getMax_period()}"/>
                     </div>
                     <div class="form-group col-md-6">
-                        <label>Tasa de interes </label>
+                        <label>Tasa de Intéres: </label>
                         <input type="text" class="form-control" name="txttasainteres" id="txttasainteres" onkeyup="" value="${CreditoSeleccionado.getInterest_rate()}" />
                     </div>
                     <div class="form-group col-md-6">
-                        <label>Monto minimo</label>
+                        <label>Monto Mínimo:</label>
                         <input type="text" class="form-control" name="txtmontominimo" id="txtmontominimo" onkeyup="" value="${CreditoSeleccionado.getMin_amount()}" />
                     </div>
                     <div class="form-group col-md-6">
-                        <label>Monto Maximo</label>
+                        <label>Monto Máximo:</label>
                         <input type="text" class="form-control" name="txtmontomaximo" id="txtmontomaximo" onkeyup="" value="${CreditoSeleccionado.getMax_amount()}"/>
                     </div>
                     <div class="form-group col-md-12">
-                        <label>Requisitos</label>
+                        <label>Requisitos:</label>
                         <textarea class="form-control" name="txtrequisitos" id="txtrequisitos" rows="4" >${CreditoSeleccionado.getRequeriments()}</textarea>
                     </div>
                     <menu>

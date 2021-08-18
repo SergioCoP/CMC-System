@@ -1,5 +1,6 @@
 
 function buscar() {
+    /*-----------------------------------------------------------*/
     var tableReg = document.getElementById('datostabla');
     var searchText = document.getElementById('buscarreg').value.toLowerCase();
     var cellsOfRow = "";
@@ -29,3 +30,42 @@ function buscar() {
     }
 }
 
+
+
+
+(function() {
+
+
+    /*Ocultar y mostar contraseña en login(index) */
+
+    /*Obteniendo el span con icono de ojo*/
+    $('#pass03').on('click', function () {
+        //Obteniendo el input y obteniendo su tipo del input
+        $('#pass1').attr('type', function (index, attr) {
+            //retornar el tipo dependiendo el establecido en html
+            return attr == 'text' ? 'password' : 'text';
+        })
+    })
+    /*----------------------------------------------*/
+    /*Ocultar y mostrar contraseña al registrar y modificar a los empleados*/
+
+    //Registro
+    /*Obteniedno el span con icono de ojo*/
+    $('#pass01').on('click', function () {
+        //Obteniendo el input y su tipo de input
+        $('#pass2').attr('type', function (index, attr) {
+            //retornar el tipo dependiendo el establecido en html
+            return attr == 'text' ? 'password' : 'text';
+        })
+    })
+
+    //Modificar
+    /*Obteniedno el span con icono de ojo*/
+    $('#pass02').on('click', function () {
+        //Obteniendo el input y su tipo de input
+        $('#txtcontrasena').attr('type', function (index, attr) {
+            //retornar el tipo dependiendo el establecido en html
+            return attr == 'text' ? 'password' : 'text';
+        })
+    })
+})();

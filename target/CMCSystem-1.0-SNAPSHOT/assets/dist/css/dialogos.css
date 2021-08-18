@@ -5,26 +5,27 @@ dialog::backdrop{
     padding: 10px;
     border: none;
     border-radius:10px;
-    top: 15%;
+    top: 10%;
     position: fixed;
     left:15%;
     overflow: hidden;
    /* right: 15%;*/
 }
 
-#content-schema{
+.content-schema{
+    max-height: 350px ;
     overflow-y: scroll;
-    max-height: 18% ;
 }
-content-schema1{
+
+.content-schema1{
     overflow-y: scroll;
-    max-height: 30% ;
+    max-height: 70% ;
 }
 #Esquema_Pago{
-    max-height: 75% ;
+    max-height: 500px ;
 }
 
 #Pagos{
-    max-height: 75% ;
+    max-height: 70% ;
 }
 

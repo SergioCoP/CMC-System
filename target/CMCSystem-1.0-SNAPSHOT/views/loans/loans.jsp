@@ -21,7 +21,7 @@
             <input type="hidden" id="seccion" value="loans">
             <input type="text" id="buscarreg" class="inputbuscar" onkeyup="buscar()" placeholder="Buscar">
             <c:if test="${EmpleadoActivo.getIdemploye().getRole() == 'Asesor'}">
-                <button type="button" class="btn btn-success" id="btn-registar"><i class="fas fa-plus"></i>Agregar</button>
+                <button type="button" class="btn btn-success" id="btn-registar"><i class="fas fa-plus"></i> Agregar</button>
             </c:if>
             <c:if test="${EmpleadoActivo.getIdemploye().getRole() == 'Cajero'}">
                 <input type="hidden" class="btn btn-success" id="btn-registar"></input>
@@ -34,7 +34,7 @@
                     <th>No Socio</th>
                     </c:if>
                     <th>Nombre del socio</th>
-                    <th>Tipo de credito</th>
+                    <th>Tipo de crédito</th>
                     <th>Monto</th>
                     <th>Plazo</th>
                     <th>Fecha de solicitud</th>
@@ -99,7 +99,7 @@
                     <input type="hidden" name="txtidempleado" value="${EmpleadoActivo.getIdemploye().getIdemploye()}">
                     <input type="hidden" name="txtnombrempleado" value="${EmpleadoActivo.getIdemploye().getName()} ${EmpleadoActivo.getIdemploye().getLastnames()}">
                     <div class="col-md-5">
-                        <label>Tipo de credito: </label>
+                        <label>Tipo de crédito: </label>
                         <div class="row">
                             <div class="">
                                 <select class="form-select fecha" name="txttipocredito" id="txt_tipocredito" onchange="">
@@ -160,7 +160,7 @@
                         <input type="text" class="form-control campo" name="txtrazonsocial" onkeyup=""/>
                     </div>
                     <div class="form-group col-md-6">
-                        <label>Ubicacion:</label>
+                        <label>Ubicación:</label>
                         <input type="text" class="form-control campo" name="txtubicacion" onkeyup=""/>
                     </div>
                     <div class="form-group col-md-6">
@@ -168,7 +168,7 @@
                         <input type="text" class="form-control campo" name="txtgiro" onkeyup=""/>
                     </div>
                     <menu>
-                        <button type="submit" class="btn btn-success"><i class="fas fa-plus"></i>Registrar</button>
+                        <button type="submit" class="btn btn-success"><i class="fas fa-plus"></i> Registrar</button>
                     </menu>
                 </form>
             </div>
@@ -200,7 +200,7 @@
                     <input type="hidden" name="txtidempleado" value="${EmpleadoActivo.getIdemploye().getIdemploye()}">
                     <input type="hidden" name="txtnombrempleado" value="${EmpleadoActivo.getIdemploye().getName()} ${EmpleadoActivo.getIdemploye().getLastnames()}">
                     <div class="col-md-5">
-                        <label>Tipo de credito: </label>
+                        <label>Tipo de crédito: </label>
                         <div class="row">
                             <div class="">
                                 <select class="form-select fecha" name="txttipocredito" id="txt_tipocredito2" onchange="">
@@ -262,7 +262,7 @@
                         <input type="text" class="form-control campo" name="txtrazonsocial" id="txt_razonsocial" onkeyup=""/>
                     </div>
                     <div class="form-group col-md-6">
-                        <label>Ubicacion:</label>
+                        <label>Ubicación:</label>
                         <input type="text" class="form-control campo" name="txtubicacion" id="txt_ubicacion" onkeyup=""/>
                     </div>
                     <div class="form-group col-md-6">
@@ -270,7 +270,7 @@
                         <input type="text" class="form-control campo" name="txtgiro" id="txt_giro" onkeyup=""/>
                     </div>
                     <menu>
-                        <button type="submit" class="btn btn-primary"><i class="fas fa-edit"></i>Modificar</button>
+                        <button type="submit" class="btn btn-primary"><i class="fas fa-edit"></i> Modificar</button>
                     </menu>
                 </form>
             </div>
@@ -293,7 +293,7 @@
                         <input type="text" class="form-control campo" name="txtnombresocio" id="txt_nombresocio3" disabled />
                     </div>
                     <menu>
-                        <button type="submit" class="btn btn-danger"><i class="fas fa-plus"></i>Eliminar</button>
+                        <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt"></i> Eliminar</button>
                     </menu>
                 </form>
             </div>
@@ -301,19 +301,19 @@
     </div>
 </dialog>
 
-
-<dialog id="Esquema_Pago" class="col-sm-9 dialogo">
-    <div class="d-flex">
+<dialog id="Esquema_Pago" class="col-sm-10 dialogo">
+    <div class="d-lg-flex">
         <div class="card col-sm-12 border-0">
             <div class="card-header align-content-end">
                 <button class="btn btn-light" id="cerrar3" type="reset"><i class="fas fa-times"></i></button>
             </div>
-            <div class="card-body" id="content-schema">
-                <div class="row g-1">
+            <div class="card-body content-schema" id="">
                     <div id="EsquemaPagoPDF">
-                        <div class="form-group col-md-4">
-                            <label>Socio:</label>
-                            <input class="form-control campo" type="text" id="txtnombre_socio" >
+                        <div class="card-title">
+                            <div class="form-group col-md-4">
+                                <label>Socio:</label>
+                                <input class="form-control campo" type="text" id="txtnombre_socio" >
+                            </div>
                         </div>
                         <br>
                         <div class="form-group col-md-12" id="tableesquema" >
@@ -335,12 +335,14 @@
                             </table>
                         </div>
                     </div>
-                </div>
+
             </div>
             <br>
-            <menu>
-                <button class="btn btn-success" id="btn-exportar"><i class="far fa-file-pdf"></i> Exportar a PDF</button>
-            </menu>
+            <div class="card-footer  row g-3 ">
+                <menu>
+                    <button class="btn btn-success" id="btn-exportar"><i class="far fa-file-pdf"></i> Exportar a PDF</button>
+                </menu>
+            </div>
         </div>
     </div>
 </dialog>

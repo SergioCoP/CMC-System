@@ -21,7 +21,7 @@
       <input type="hidden" id="seccion" value="member">
       <input type="text" id="buscarreg" class="inputbuscar" onkeyup="buscar()" placeholder="Buscar">
       <c:if test="${EmpleadoActivo.getIdemploye().getRole() == 'Asesor'}">
-        <button type="button" id="btn-registar" class="btn btn-success" ><i class="fas fa-plus"></i>Agregar</button>
+        <button type="button" id="btn-registar" class="btn btn-success" ><i class="fas fa-plus"></i> Agregar</button>
       </c:if>
       <c:if test="${EmpleadoActivo.getIdemploye().getRole() == 'Coordinador'}">
 
@@ -145,23 +145,23 @@
           <form action="${context}/ServletContainer?menu=member"  method="POST" class="row g-3">
             <input type="hidden" name="action" value="Registrar">
             <div class="form-group col-md-6">
-              <label>Nombre(S)</label>
+              <label>Nombre(S):</label>
               <input type="text" class="form-control campo" name="txtnombre" onkeyup="" pattern="^[a-zA-ZáéíóúÁÉÍÓÚÑñüÜ ]+" title="Sólo letras" />
             </div>
             <div class="form-group col-md-6">
-              <label>Apellido(S)</label>
+              <label>Apellido(S):</label>
               <input type="text" class="form-control campo" name="txtapellidos" onkeyup="" pattern="^[a-zA-ZáéíóúÁÉÍÓÚÑñüÜ ]+" title="Sólo letras" />
             </div>
             <div class="form-group col-md-6">
-              <label>Fecha Nacimiento</label>
+              <label>Fecha Nacimiento:</label>
               <input type="text" class="form-control campo" name="txtfechanacimiento" onkeyup=""  placeholder="YYYY-MM-DD" />
             </div>
             <div class="form-group col-md-6">
-              <label>Fecha de Registro</label>
-              <input type="text" class="form-control campo" name="txtfecharegistro" onkeyup=""  placeholder="YYYY-MM-DD"/>
+              <label>Fecha de Registro:</label>
+              <input type="date" class="form-control campo" name="txtfecharegistro" onkeyup=""  placeholder="YYYY-MM-DD"/>
             </div>
             <div class="form-group col-md-6">
-              <label>Sexo</label>
+              <label>Sexo:</label>
               <input type="text" class="form-control campo" name="txtsexo" onkeyup=""  placeholder="Masculino/Femenino"/>
             </div>
             <div class="col-md-6">
@@ -201,7 +201,7 @@
               </div>
             </div>
             <div class="col-md-6">
-              <label>Comprobante de Domcilio: </label>
+              <label>Comprobante de Domicilio: </label>
               <div class="row">
                 <div class="">
                   <select class="form-select" name="txtcomprobantedomicilio" onchange="" >
@@ -243,20 +243,20 @@
           <form action="ServletContainer?menu=member" method="POST" class="row g-3" id="formmodificar">
             <div class="form-group col-md-6">
               <input type="hidden" value="${MiembroSeleccionado.getIdmember()}" name="id" id="idmiembro">
-              <label>Nombre(S)</label>
+              <label>Nombre(S):</label>
               <input type="text" class="form-control campo" name="txtnombre" id="txtnombre" onkeyup="" pattern="^[a-zA-ZáéíóúÁÉÍÓÚÑñüÜ ]+" title="Sólo letras" value="${MiembroSeleccionado.getName()}"/>
             </div>
             <div class="form-group col-md-6">
-              <label>Apellido(S)</label>
+              <label>Apellido(S):</label>
               <input type="text" class="form-control campo" name="txtapellidos" id="txtapellidos" onkeyup="" pattern="^[a-zA-ZáéíóúÁÉÍÓÚÑñüÜ ]+" title="Sólo letras" value="${MiembroSeleccionado.getLastname()}"/>
             </div>
             <div class="form-group col-md-6">
-              <label>Fecha Nacimiento</label>
+              <label>Fecha Nacimiento:</label>
               <input type="text" class="form-control campo" name="txtfechanacimiento" id="txtfechanacimiento" onkeyup=""  placeholder="YYYY-MM-DD" value="${MiembroSeleccionado.getBorn_date()}"/>
             </div>
             <div class="form-group col-md-6">
-              <label>Fecha de Registro</label>
-              <input type="text" class="form-control campo" name="txtfecharegistro"  id="txtfecharegistro" onkeyup=""  placeholder="YYYY-MM-DD" value="${MiembroSeleccionado.getReg_dates()}"/>
+              <label>Fecha de Registro:</label>
+              <input type="date" class="form-control campo" name="txtfecharegistro"  id="txtfecharegistro" onkeyup=""  placeholder="YYYY-MM-DD" value="${MiembroSeleccionado.getReg_dates()}"/>
             </div>
             <div class="form-group col-md-6">
               <label>Sexo</label>
@@ -326,7 +326,7 @@
               </div>
             </div>
             <div class="col-md-6">
-              <label>Comprobante de Domcilio: </label>
+              <label>Comprobante de Domicilio: </label>
               <div class="row">
                 <div class="">
                   <select class="form-select" name="txtcomprobantedomicilio" id="txtcomprobantedomicilio" onchange="" >
@@ -390,8 +390,8 @@
               <input type="text" class="form-control campo" name="txtnombre" id="txtnombre2" disabled />
             </div>
             <menu>
-              <button type="submit" class="btn btn-danger" name="action" value="Eliminar" id="btneliminarmember"><i class="fas fa-plus"></i>Eliminar</button>
-              <button type="submit" class="btn btn-primary" name="action" value="EliminarTemporal" id="btnbajatemporalmember"><i class="fas fa-plus"></i>Baja Temporal</button>
+              <button type="submit" class="btn btn-danger" name="action" value="Eliminar" id="btneliminarmember"><i class="fas fa-trash-alt"></i></i> Eliminar</button>
+              <button type="submit" class="btn btn-primary" name="action" value="EliminarTemporal" id="btnbajatemporalmember"><i class="fas fa-edit"></i> Baja Temporal</button>
             </menu>
           </form>
         </div>
@@ -408,23 +408,23 @@
         <div class="card-body row g-3">
             <div class="form-group col-md-6">
               <input type="hidden" value="${MiembroSeleccionado.getIdmember()}" name="id" id="idmiembro3">
-              <label>Nombre(S)</label>
+              <label>Nombre(S):</label>
               <input type="text" class="form-control campo" name="txtnombre" id="txtnombre3" onkeyup="" pattern="^[a-zA-ZáéíóúÁÉÍÓÚÑñüÜ ]+" title="Sólo letras" disabled/>
             </div>
             <div class="form-group col-md-6">
-              <label>Apellido(S)</label>
+              <label>Apellido(S):</label>
               <input type="text" class="form-control campo" name="txtapellidos" id="txtapellidos3" onkeyup="" pattern="^[a-zA-ZáéíóúÁÉÍÓÚÑñüÜ ]+" title="Sólo letras" disabled/>
             </div>
             <div class="form-group col-md-6">
-              <label>Fecha Nacimiento</label>
+              <label>Fecha Nacimiento:</label>
               <input type="text" class="form-control campo" name="txtfechanacimiento" id="txtfechanacimiento3" onkeyup=""  placeholder="YYYY-MM-DD" disabled/>
             </div>
             <div class="form-group col-md-6">
-              <label>Fecha de Registro</label>
+              <label>Fecha de Registro:</label>
               <input type="text" class="form-control campo" name="txtfecharegistro"  id="txtfecharegistro3" onkeyup=""  placeholder="YYYY-MM-DD" disabled/>
             </div>
             <div class="form-group col-md-6">
-              <label>Sexo</label>
+              <label>Sexo:</label>
               <input type="text" class="form-control campo" name="txtsexo" id="txtsexo3" onkeyup=""  placeholder="Masculino/Femenino" disabled/>
             </div>
             <div class="col-md-6">
@@ -464,7 +464,7 @@
               </div>
             </div>
             <div class="col-md-6">
-              <label>Comprobante de Domcilio: </label>
+              <label>Comprobante de Domicilio: </label>
               <div class="row">
                 <div class="">
                   <select class="form-select" name="txtcomprobantedomicilio" id="txtcomprobantedomicilio3" onchange="" disabled>

@@ -90,10 +90,8 @@ main {
     overflow-x: auto;
 }
 
-/*myframe {
-    height: 100%;
-    width: 100%;
-}*/
+
+
 #nav-toggle:checked+.sidebar {
     width: 70px;
 }

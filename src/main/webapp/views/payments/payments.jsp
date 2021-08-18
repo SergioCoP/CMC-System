@@ -21,13 +21,13 @@
         <div class="col-sm-12">
             <input type="hidden" id="seccion" value="payments">
             <input type="text" id="buscarreg" class="inputbuscar" onkeyup="buscar()" placeholder="Buscar">
-            <button type="button" class="btn btn-success" id="btn-registar"><i class="fas fa-plus"></i>Agregar Pago</button>
+            <button type="button" class="btn btn-success" id="btn-registar"><i class="fas fa-plus"></i> Agregar Pago</button>
             <table class="table" id="datostabla">
                 <thead class="table-light">
                 <tr>
                     <th>No</th>
                     <th>Nombre Socio</th>
-                    <th>Tipo Credito</th>
+                    <th>Tipo Crédito</th>
                     <th>Plazo</th>
                     <%--<th>Monto</th>--%>
                     <th>Restante</th>
@@ -92,7 +92,7 @@
                         <input type="text" class="form-control campo" name="txtnombresocio" id="txt_nombresocio" pattern="^[a-zA-ZáéíóúÁÉÍÓÚÑñüÜ ]+" title="Sólo letras"/>
                     </div>
                     <div class="form-group col-md-3">
-                        <label>No.Prestamo</label>
+                        <label>No.Prestamo:</label>
                         <input type="text" class="form-control campo" name="txtidprestamo"  id="txt_idprestamo" value="" />
                     </div>
                     <div class="form-group col-md-4">
@@ -104,7 +104,7 @@
                         <input type="number" class="form-control" name="txtmontoabonado" onkeyup="" />
                     </div>
                     <menu>
-                        <button type="submit" class="btn btn-success"><i class="fas fa-plus"></i>Registrar</button>
+                        <button type="submit" class="btn btn-success"><i class="fas fa-plus"></i> Registrar</button>
                     </menu>
                 </form>
             </div>
@@ -119,7 +119,7 @@
             <div class="card-header align-content-end">
                 <button class="btn btn-light" id="cerrar1" type="reset"><i class="fas fa-times"></i></button>
             </div>
-            <div class="card-body" id="content-schema1">
+            <div class="card-body content-schema1" id="">
                 <table class="table" id="datostabla1">
                     <thead class="table-light">
                     <tr>

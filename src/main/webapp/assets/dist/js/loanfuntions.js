@@ -321,8 +321,8 @@ const findCredits = () =>{
 
 const ExportaraPDF = (socio) =>{
    /*Probablemente no se utilicen*/
-    var HTML_Width = $('#EsquemaPagoPDF').width();
-    var HTML_Height = $('#EsquemaPagoPDF').height();
+  //  var HTML_Width = $('#EsquemaPagoPDF').width();
+   // var HTML_Height = $('#EsquemaPagoPDF').height();
     var top_left_margin = 15;
     var PDF_Width = HTML_Width + (top_left_margin * 2);
     var PDF_Height = (PDF_Width * 1.1) + (top_left_margin * 2);

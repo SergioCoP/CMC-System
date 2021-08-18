@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="${context}/assets/plugins/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="${context}/assets/dist/css/main.css">
     <link rel="stylesheet" href="${context}/assets/dist/css/dialogos.css">
+    <link rel="stylesheet" href="${context}/assets/dist/css/employe.css">
     <link rel="stylesheet" href="${context}/assets/dist/css/member.css">
     <link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
     <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
@@ -21,7 +22,7 @@
         <div class="col-sm-12">
             <input type="hidden" id="seccion" value="employes">
             <input type="text" id="buscarreg" class="inputbuscar" onkeyup="buscar()" placeholder="Buscar">
-            <button type="button" class="btn btn-success btn-reg" id="btn-registar"><i class="fas fa-plus"></i>Agregar</button>
+            <button type="button" class="btn btn-success btn-reg" id="btn-registar"><i class="fas fa-plus"></i> Agregar</button>
             <table class="table" id="datostabla">
                 <thead class="table-light">
                 <tr>
@@ -64,11 +65,11 @@
                 <form action="ServletContainer?menu=employee" method="POST" class="row g-3" >
                     <input type="hidden" name="action" value="Registrar">
                     <div class="form-group col-md-6">
-                        <label>Nombre(s)</label>
+                        <label>Nombre(s):</label>
                         <input type="text" class="form-control campo" name="txtnombre" onkeyup="" pattern="^[a-zA-ZáéíóúÁÉÍÓÚÑñüÜ ]+" title="Sólo letras" value="${Userselected.getIduser()}"/>
                     </div>
                     <div class="form-group col-md-6">
-                        <label>Apellido(s)</label>
+                        <label>Apellido(s):</label>
                         <input type="text" class="form-control campo" name="txtapellidos" onkeyup="" pattern="^[a-zA-ZáéíóúÁÉÍÓÚÑñüÜ ]+" title="Sólo letras"/>
                     </div>
                     <div class="form-group col-md-12">
@@ -77,7 +78,8 @@
                     </div>
                     <div class="form-group col-md-6">
                         <label>Contraseña: </label>
-                        <input type="text" class="form-control" name="txtcontrasena" onkeyup="" />
+                        <input type="password" class="form-control" name="txtcontrasena"  id="pass2" onkeyup="" />
+                        <span class="fas fa-eye password-icon" id="pass01"></span>
                     </div>
                     <div class="col-md-6">
                         <label>Rol: </label>
@@ -92,7 +94,7 @@
                         </div>
                     </div>
                     <menu>
-                        <button type="submit" class="btn btn-success"><i class="fas fa-plus"></i>Registrar</button>
+                        <button type="submit" class="btn btn-success"><i class="fas fa-plus"></i> Registrar</button>
                     </menu>
                 </form>
             </div>
@@ -110,11 +112,11 @@
                 <form action="ServletContainer?menu=employee" method="POST" class="row g-3">
                     <input type="hidden" name="id" value="" id="idemploye">
                     <div class="form-group col-md-6">
-                        <label>Nombre(s)</label>
+                        <label>Nombre(s):</label>
                         <input type="text" class="form-control campo" name="txtnombre" id="txtnombre" onkeyup="" pattern="^[a-zA-ZáéíóúÁÉÍÓÚÑñüÜ ]+" title="Sólo letras" value="${Userselected.getIduser()}"/>
                     </div>
                     <div class="form-group col-md-6">
-                        <label>Apellido(s)</label>
+                        <label>Apellido(s):</label>
                         <input type="text" class="form-control campo" name="txtapellidos" id="txtapellidos" onkeyup="" pattern="^[a-zA-ZáéíóúÁÉÍÓÚÑñüÜ ]+" title="Sólo letras"/>
                     </div>
                     <div class="form-group col-md-12">
@@ -123,7 +125,8 @@
                     </div>
                     <div class="form-group col-md-6">
                         <label>Contraseña: </label>
-                        <input type="text" class="form-control" name="txtcontrasena" id="txtcontrasena" onkeyup="" />
+                        <input type="password" class="form-control" name="txtcontrasena" id="txtcontrasena" onkeyup="" />
+                        <span class="fas fa-eye password-icon" id="pass02"></span>
                     </div>
                     <div class="col-md-6">
                         <label>Rol: </label>
@@ -139,7 +142,7 @@
                         <small id="desc-rol" class="form-text text-danger"></small>
                     </div>
                     <menu>
-                        <button type="submit" class="btn btn-primary" name="action" value="Actualizar"><i class="fas fa-edit"></i>Modificar</button>
+                        <button type="submit" class="btn btn-primary" name="action" value="Actualizar"><i class="fas fa-edit"></i> Modificar</button>
                     </menu>
                 </form>
             </div>
@@ -161,7 +164,7 @@
                         <input type="text" class="form-control campo" name="txtnombre" id="txtnombre2" disabled />
                     </div>
                     <menu>
-                        <button type="submit" class="btn btn-danger" name="action" value="Eliminar" ><i class="fas fa-plus"></i>Eliminar</button>
+                        <button type="submit" class="btn btn-danger" name="action" value="Eliminar" ><i class="fas fa-trash-alt"></i> Eliminar</button>
                     </menu>
                 </form>
             </div>
@@ -178,4 +181,5 @@
 <script src="${context}/assets/plugins/bootstrap/js/bootstrap.min.js"></script>
 <script src="${context}/assets/dist/js/validarusuario.js"></script>
 </body>
+
 </html>
