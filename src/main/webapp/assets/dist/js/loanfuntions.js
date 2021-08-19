@@ -321,8 +321,8 @@ const findCredits = () =>{
 
 const ExportaraPDF = (socio) =>{
    /*Probablemente no se utilicen*/
-  //  var HTML_Width = $('#EsquemaPagoPDF').width();
-   // var HTML_Height = $('#EsquemaPagoPDF').height();
+    var HTML_Width = $('#EsquemaPagoPDF').width();
+    var HTML_Height = $('#EsquemaPagoPDF').height();
     var top_left_margin = 15;
     var PDF_Width = HTML_Width + (top_left_margin * 2);
     var PDF_Height = (PDF_Width * 1.1) + (top_left_margin * 2);
@@ -332,7 +332,7 @@ const ExportaraPDF = (socio) =>{
     html2canvas($('#EsquemaPagoPDF')[0]).then(function (canvas) {
         var imgData = canvas.toDataURL("image/jpeg", 80.0);
         var pdf = new jsPDF('p', 'pt', 'letter');
-        PDF_Width = pdf.internal.pageSize.getWidth()*.65;
+        PDF_Width = pdf.internal.pageSize.getWidth()*.75;
         PDF_Height = pdf.internal.pageSize.getHeight()*.98;
         pdf.addImage(imgData, 'JPG', 100, 10, PDF_Width, PDF_Height);
        /* for (var i = 1; i <= totalPDFPages; i++) {
