@@ -83,7 +83,7 @@
                         <label>Buscar Socio:</label>
                         <div class="input-group">
                             <button class="btn btn-outline-secondary" type="button" id="btn-buscarsocio"><i class="fas fa-search"></i></button>
-                            <input type="text" class="form-control" placeholder="Por Id"  aria-describedby="btn-buscarsocio" name="txtidsocio" id="txt_idsocio" >
+                            <input type="text" class="form-control" placeholder="No.Socio"  aria-describedby="btn-buscarsocio" name="txtidsocio" id="txt_idsocio" >
                         </div>
                     </div>
                     <input type="hidden" name="txtidempleado" value="${EmpleadoActivo.getIdemploye().getIdemploye()}">
@@ -97,7 +97,7 @@
                     </div>
                     <div class="form-group col-md-4">
                         <label>Fecha:</label>
-                        <input type="date" class="form-control campo" name="txtfechaabono" onkeyup="" title="Fecha de registro"/>
+                        <input type="date" class="form-control campo" name="txtfechaabono" id="txt_fechabo1"/>
                     </div>
                     <div class="form-group col-md-5">
                         <label>Monto abonado: </label>
@@ -111,7 +111,6 @@
         </div>
     </div>
 </dialog>
-
 
 <dialog id="Pagos" class="col-sm-7 dialogo">
     <div class="d-flex">
@@ -136,14 +135,42 @@
     </div>
 </dialog>
 
+<dialog id="Buscar_socio" class="col-sm-5 dialogo">
+    <div class="d-flex">
+        <div class="card col-sm-12 border-0">
+            <div class="card-header align-content-end">
+                <button class="btn btn-light" id="cerrar4" type="reset"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="card-body">
+                <div class="col-md-12 align-content-center">
+                    <input type="text" id="buscarreg1" class="inputbuscar" onkeyup="buscarsocio()" placeholder="Buscar">
+                </div>
+                <div class="form-group col-md-12" id="tableesquema1" >
+                    <table class="table" id="datostabla2">
+                        <thead class="table-light">
+                        <tr>
+                            <th>No.</th>
+                            <th>Nombre Completo</th>
+                            <th>Fecha de Registro</th>
+                            <th>Seleccionar</th>
+                        </tr>
+                        </thead>
+                        <tbody id="tdatossocios"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</dialog>
+
 <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
 <script src="${context}/assets/dist/js/funciones.js"></script>
-<script src="${context}/assets/dist/js/payments.js"></script>
+
 <script src="${context}/assets/dist/js/validarusuario.js"></script>
 <script src="${context}/assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="${context}/assets/plugins/bootstrap/js/bootstrap.bundle.js"></script>
 <script src="${context}/assets/plugins/bootstrap/js/bootstrap.min.js"></script>
 </body>
-
+<script src="${context}/assets/dist/js/payments.js"></script>
 </html>

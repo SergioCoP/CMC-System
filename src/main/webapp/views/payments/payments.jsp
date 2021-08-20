@@ -112,7 +112,6 @@
     </div>
 </dialog>
 
-
 <dialog id="Pagos" class="col-sm-7 dialogo">
     <div class="d-flex">
         <div class="card col-sm-12 border-0">
@@ -131,6 +130,34 @@
                     </thead>
                     <tbody id="tdatospago"></tbody>
                 </table>
+            </div>
+        </div>
+    </div>
+</dialog>
+
+<dialog id="Buscar_socio" class="col-sm-5 dialogo">
+    <div class="d-flex">
+        <div class="card col-sm-12 border-0">
+            <div class="card-header align-content-end">
+                <button class="btn btn-light" id="cerrar4" type="reset"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="card-body">
+                <div class="col-md-12 align-content-center">
+                    <input type="text" id="buscarreg1" class="inputbuscar" onkeyup="buscarsocio()" placeholder="Buscar">
+                </div>
+                <div class="form-group col-md-12" id="tableesquema1" >
+                    <table class="table" id="datostabla2">
+                        <thead class="table-light">
+                        <tr>
+                            <th>No.</th>
+                            <th>Nombre Completo</th>
+                            <th>Fecha de Registro</th>
+                            <th>Seleccionar</th>
+                        </tr>
+                        </thead>
+                        <tbody id="tdatossocios"></tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>

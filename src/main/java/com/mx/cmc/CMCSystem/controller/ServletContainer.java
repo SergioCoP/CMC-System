@@ -73,6 +73,12 @@ public class ServletContainer extends HttpServlet {
                    // HttpSession session = request.getSession();//Para guardar los datos del usuario durante todo el tiempo que use la app
                    // session.setAttribute("SocioASeleccionar",listMembers);//Para guardar los datos del usuario durante todo el tiempo que use la app-se guardan
                     break;
+                case "Listar01":
+                    List<BeanMember> listMembers01 = memberdao.findmembers();
+                    map.put("ListMembers", listMembers01);
+                    write(response, map);
+                   map.clear();
+                    return;
                 case "Registrar":
                     //int idemp = Integer.parseInt(request.getParameter("txtidempleado"));
                     String nombre = request.getParameter("txtnombre");
@@ -232,6 +238,7 @@ public class ServletContainer extends HttpServlet {
                     List<BeanCredits> listCredits1 = creditdaot.findcredits();
                     map.put("listCredits1",listCredits1);
                     write(response, map);
+                    map.clear();
                     return;
                 case "Registrar":
                     String nombre = request.getParameter("txtnombre") != null ? request.getParameter("txtnombre") : "";
@@ -335,16 +342,6 @@ public class ServletContainer extends HttpServlet {
                     map.clear();
                   //  request.getRequestDispatcher("ServletContainer?menu=payment&action=Listar").forward(request, response);
                     return;
-                case "exportarPDF":
-                    DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
-                    String nomFile = dateFormat.format(new Date());
-                    String var1 = "Content";
-                    String var2 = "attachment; filename=Pagos_" + nomFile;
-                    response.setHeader(var1,var2);
-                    DaoPayments exportarPDF = new DaoPayments();
-                    exportarPDF.findAll();
-                  //  exportarPDF.export(response);
-                    request.getRequestDispatcher("ServletContainer?menu=payment&action=Listar").forward(request,response);
 
             }
             request.getRequestDispatcher("/views/payments/payments.jsp").forward(request, response);

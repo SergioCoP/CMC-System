@@ -42,7 +42,7 @@
                         <th>Acciones</th>
                     </c:if>
                     <c:if test="${EmpleadoActivo.getIdemploye().getRole() == 'Cajero'}">
-
+                    <th>Esquema de Pagos</th>
                     </c:if>
                 </tr>
                 </thead>
@@ -66,7 +66,9 @@
                             </td>
                         </c:if>
                         <c:if test="${EmpleadoActivo.getIdemploye().getRole() == 'Cajero'}">
-
+                          <td>
+                            <a class="btn btn-success btn-sm btn-generaresquema" data-fechasolicitud="${loan.getDate_request()}" data-plazo="${loan.getPeriod()}" data-montosolicitado="${loan.getAmount()}" data-tipocredito="${loan.getCredit_type()}" data-nombresocio="${loan.getMember_name()}"><i class="far fa-file-pdf"></i></a>
+                          </td>
                         </c:if>
                     </tr>
                 </c:forEach>
@@ -89,7 +91,7 @@
                         <label>Buscar Socio:</label>
                         <div class="input-group">
                             <button class="btn btn-outline-secondary" type="button" id="btn-buscarsocio"><i class="fas fa-search"></i></button>
-                            <input type="text" class="form-control" placeholder="Por Id"  aria-describedby="btn-buscarsocio" name="txtidsocio" id="txt_idsocio" >
+                            <input type="text" class="form-control" placeholder="No.Socio"  aria-describedby="btn-buscarsocio" name="txtidsocio" id="txt_idsocio" >
                         </div>
                     </div>
                     <div class="form-group col-md-9">
@@ -119,13 +121,13 @@
                     </div>
                     <div class="form-group col-md-8">
                         <label>Fecha solicitud: </label>
-                        <input type="date" class="form-control" name="txtfechasolicitud" onkeyup="" />
+                        <input type="date" class="form-control" name="txtfechasolicitud" id="txt_fechasol1" value="" />
                     </div>
                     <div class="form-group col-md-4">
                         <label>Aval 1:</label>
                         <div class="input-group">
                             <button class="btn btn-outline-secondary" type="button" id="btn-buscaraval1"><i class="fas fa-search"></i></button>
-                            <input type="text" class="form-control" placeholder="Id Socio"  aria-describedby="btn-buscarsocio" name="txtidaval1" id="txt_idaval1" >
+                            <input type="text" class="form-control" placeholder="No.Socio"  aria-describedby="btn-buscarsocio" name="txtidaval1" id="txt_idaval1" >
                         </div>
                     </div>
                     <div class="form-group col-md-8">
@@ -136,7 +138,7 @@
                         <label>Aval 2:</label>
                         <div class="input-group">
                             <button class="btn btn-outline-secondary" type="button" id="btn-buscaraval2"><i class="fas fa-search"></i></button>
-                            <input type="text" class="form-control" placeholder=" Id Socio"  aria-describedby="btn-buscarsocio" name="txtidaval2" id="txt_idaval2" >
+                            <input type="text" class="form-control" placeholder="No.Socio"  aria-describedby="btn-buscarsocio" name="txtidaval2" id="txt_idaval2" >
                         </div>
                     </div>
                     <div class="form-group col-md-8">
@@ -227,7 +229,7 @@
                         <label>Aval 1:</label>
                         <div class="input-group">
                             <button class="btn btn-outline-secondary" type="button" id="btn-buscaraval12"><i class="fas fa-search"></i></button>
-                            <input type="text" class="form-control" placeholder="Id Socio"  aria-describedby="btn-buscarsocio" name="txtidaval" id="txt_idaval11" >
+                            <input type="text" class="form-control" placeholder="No.Socio"  aria-describedby="btn-buscarsocio" name="txtidaval" id="txt_idaval11" >
                         </div>
                     </div>
                     <div class="form-group col-md-8">
@@ -238,7 +240,7 @@
                         <label>Aval 2:</label>
                         <div class="input-group">
                             <button class="btn btn-outline-secondary" type="button" id="btn-buscaraval22"><i class="fas fa-search"></i></button>
-                            <input type="text" class="form-control" placeholder=" Id Socio"  aria-describedby="btn-buscarsocio" name="txtidaval" id="txt_idaval22" >
+                            <input type="text" class="form-control" placeholder="No.Socio"  aria-describedby="btn-buscarsocio" name="txtidaval" id="txt_idaval22" >
                         </div>
                     </div>
                     <div class="form-group col-md-8">
@@ -301,6 +303,34 @@
     </div>
 </dialog>
 
+<dialog id="Buscar_socio" class="col-sm-5 dialogo">
+    <div class="d-flex">
+        <div class="card col-sm-12 border-0">
+            <div class="card-header align-content-end">
+                <button class="btn btn-light" id="cerrar4" type="reset"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="card-body">
+                <div class="col-md-12 align-content-center">
+                    <input type="text" id="buscarreg1" class="inputbuscar" onkeyup="buscarsocio()" placeholder="Buscar">
+                </div>
+                <div class="form-group col-md-12" id="tableesquema1" >
+                    <table class="table" id="datostabla2">
+                        <thead class="table-light">
+                        <tr>
+                            <th>No.</th>
+                            <th>Nombre Completo</th>
+                            <th>Fecha de Registro</th>
+                            <th>Seleccionar</th>
+                        </tr>
+                        </thead>
+                        <tbody id="tdatossocios"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</dialog>
+
 <dialog id="Esquema_Pago" class="col-sm-10 dialogo">
     <div class="d-lg-flex">
         <div class="card col-sm-12 border-0">
@@ -350,14 +380,14 @@
 <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
 <script src="${context}/assets/dist/js/funciones.js"></script>
-<script src="http://momentjs.com/downloads/moment.min.js"></script>
-<script src="${context}/assets/dist/js/loanfuntions.js"></script>
 <script src="${context}/assets/dist/js/validarusuario.js"></script>
 <script src="${context}/assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="${context}/assets/plugins/bootstrap/js/bootstrap.bundle.js"></script>
 <script src="${context}/assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+
 <!--Script que permite exportar a pdf -->
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
 <script type="text/javascript" src="https://html2canvas.hertzen.com/dist/html2canvas.js"></script>
 </body>
+<script src="${context}/assets/dist/js/loanfuntions.js"></script>
 </html>

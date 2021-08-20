@@ -3,14 +3,18 @@ var abrir = document.getElementById('btn-registar');
 var abrir2 = document.getElementsByClassName('btn-modificar');
 var abrir3 = document.getElementsByClassName('btn-eliminar');
 var abrir4 = document.getElementsByClassName('btn-generaresquema');
+//var btnselsocio = document.getElementsByClassName('btn-seleccionar');
+//console.log(btnselsocio);
 const cancelButton2 = document.getElementById('cerrar1');
 const cancelButton3 = document.getElementById('cerrar2');
 const cancelButton = document.getElementById('cerrar');
 const cancelButton4 = document.getElementById('cerrar3');
+const cancelButton5 = document.getElementById('cerrar4');
 const dialogoregistrar = document.getElementById('Registrar');
 const dialogomodificar = document.getElementById('Modificar');
 const dialogoeliminar = document.getElementById('Eliminar');
 const dialogoesquemapagos = document.getElementById('Esquema_Pago');
+const dialogolistasocios = document.getElementById('Buscar_socio');
 /*--------------------------------------*/
 //Boton para exportar a pdf el table del esquema de pago
 btnexportarPDF = document.getElementById('btn-exportar');
@@ -36,10 +40,13 @@ var selectCredit;
 //funcion para asignar el cierre y apertura a los botones para su modal correspondiente
 (function() {
 
+
     // Update button opens a modal dialog
     abrir.addEventListener('click', function() {
         selectCredit = 1;
         findCredits();
+        $('#txt_idsocio').val("");
+        $('#tnombresocio').val("");
         dialogoregistrar.showModal();
         //Cargar fecha actual en inputs de modals.
         var fecha = new Date();//Fecha actual
@@ -60,18 +67,24 @@ var selectCredit;
         $('#txt_fechasol1').val(anio+"-"+mes+"-"+dia);
     });
 
-//se recorrem todos los botones
-    for(let i=0; i < abrir2.length; i++){
-        //se llama a la funcion con se mostrara el modal y carga los datos en el mismo
-        cargarmodal(abrir2[i]);
-    }
 
-    for(let x=0; x< abrir3.length; x++){
-        cargarmodal2(abrir3[x]);
-    }
-    for(let x = 0; x < abrir4.length; x++){
-        cargarmodal3(abrir4[x]);
-    }
+//se recorrem todos los botones
+   for(let i=0; i < abrir2.length; i++){
+       //se llama a la funcion con se mostrara el modal y carga los datos en el mismo
+       console.log(abrir2[i]);
+       cargarmodal(abrir2[i]);
+   }
+
+   for(let x=0; x< abrir3.length; x++){
+       cargarmodal2(abrir3[x]);
+   }
+   for(let x = 0; x < abrir4.length; x++){
+       cargarmodal3(abrir4[x]);
+   }
+   /*for(let x = 0; x < btnselsocio.length; x++){
+       console.log(btnselsocio[x]);
+       cargarmodal4(btnselsocio[x]);
+   }*/
 
     btnexportarPDF.addEventListener('click', function() {
         let socioname = $('#txtnombre_socio').val();
@@ -90,10 +103,13 @@ var selectCredit;
     });
     cancelButton4.addEventListener('click', function() {
         dialogoesquemapagos.close();
+    });
+    cancelButton5.addEventListener('click', function() {
+        dialogolistasocios.close();
     })
 
-})();
 
+})();
 
 function cargarmodal(boton){
     //en el evento onclick
@@ -147,8 +163,7 @@ function  cargarmodal2(boton2) {
         dialogoeliminar.showModal();
     }
 }
-
-//Cargar modal esquema pago
+//Cargar modal esquema pago y generar el esquema
 function cargarmodal3(boton3){
     boton3.onclick = function () {
         let nombresocio = $(this).attr('data-nombresocio');
@@ -295,45 +310,160 @@ function cargarmodal3(boton3){
         /*Implementar el exporta a pdf y corregir las fechas, */
     }
 }
+
+
+//Funcion para listar los socios al dar en clic al boton buscar dentro de los modals
+const findListMembers= () =>{
+    const contextPath = window.location.origin + window.location.pathname.substring(0, window.location.pathname.indexOf("/",2));
+    $.ajax({
+        type: 'GET',
+        url: contextPath + '/ServletContainer?menu=member&action=Listar01'
+    }).done(function(response){
+      //  console.log(response);
+        var dsocio = response;
+        //llenartablapago(dabono);
+        // console.log(dabono.AbonoSeleccionado);
+        let table = "";
+       $('#tdatossocios').empty();
+        // var list = response.AbonoSeleccionado.length;
+        $.each(dsocio, function(i,item){
+           // console.log(item.name);
+            let list = item;
+            if(list.length > 0){
+                for(let i = 0; i < list.length; i++){
+                    table += `
+            <tr>
+                <td>${list[i].idmember}</td>
+                <td>${list[i].name} ${list[i].lastname}</td>
+                <td>${list[i].reg_dates}</td>
+                <td>
+                <a class="btn btn-success btn-sm btn-seleccionar" data-id="${list[i].idmember}" data-name="${list[i].name} ${list[i].lastname}"><i class="fas fa-check-circle"></i></a>
+                </td>
+            </tr>
+            `;
+                }
+            }else{
+                table = `
+		`;
+            }
+            // console.log(item);
+            //console.log(table);
+            $('#tdatossocios').append(table);
+            //    llenartablapago(item);
+        })
+    })
+};
+
+//Buscar en tabla para el modol de listar los socios, para no inferir
+//en la busqued de las tablas mostradas en cada vista
+
+function buscarsocio() {
+    /*-----------------------------------------------------------*/
+    var tableReg = document.getElementById('datostabla2');
+    var searchText = document.getElementById('buscarreg1').value.toLowerCase();
+    var cellsOfRow = "";
+    var found = false;
+    var CompareWith = "";
+
+    //se recorren las filas
+    for(var i=1; i < tableReg.rows.length; i++){
+
+        cellsOfRow = tableReg.rows[i].getElementsByTagName('td');
+        found=false;
+        //se recorren las celdas
+        for(var j=0; j < cellsOfRow.length && !found;j++){
+
+            CompareWith = cellsOfRow[j].innerHTML.toLowerCase();
+            //Buscar el texto en el contenido de las celdas
+            if(searchText.length === 0 || (CompareWith.indexOf(searchText) > -1)){
+                found=true;
+            }
+        }
+        if(found){
+            tableReg.rows[i].style.display='';
+        }else{
+            //si no se encuentra pues se esconde la fila
+            tableReg.rows[i].style.display = 'none';
+        }
+    }
+}
+
+
 /*------------------------------------------------------------*/
 //Funciones para abrir los dialogos y mandar variablea a ajax para obtener el idsocio, idaval y llenar los inputs con el response
 (function() {
         btnbuscarsocio.addEventListener('click', function() {
-           idsocio = $('#txt_idsocio').val();
+         // idsocio = $('#txt_idsocio').val();
+         //  inputsocios = $('#tnombresocio');
+          // findMember();
+           idsocio = $('#txt_idsocio');
            inputsocios = $('#tnombresocio');
-           findMember();
+            findListMembers();
+            dialogolistasocios.showModal();
+            SeleccionarSocio(idsocio,inputsocios);
         });
 
         btnbuscarsocio2.addEventListener('click', function() {
-            idsocio = $('#tidsocio1').val();
+            idsocio = $('#tidsocio1');
             inputsocios = $('#tnombresocio1');
-            findMember();
+          //  findMember();
+            findListMembers();
+            dialogolistasocios.showModal();
+            SeleccionarSocio(idsocio,inputsocios);
         });
 
         btnbuscaraval1.addEventListener('click', function() {
-            idsocio = $('#txt_idaval1').val();
+            idsocio = $('#txt_idaval1');
             inputsocios = $('#txt_nombreaval1');
-            findMember();
+          //  findMember();
+            findListMembers();
+            dialogolistasocios.showModal();
+            SeleccionarSocio(idsocio,inputsocios);
         });
 
         btnbuscaraval2.addEventListener('click', function() {
-            idsocio = $('#txt_idaval2').val();
+            idsocio = $('#txt_idaval2');
             inputsocios = $('#txt_nombreaval2');
-            findMember();
+            //findMember();
+            findListMembers();
+            dialogolistasocios.showModal();
+            SeleccionarSocio(idsocio,inputsocios);
         });
 
         btnbuscaraval11.addEventListener('click', function() {
-            idsocio = $('#txt_idaval11').val();
+            idsocio = $('#txt_idaval11');
             inputsocios = $('#txt_nombreaval11');
-            findMember();
+           // findMember();
+            findListMembers();
+            dialogolistasocios.showModal();
+            SeleccionarSocio(idsocio,inputsocios);
         });
 
         btnbuscaraval22.addEventListener('click', function() {
-            idsocio =$('#txt_idaval22').val();
+            idsocio =$('#txt_idaval22');
             inputsocios = $('#txt_nombreaval22');
-            findMember();
+          //  findMember();
+            findListMembers();
+            dialogolistasocios.showModal();
+            SeleccionarSocio(idsocio,inputsocios);
         })
 })();
+
+const SeleccionarSocio = (inputid,inputnombre) =>{
+    //Se delega el evento click, en cambio se agrega el elemento contenedor del elemento dinamico
+    //.on('evento','elemento credado dinamicamente)
+    $('#tdatossocios').on('click','.btn-seleccionar',function () {
+        console.log("Seleccionaste un socio");
+        //Obtener los valores almacenados en las variables data
+        let idsocio =  $(this).attr('data-id');
+        let nombresocio = $(this).attr('data-name');
+        //Asignarlos a los inputs del modal de registro
+        inputid.val(idsocio);
+        inputnombre.val(nombresocio);
+        //  dialogoregistrar.showModal();
+        dialogolistasocios.close();
+    })
+}
 
 const findMember = () =>{
     const contextPath = window.location.origin + window.location.pathname.substring(0, window.location.pathname.indexOf("/",2));
@@ -359,22 +489,20 @@ const findCredits = () =>{
         url: contextPath + '/ServletContainer?menu=credit&action=Listar1'
        // dataType: 'json'
     }).done(function(response){
-        console.log(response);
+        //console.log(response);
         var options;
        // var dcredit = response;
        $.each(response.listCredits1, function(i,item){
-          console.log(item);
+         // console.log(item);
            options += "<option value='"+item.name+"'>"+item.name+"</option>";
         //  fillSelect(item);
            if(selectCredit == 1){
-
               // $('#txt_tipocredito').append('<option value = '+ item.name +'>'+ item.name +'</option>');
                $('#txt_tipocredito').html(options);
            }else if(selectCredit == 2){
               // $('#txt_tipocredito2').append('<option value = '+ item.name +'>'+ item.name +'</option>');
                $('#txt_tipocredito2').html(options);
            }
-
         })
     })
 };
