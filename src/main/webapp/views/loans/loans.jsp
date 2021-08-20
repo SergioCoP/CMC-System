@@ -42,7 +42,7 @@
                         <th>Acciones</th>
                     </c:if>
                     <c:if test="${EmpleadoActivo.getIdemploye().getRole() == 'Cajero'}">
-
+                    <th>Esquema de Pagos</th>
                     </c:if>
                 </tr>
                 </thead>
@@ -66,7 +66,9 @@
                             </td>
                         </c:if>
                         <c:if test="${EmpleadoActivo.getIdemploye().getRole() == 'Cajero'}">
-
+                          <td>
+                            <a class="btn btn-success btn-sm btn-generaresquema" data-fechasolicitud="${loan.getDate_request()}" data-plazo="${loan.getPeriod()}" data-montosolicitado="${loan.getAmount()}" data-tipocredito="${loan.getCredit_type()}" data-nombresocio="${loan.getMember_name()}"><i class="far fa-file-pdf"></i></a>
+                          </td>
                         </c:if>
                     </tr>
                 </c:forEach>
@@ -89,7 +91,7 @@
                         <label>Buscar Socio:</label>
                         <div class="input-group">
                             <button class="btn btn-outline-secondary" type="button" id="btn-buscarsocio"><i class="fas fa-search"></i></button>
-                            <input type="text" class="form-control" placeholder="Por Id"  aria-describedby="btn-buscarsocio" name="txtidsocio" id="txt_idsocio" >
+                            <input type="text" class="form-control" placeholder="No.Socio"  aria-describedby="btn-buscarsocio" name="txtidsocio" id="txt_idsocio" >
                         </div>
                     </div>
                     <div class="form-group col-md-9">
@@ -119,13 +121,13 @@
                     </div>
                     <div class="form-group col-md-8">
                         <label>Fecha solicitud: </label>
-                        <input type="date" class="form-control" name="txtfechasolicitud" onkeyup="" />
+                        <input type="date" class="form-control" name="txtfechasolicitud" id="txt_fechasol1" value="" />
                     </div>
                     <div class="form-group col-md-4">
                         <label>Aval 1:</label>
                         <div class="input-group">
                             <button class="btn btn-outline-secondary" type="button" id="btn-buscaraval1"><i class="fas fa-search"></i></button>
-                            <input type="text" class="form-control" placeholder="Id Socio"  aria-describedby="btn-buscarsocio" name="txtidaval1" id="txt_idaval1" >
+                            <input type="text" class="form-control" placeholder="No.Socio"  aria-describedby="btn-buscarsocio" name="txtidaval1" id="txt_idaval1" >
                         </div>
                     </div>
                     <div class="form-group col-md-8">
@@ -136,7 +138,7 @@
                         <label>Aval 2:</label>
                         <div class="input-group">
                             <button class="btn btn-outline-secondary" type="button" id="btn-buscaraval2"><i class="fas fa-search"></i></button>
-                            <input type="text" class="form-control" placeholder=" Id Socio"  aria-describedby="btn-buscarsocio" name="txtidaval2" id="txt_idaval2" >
+                            <input type="text" class="form-control" placeholder="No.Socio"  aria-describedby="btn-buscarsocio" name="txtidaval2" id="txt_idaval2" >
                         </div>
                     </div>
                     <div class="form-group col-md-8">
@@ -360,4 +362,5 @@
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
 <script type="text/javascript" src="https://html2canvas.hertzen.com/dist/html2canvas.js"></script>
 </body>
+
 </html>

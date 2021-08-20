@@ -16,6 +16,23 @@ const dialogoinformacion = document.getElementById('Informacion');
     if(abrir){
        abrir.addEventListener('click', function() {
            dialogoregistrar.showModal();
+           //Cargar fecha actual en inputs de modals.
+           var fecha = new Date();//Fecha actual
+           var mes = fecha.getMonth()+1;//Mes +1 ya que comienza desde 0
+           var dia = fecha.getDate();//Obtener dia
+           var anio = fecha.getFullYear();//Obtener año
+
+           if(dia < 10){
+               dia='0'+dia;
+           }
+           if(mes < 10){
+               mes='0'+mes;
+           }
+//Socios
+           console.log(anio+"/"+mes+"/"+dia);
+           $('#txt_fechareg1').val(anio+"-"+mes+"-"+dia);
+           //Prestamos
+           //$('#txt_fechasol1').val(dia+"/"+mes+"/"+anio);
        });
    }
 
@@ -43,6 +60,9 @@ const dialogoinformacion = document.getElementById('Informacion');
     cancelButton4.addEventListener('click', function() {
         dialogoinformacion.close();
     })
+
+
+
 
 })();
 

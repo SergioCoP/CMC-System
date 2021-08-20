@@ -158,7 +158,7 @@
             </div>
             <div class="form-group col-md-6">
               <label>Fecha de Registro:</label>
-              <input type="date" class="form-control campo" name="txtfecharegistro" onkeyup=""  placeholder="YYYY-MM-DD"/>
+              <input type="date" class="form-control campo" name="txtfecharegistro" id="txt_fechareg1" value=""/>
             </div>
             <div class="form-group col-md-6">
               <label>Sexo:</label>
@@ -499,7 +499,7 @@
   <script src="${context}/assets/plugins/bootstrap/js/bootstrap.min.js"></script>
 <script src="${context}/assets/dist/js/funciones.js"></script>
 <script src="${context}/assets/dist/js/validarusuario.js"></script>
-
 </body>
+
 <script src="${context}/assets/dist/js/memberfuntions.js"></script>
 </html>

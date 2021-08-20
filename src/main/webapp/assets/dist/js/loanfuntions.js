@@ -41,6 +41,23 @@ var selectCredit;
         selectCredit = 1;
         findCredits();
         dialogoregistrar.showModal();
+        //Cargar fecha actual en inputs de modals.
+        var fecha = new Date();//Fecha actual
+        var mes = fecha.getMonth()+1;//Mes +1 ya que comienza desde 0
+        var dia = fecha.getDate();//Obtener dia
+        var anio = fecha.getFullYear();//Obtener año
+
+        if(dia < 10){
+            dia='0'+dia;
+        }
+        if(mes < 10){
+            mes='0'+mes;
+        }
+//Socios
+        console.log(anio+"/"+mes+"/"+dia);
+       // $('#txt_fechareg1').val(anio+"-"+mes+"-"+dia);
+        //Prestamos
+        $('#txt_fechasol1').val(anio+"-"+mes+"-"+dia);
     });
 
 //se recorrem todos los botones
@@ -149,6 +166,33 @@ function cargarmodal3(boton3){
         let iva;
         /*------Fechas-----*/
         var fecha = fechasolicitud.setMonth(fechasolicitud.getMonth());
+        //Dias festivos
+        const festivos = [
+            //Enero
+            [1],
+            //febrero
+            [5],
+            //marzo
+            [21],
+            //abril
+            [1,2],
+            //mayo
+            [1,5],
+            //junio
+            [],
+            //julio
+            [],
+            //agosto
+            [],
+            //septiembre
+            [2,15],
+            //octubre
+            [],
+            //novimebre
+            [2,20],
+            //Diciembre
+            [25]
+        ];
         let totpagado=0;
         let totintereses=0;
         let totiva=0;
@@ -180,6 +224,22 @@ function cargarmodal3(boton3){
             mes = diferenciadias1.getMonth();
             dia = diferenciadias1.getDay();*/
             fecha = new Date(fechasolicitud.setMonth(fechasolicitud.getMonth()+1));
+            //Validar si es domingo y restar un dia
+            //console.log(fecha.getDay());
+            //Obtener mes y dia de la fecha
+            let m = fecha.getMonth();
+            let dia = fecha.getDate();
+            //recorrer arrau con fechas no laborales
+            for(let d in festivos[m]){
+                if(dia === festivos[m][d] || fecha.getDay() == 0){
+                    fecha.setDate(fecha.getDate() - 1);
+                }
+            }
+           /* if(fecha.getDay() == 0){
+                fecha.setDate(fecha.getDate() - 1);
+            }*/
+
+
             diferenciadias2 =Math.abs( Math.floor(((diferenciadias1 - fecha)/(1000*60*60*24))));
             //diferenciadias1 = fecha;
             //console.log(diferenciadias1);
@@ -199,7 +259,7 @@ function cargarmodal3(boton3){
             /*------------------*/
 
 
-//intentar poner defirenci1 antes del for y despues
+//Llenar table con el resultado obtenido
             table +=`
                 <tr>
                     <td>${x}</td>

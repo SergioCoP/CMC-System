@@ -22,6 +22,20 @@ var btnbuscarsocio = document.getElementById("btn-buscarsocio");
     // Update button opens a modal dialog
     abrir.addEventListener('click', function() {
         dialogoregistrar.showModal();
+        //Cargar fecha actual en inputs de modals.
+        var fecha = new Date();//Fecha actual
+        var mes = fecha.getMonth()+1;//Mes +1 ya que comienza desde 0
+        var dia = fecha.getDate();//Obtener dia
+        var anio = fecha.getFullYear();//Obtener año
+
+        if(dia < 10){
+            dia='0'+dia;
+        }
+        if(mes < 10){
+            mes='0'+mes;
+        }
+        console.log(anio+"/"+mes+"/"+dia);
+        $('#txt_fechabo1').val(anio+"-"+mes+"-"+dia);
     });
 //se recorrem todos los botones
     for(let i=0; i < abrir2.length; i++){
@@ -103,7 +117,7 @@ const findAbonos= (idmember) =>{
            for(let i = 0; i < list.length; i++){
                table += `
             <tr>
-                <td>${list[i].idpayment}</td>
+                <td>${i+1}</td>
                 <td>${list[i].membername}</td>
                 <td>${list[i].date_payment}</td>
                 <td>$ ${list[i].amount_payment}</td>
@@ -115,7 +129,7 @@ const findAbonos= (idmember) =>{
 		`;
        }
       // console.log(item);
-      console.log(table);
+      //console.log(table);
        $('#tdatospago').append(table);
         //    llenartablapago(item);
         })
