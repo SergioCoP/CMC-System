@@ -388,70 +388,10 @@ function buscarsocio() {
     }
 }
 
-
-/*------------------------------------------------------------*/
-//Funciones para abrir los dialogos y mandar variablea a ajax para obtener el idsocio, idaval y llenar los inputs con el response
-(function() {
-        btnbuscarsocio.addEventListener('click', function() {
-         // idsocio = $('#txt_idsocio').val();
-         //  inputsocios = $('#tnombresocio');
-          // findMember();
-           idsocio = $('#txt_idsocio');
-           inputsocios = $('#tnombresocio');
-            findListMembers();
-            dialogolistasocios.showModal();
-            SeleccionarSocio(idsocio,inputsocios);
-        });
-
-        btnbuscarsocio2.addEventListener('click', function() {
-            idsocio = $('#tidsocio1');
-            inputsocios = $('#tnombresocio1');
-          //  findMember();
-            findListMembers();
-            dialogolistasocios.showModal();
-            SeleccionarSocio(idsocio,inputsocios);
-        });
-
-        btnbuscaraval1.addEventListener('click', function() {
-            idsocio = $('#txt_idaval1');
-            inputsocios = $('#txt_nombreaval1');
-          //  findMember();
-            findListMembers();
-            dialogolistasocios.showModal();
-            SeleccionarSocio(idsocio,inputsocios);
-        });
-
-        btnbuscaraval2.addEventListener('click', function() {
-            idsocio = $('#txt_idaval2');
-            inputsocios = $('#txt_nombreaval2');
-            //findMember();
-            findListMembers();
-            dialogolistasocios.showModal();
-            SeleccionarSocio(idsocio,inputsocios);
-        });
-
-        btnbuscaraval11.addEventListener('click', function() {
-            idsocio = $('#txt_idaval11');
-            inputsocios = $('#txt_nombreaval11');
-           // findMember();
-            findListMembers();
-            dialogolistasocios.showModal();
-            SeleccionarSocio(idsocio,inputsocios);
-        });
-
-        btnbuscaraval22.addEventListener('click', function() {
-            idsocio =$('#txt_idaval22');
-            inputsocios = $('#txt_nombreaval22');
-          //  findMember();
-            findListMembers();
-            dialogolistasocios.showModal();
-            SeleccionarSocio(idsocio,inputsocios);
-        })
-})();
-
 const SeleccionarSocio = (inputid,inputnombre) =>{
     //Se delega el evento click, en cambio se agrega el elemento contenedor del elemento dinamico
     //.on('evento','elemento credado dinamicamente)
+
     $('#tdatossocios').on('click','.btn-seleccionar',function () {
         console.log("Seleccionaste un socio");
         //Obtener los valores almacenados en las variables data
@@ -462,8 +402,55 @@ const SeleccionarSocio = (inputid,inputnombre) =>{
         inputnombre.val(nombresocio);
         //  dialogoregistrar.showModal();
         dialogolistasocios.close();
-    })
-}
+        inputid = $('');
+        inputnombre = $('');
+    });
+
+};
+
+/*------------------------------------------------------------*/
+//Funciones para abrir los dialogos y mandar variablea a ajax para obtener el idsocio, idaval y llenar los inputs con el response
+(function() {
+        btnbuscarsocio.addEventListener('click', function() {
+            findListMembers();
+            dialogolistasocios.showModal();
+            SeleccionarSocio( $('#txt_idsocio'),$('#tnombresocio'));
+            SeleccionarSocio($(''),$(''));
+        });
+
+        btnbuscarsocio2.addEventListener('click', function() {
+            findListMembers();
+            dialogolistasocios.showModal();
+            SeleccionarSocio($('#tidsocio1'),$('#tnombresocio1'));
+            SeleccionarSocio($(''),$(''));
+        });
+        btnbuscaraval1.addEventListener('click', function() {
+            findListMembers();
+            dialogolistasocios.showModal();
+            SeleccionarSocio($('#txt_idaval1'),$('#txt_nombreaval1'));
+            SeleccionarSocio($(''),$(''));
+        });
+        btnbuscaraval2.addEventListener('click', function() {
+            findListMembers();
+            dialogolistasocios.showModal();
+            SeleccionarSocio($('#txt_idaval2'),$('#txt_nombreaval2'));
+            SeleccionarSocio($(''),$(''));
+        });
+        btnbuscaraval11.addEventListener('click', function() {
+            findListMembers();
+            dialogolistasocios.showModal();
+            SeleccionarSocio($('#txt_idaval11'),$('#txt_nombreaval11'));
+            SeleccionarSocio($(''),$(''));
+        });
+        btnbuscaraval22.addEventListener('click', function() {
+            findListMembers();
+            dialogolistasocios.showModal();
+            SeleccionarSocio($('#txt_idaval22'),$('#txt_nombreaval22'));
+            SeleccionarSocio($(''),$(''));
+        });
+})();
+
+
 
 const findMember = () =>{
     const contextPath = window.location.origin + window.location.pathname.substring(0, window.location.pathname.indexOf("/",2));
